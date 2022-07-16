@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            margin: 0;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <script src="https://unpkg.com/kaboom/dist/kaboom.js"></script>
+    <script>
+        kaboom({
+            background: [0, 0, 0],
+            scale:2,
+        });
+        loadSprite('slime', 'slime.png', {
+            sliceX: 3,
+            sliceY: 3,
+            anims: {
+                idle:{ from: 0, to: 2 },
+                pulse: { from: 0, to: 8 },
+                run: { from: 0, to: 8 }
+            }
+        })
+        onLoad(function(){
+            var ground = add([
+                pos(0, height()-50),
+		        rect(width(), 50),
+                color(10,150,10),
+                area(),
+		        solid()
+            ])
+            var slime = add([
+                sprite('slime', {
+                    
+                }),
+                pos(width() * 0.5, -100),
+                origin('center'),
+                area({ scale: 0.6 }),
+                origin("center"),
+                body(),
+                scale(1),
+                onUpdate(function(){
+                    if(slime.x <= width() && slime.x >= 0 ) {
+                        slime.x += slime.vx;
+                        slime.moveTo(slime.x, slime.pos.y)
+                    } else if(slime.x > width()){
+                        slime.x=width()
+                    } else if(slime.x < 0){
+                        slime.x=0;
+                    }
+                    slime.vx *= .95
+                }),
+            ])
+            slime.play('idle')
+            slime.onAnimEnd("idle", () => {
+                slime.play('idle')
+            })
+            slime.x=100
+            slime.vx=0;
+            onKeyPress('up', () => {
+                slime.scale.x = 2
+                slime.play('run')
+                slime.jump()
+            })
+            onKeyRelease('up', () => {
+                slime.scale.x = 1
+                slime.play('idle')                
+            })
+            onKeyPress('left', () => {
+                slime.scale.x = 2
+                slime.play('run')
+                slime.vx-=10
+            })
+            onKeyRelease('left', () => {
+                slime.scale.x = 1
+                slime.play('idle')  
+                slime.vx=0              
+            })
+            onKeyPress('right', () => {
+                slime.scale.x = 2
+                slime.play('run')
+                slime.vx+=10
+            })
+            onKeyRelease('right', () => {
+                slime.scale.x = 1
+                slime.play('idle')                
+                slime.vx=0              
+            })
+            setInterval(function(){
+                //if(slime.pos.y > 100) slime.jump();
+            },820)
+        })
+    </script>
+</body>
+</html>
