@@ -75,7 +75,7 @@ kaboom({
         'a        b',
         'a        b',
         'a        b',
-        'a        xccccccccccccccccccccccccccccccccccccccccccccccccccw',
+        'a        cccccccccccccccccccccccccccccccccccccccccccccccccccw',
         'a                                                 *         b',
         'a                                                           b',
         'a                                                           b',
