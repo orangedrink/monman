@@ -55,6 +55,15 @@
     loadSprite('stairs-up', 'stairs-up.png')
     loadSprite('stairs-dn', 'stairs-dn.png')
     loadSprite('floor', 'floor.png')
+    loadSprite('top-left-carpet', 'carpet-top-left.png')
+    loadSprite('top-carpet', 'carpet-top.png')
+    loadSprite('top-right-carpet', 'carpet-top-right.png')
+    loadSprite('left-carpet', 'carpet-left.png')
+    loadSprite('carpet', 'carpet.png')
+    loadSprite('right-carpet', 'carpet-right.png')
+    loadSprite('bottom-right-carpet', 'carpet-bottom-right.png')
+    loadSprite('bottom-carpet', 'carpet-bottom.png')
+    loadSprite('bottom-left-carpet', 'carpet-bottom-left.png')
     loadSprite('bed', 'bed.png')
     loadSprite('dialog', 'dialog.png')
     loadSprite('chair', 'chair.png')
@@ -63,6 +72,7 @@
     loadSprite('table', 'table.png')
     loadSprite('table2', 'table2.png')
     loadSprite('column', 'column.png')
+    loadSprite('statue', 'statue.png')
     loadSprite('slime', 'slime.png', {
         sliceX: 3,
         sliceY: 3,
@@ -90,10 +100,11 @@
         const maps = [
             [
                 'yccccw',
-                'aiiiib',
                 'akjikb',
                 'aiiiib',
-                'aiiiib',
+                'aqrrsb',
+                'atuuvb',
+                'aABBCb',
                 'xgiihz',
                 ' aiib ',
                 ' a2ib ',
@@ -101,27 +112,27 @@
                 ' xddz  ',
             ],
             [
-                'yccw             yccw',
-                'aiib   ycccccw   a1ib',
-                'aiib   aiMiiib   aiib',
-                'aiib   aiiiiib   aiib',
-                'aiifccceiiiiifccceiib',
-                'aiiiiiiiiiiiiiiiiiiib',
-                'xddddddgiiiiiIiiiiiib',
-                '       aiiiiiiiiiiiib',
-                '       aiiiiiimoiiiib',
-                '       aiiiiiIiiiiiib',
-                '       aiiiiiiiiiiiib',
-                '       aiiiiiiiiiilib',
-                'avb    aiiiiiIiiiilib',
-                'aib    aiiiiiimiiiiib',
-                'aifcccceiiiiiimiiiiib',
-                'aiiiiiiiiiiiiIiiiiiib',
-                'xddddddddgiihdddddddz',
-                '         aiib',
-                '         a2ib',
-                '         aiib',
-                '         xddz',
+                '        yccw     M       yccw',
+                '        a3ib   ycccccw   a1ib',
+                '        aiib   aiiiiib   aiib',
+                '        aiib   aiiiiib   aiib',
+                '    a>b aiifccceiiiiifccceiib a<b',
+                '    aib aiiiiiiiiqrsiiiiiiiib aib', 
+                '    aifcccccccceituvifcccccccceib',
+                '    aiiiiiiiiiiIituviIiiiiiiiiiib',
+                '    xdddgiippiiIituviIiippiihdddz',
+                '        aiippiiIituviIiippiib',
+                '        aiippiiIituviIiippiib',
+                'aVb     aiippiiIituviIiippiib     a^b',
+                'aib     aiippiiIituviIiippiib     aib',
+                'aifccccceiiiiiiiituviiiiiiiifccccceib',
+                'aiiiiiiiiiiiiiiiiABCiiiiiiiiiiiiiiiib',
+                'xdddddddddddddddgiiihdddddddddddddddz',
+                '                aiiib',
+                '                aiiifcccccccw',
+                '                aiiiiiiiiiiib',
+                '                xddddddddg2ib',
+                '                         aiib',
             ],
             [
                 '         yccw',
@@ -131,6 +142,20 @@
                 'ycccccccceiifcccccccccw',
                 'aiiiiiiiiiiiiiiiiiiiiib',
                 'xddddddgiiiiiihdddddddz',
+                '       aiiiiiib',
+                '       aiiiiiib',
+                '       aiiiiiib',
+                '       aiiiiiib',
+                '       aiiiiiib',
+                '       aiiiiiib',
+                '       aiiiiiib',
+                '       aiiiiiib',
+                '       aiiiiiib',
+                '       aiiiiiib',
+                '       aiiiiiib',
+                '       aiiiiiib',
+                '       aiiiiiib',
+                '       aiiiiiib',
                 '       aiiiiiib',
                 '       aiiiiiib',
                 '       aiiiiiib',
@@ -212,7 +237,7 @@
             0: {
                 2: {
                     targetLevel: 1,
-                    targetX: 1216,
+                    targetX: 1726,
                     targetY: 230
                 }
             },
@@ -247,16 +272,30 @@
             m: () => [sprite('chair3'), layer('mg'), area(), solid(), 'replace'],
             n: () => [sprite('table'), layer('mg'), area(), solid(), 'replace'],
             o: () => [sprite('table2'), layer('mg'), area(), solid(), 'replace'],
+            p: () => [sprite('statue'), layer('mg'), area(), solid(), 'replace'],
+
+            q: () => [sprite('top-left-carpet'), layer('bg')],
+            r: () => [sprite('top-carpet'), layer('bg')],
+            s: () => [sprite('top-right-carpet'), layer('bg')],
+
+            t: () => [sprite('left-carpet'), layer('bg')],
+            u: () => [sprite('carpet'), layer('bg')],
+            v: () => [sprite('right-carpet'), layer('bg')],
+
+            A: () => [sprite('bottom-left-carpet'), layer('bg')],
+            B: () => [sprite('bottom-carpet'), layer('bg')],
+            C: () => [sprite('bottom-right-carpet'), layer('bg')],
+            
             I: () => [sprite('column'), layer('mg'), area(), solid(), 'replace'],
             w: () => [sprite('top-right-wall'), area(), solid(), 'wall'],
             x: () => [sprite('bottom-left-wall'), area(), solid(), 'wall'],
             y: () => [sprite('top-left-wall'), area(), solid(), 'wall'],
             z: () => [sprite('bottom-right-wall'), area(), solid(), 'wall'],
-            M: () => [sprite('monmach'), {frame: 0}, area(), solid(), layer('mg'), 'replace', 'monmach'],
+            M: () => [sprite('monmach'), {frame: 0}, area(), solid(), layer('mg'), 'monmach'],
             '^': () => [sprite('top-door'), area(), 'door', 'replace', {
                 doorLookup: '^'
             }],
-            'v': () => [sprite('top-door'), area(), 'door', 'replace', {
+            'V': () => [sprite('top-door'), area(), 'door', 'replace', {
                 doorLookup: 'v'
             }],
             1: () => [sprite('stairs-up'), layer('mg'), area(), 'stairs', 'replace', {
