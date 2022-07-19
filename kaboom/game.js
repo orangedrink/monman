@@ -11,7 +11,22 @@
     // Constants
     const MOVE_SPEED = 120
     const dialog = function(message, player){
-        dialogOpen = true        
+        dialogOpen = true
+        /*var interval = setInterval(function(){
+            var currCam = camPos();
+            if(player.pos.y>currCam.y){
+                currCam.y++
+            }else if(player.pos.y<currCam.y){
+                currCam.y--
+            }
+            if(player.pos.x>currCam.x){
+                currCam.x++
+            }else if(player.pos.x<currCam.x){
+                currCam.x--
+            }
+            camPos(currCam)
+        },1)*/
+        camPos(player.pos.x, player.pos.y)
         const b = add([
             sprite('dialog'),
             origin('center'),
@@ -32,6 +47,7 @@
             wait(1, ()=>{
                 dialogOpen = false
                 player.play('Idle')
+//                clearInterval(interval)
             })
         })
     }
@@ -101,8 +117,7 @@
             [
                 'yccccw',
                 'akjikb',
-                'aiiiib',
-                'aqrrsb',
+                 'aqrrsb',
                 'atuuvb',
                 'aABBCb',
                 'xgiihz',
@@ -112,12 +127,12 @@
                 ' xddz  ',
             ],
             [
-                '        yccw     M       yccw',
+                '        yccw     M N     yccw',
                 '        a3ib   ycccccw   a1ib',
                 '        aiib   aiiiiib   aiib',
-                '        aiib   aiiiiib   aiib',
-                '    a>b aiifccceiiiiifccceiib a<b',
-                '    aib aiiiiiiiiqrsiiiiiiiib aib', 
+                '        aiib   aiqrsib   aiib',
+                '    a>b aiifccceituvifccceiib a<b',
+                '    aib aiiiiiiiituviiiiiiiib aib', 
                 '    aifcccccccceituvifcccccccceib',
                 '    aiiiiiiiiiiIituviIiiiiiiiiiib',
                 '    xdddgiippiiIituviIiippiihdddz',
@@ -187,6 +202,19 @@
                 '       aiiiiiib',
                 '       aiiiiiib',
                 'ycccccceiiiiiifccccccvw',
+                'aiiiiiiiiiiiiiiiiiiiiib',
+                'xddddddddgiihdddddddddz',
+                '         aiib',
+                '         aiib',
+                '         aiib',
+                '         xddz',
+            ],
+            [
+                '         yccw',
+                '         aiib',
+                '         aiib',
+                '         aiib',
+                'ycccccccceiifccccccccvw',
                 'aiiiiiiiiiiiiiiiiiiiiib',
                 'xddddddddgiihdddddddddz',
                 '         aiib',
@@ -487,4 +515,4 @@
 
     })
 
-    go ('game', { level: 0, score: 0, startX: 192, startY:256, newGame:true })
+    go ('game', { level: 0, score: 0, startX: 192, startY:216, newGame:true })
