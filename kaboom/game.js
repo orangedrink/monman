@@ -7,48 +7,116 @@
     })
     //globals
     var dialogOpen = false;
-
+    let keystate
     // Constants
     const MOVE_SPEED = 120
-    const dialog = function(message, player){
+    const dialog = function(message, player, p, choices, callback){
         dialogOpen = true
-        /*var interval = setInterval(function(){
+        var step = 0;
+        var camInterval = setInterval(function(){
+            step++;
+            if(step>6) clearInterval(camInterval)
             var currCam = camPos();
-            if(player.pos.y>currCam.y){
-                currCam.y++
-            }else if(player.pos.y<currCam.y){
-                currCam.y--
+            var xmov = (p.x - currCam.x) / (6-step);
+            var ymov = (p.y - currCam.y) / (6-step);
+            if(Math.round(p.y)!=Math.round(currCam.y)){
+                currCam.y+=ymov;
             }
-            if(player.pos.x>currCam.x){
-                currCam.x++
-            }else if(player.pos.x<currCam.x){
-                currCam.x--
+            if(Math.round(p.x)!=Math.round(currCam.x)){
+                currCam.x+=xmov;
             }
             camPos(currCam)
-        },1)*/
-        camPos(player.pos.x, player.pos.y)
+        },1)
+        //camPos(player.pos.x, player.pos.y)
         const b = add([
             sprite('dialog'),
             origin('center'),
-            pos(player.pos.x, player.pos.y),
+            pos(p.x, p.y),
         ])
-        const t = add([
-            text(message+'\n\n\nPress space to continue',{
+
+        const t = []
+        let selected = 0;
+        let cursor
+        t.push(add([
+            text(message,{
                 size: 12,
                 width:300
             }),
-            pos(player.pos.x, player.pos.y),
+            pos(p.x, p.y-40),
             origin('center')
-        ])
-
-        keyDown('space', ()=>{
-            destroy(t)
-            destroy(b)
-            wait(1, ()=>{
-                dialogOpen = false
-                player.play('Idle')
-//                clearInterval(interval)
+        ]))
+        if(choices){
+            cursor = add([
+                text('>>>',
+                {
+                    size: 12,
+                    width:300
+                }),
+                pos(p.x-70, p.y+(28+(12*selected))),
+                origin('center')
+            ])
+            t.push(cursor)
+            t.push(add([
+                text('Use the arrow keys and space to select.',{
+                    size: 12,
+                    width:300
+                }),
+                pos(p.x, p.y+100),
+                origin('center')
+            ]))
+            choices.forEach((choice, i)=>{
+                t.push(add([
+                    text(choice ,{
+                        size: 12,
+                        width:300
+                    }),
+                    pos(p.x, p.y+(28+(12*i))),
+                    origin('center')
+                ]))
             })
+        } else{
+            t.push(add([
+                text('Press space to continue',{
+                    size: 12,
+                    width:300
+                }),
+                pos(p.x, p.y+100),
+                origin('center')
+            ]))                
+        }
+        wait(.5,()=>{
+            keystate=''
+            let keyInterval = setInterval(()=>{
+                if(cursor){
+                    cursor.moveTo(p.x-70, p.y+(28+(12*selected)))
+                }
+                if(keystate == 'down'){
+                    keystate =''
+                    selected++
+                    if(choices && selected == choices.length){
+                        selected = 0
+                    }
+                }else if(keystate == 'up'){
+                    keystate =''
+                    selected--
+                    if(selected < 0 && choices){
+                        selected = choices.length-1
+                    }
+                }else if(keystate == 'space'){
+                    keystate =''
+                    clearInterval(keyInterval)
+                    destroy(b)
+                    t.forEach(t=>{
+                        destroy(t)
+                    })
+                    player.play('Idle')
+                    wait(.1,()=>{
+                        dialogOpen = false
+                        if(callback) callback(selected)
+                    })
+                } else {
+                }
+            }, 1)    
         })
     }
     //Load sprites
@@ -81,6 +149,7 @@
     loadSprite('bottom-carpet', 'carpet-bottom.png')
     loadSprite('bottom-left-carpet', 'carpet-bottom-left.png')
     loadSprite('bed', 'bed.png')
+    loadSprite('bed2', 'bed2.png')
     loadSprite('dialog', 'dialog.png')
     loadSprite('chair', 'chair.png')
     loadSprite('chair2', 'chair2.png')
@@ -178,13 +247,25 @@
                 '       aiiiiiib',
                 '       aiiiiiib',
                 '       aiiiiiib',
-                'ycccccceiiiiiifccccccvw',
+                'ycccccceiiiiiifccccccVw',
                 'aiiiiiiiiiiiiiiiiiiiiib',
                 'xddddddddgiihdddddddddz',
                 '         aiib',
                 '         aiib',
                 '         aiib',
                 '         xddz',
+            ],
+            [
+                'yccccw',
+                'akDikb',
+                'aqrrsb',
+                'atuuvb',
+                'aABBCb',
+                'xgiihz',
+                ' aiib ',
+                ' a2ib ',
+                ' aiib ',
+                ' xddz  ',
             ],
             [
                 '         yccw',
@@ -201,7 +282,7 @@
                 '       aiiiiiib',
                 '       aiiiiiib',
                 '       aiiiiiib',
-                'ycccccceiiiiiifccccccvw',
+                'ycccccceiiiiiifccccccVw',
                 'aiiiiiiiiiiiiiiiiiiiiib',
                 'xddddddddgiihdddddddddz',
                 '         aiib',
@@ -214,7 +295,7 @@
                 '         aiib',
                 '         aiib',
                 '         aiib',
-                'ycccccccceiifccccccccvw',
+                'ycccccccceiifcccccccccw',
                 'aiiiiiiiiiiiiiiiiiiiiib',
                 'xddddddddgiihdddddddddz',
                 '         aiib',
@@ -247,6 +328,18 @@
             ],
         ]
         const doorMappings = {
+            1: {
+                '^': {
+                    targetLevel: 3,
+                    targetX: 192,
+                    targetY: 400
+                },
+                'v':{
+                    targetLevel: 1,
+                    targetX: 508,
+                    targetY: 260
+                }
+            },
             2: {
                 '^': {
                     targetLevel: 0,
@@ -265,15 +358,15 @@
             0: {
                 2: {
                     targetLevel: 1,
-                    targetX: 1726,
-                    targetY: 230
+                    targetX: 1730,
+                    targetY: 215
                 }
             },
             1: {
                 1: {
                     targetLevel: 0,
-                    targetX: 192,
-                    targetY: 400
+                    targetX: 194,
+                    targetY: 428
                 },
                 2:{
                     targetLevel: 2,
@@ -281,6 +374,15 @@
                     targetY: 260
                 }
             },
+            2:{},
+            3:{
+                2: {
+                    targetLevel: 1,
+                    targetX: 2272,
+                    targetY: 786
+                }
+                
+            }
         }
         const levelCfg = {
             width: 64,
@@ -309,16 +411,15 @@
             t: () => [sprite('left-carpet'), layer('bg')],
             u: () => [sprite('carpet'), layer('bg')],
             v: () => [sprite('right-carpet'), layer('bg')],
-
-            A: () => [sprite('bottom-left-carpet'), layer('bg')],
-            B: () => [sprite('bottom-carpet'), layer('bg')],
-            C: () => [sprite('bottom-right-carpet'), layer('bg')],
-            
-            I: () => [sprite('column'), layer('mg'), area(), solid(), 'replace'],
             w: () => [sprite('top-right-wall'), area(), solid(), 'wall'],
             x: () => [sprite('bottom-left-wall'), area(), solid(), 'wall'],
             y: () => [sprite('top-left-wall'), area(), solid(), 'wall'],
             z: () => [sprite('bottom-right-wall'), area(), solid(), 'wall'],
+            A: () => [sprite('bottom-left-carpet'), layer('bg')],
+            B: () => [sprite('bottom-carpet'), layer('bg')],
+            C: () => [sprite('bottom-right-carpet'), layer('bg')],
+            D: () => [sprite('bed2'), layer('bg'), layer('mg'), area(), solid(), 'replace', 'bean'],
+            I: () => [sprite('column'), layer('mg'), area(), solid(), 'replace'],
             M: () => [sprite('monmach'), {frame: 0}, area(), solid(), layer('mg'), 'monmach'],
             '^': () => [sprite('top-door'), area(), 'door', 'replace', {
                 doorLookup: '^'
@@ -365,10 +466,14 @@
         ])
         if(newGame){
             newgame = false;
-            dialog('Yawn... Another fine evening... TO MAKE THOSE MISERABLE VILLIAGERS PAY!\n\nHAHAHAHA!\n\nTo the Monster Maker Machine!', player)
+            dialog('Yawn... Another fine evening... TO MAKE THOSE MISERABLE VILLIAGERS PAY!\n\nHAHAHAHA!\n\nTo the Monster Maker Machine!',
+                player,
+                player.pos,
+            )
             player.play("Laugh")
         }else{
             player.play("Idle")
+
         }
 
         camPos(startX, startY)
@@ -423,11 +528,35 @@
             if(!m.open){
                 shake(2,3)
                 wait(1, ()=>{
-                    dialog('Ah the Monster Machine. How Lovely. It seems to be ready to accept a cofiguration. Now I know those buttons are around this old place somewhere.. . Perhaps I should head to the Library to refresh myself on the Users\' Manuals', player)
+                    dialog('Ah the Monster Machine. How Lovely. It seems to be ready to accept a cofiguration. Now I know those buttons are around this old place somewhere.. . Perhaps I should head to the Library to refresh myself on the Users\' Manuals', 
+                        player, 
+                        {x:m.pos.x+96, y:m.pos.y+64}
+                    )
                 })
-                    m.open = true;
+                 m.open = true;
                 m.play('open', {loop:false})    
             }
+        })
+
+        player.onCollide('bean', (m) => {
+                    dialog('Ah my Lovely kitty. How are you this fine evening, Bean? How would you like to tach those villiagers the lesson of thier lives? HAHAHA!\n\nSend Bean to terrorize the villiage?', 
+                        player,  
+                        {x:m.pos.x+64, y:m.pos.y+64},
+                        ['Yes','No'],
+                        function(i){
+                            if(i==0){
+                                dialog('Ah but he looks so tired. Perhaps later..',
+                                    player,
+                                    {x:m.pos.x+64, y:m.pos.y+64}
+                                )    
+                            } else{
+                                dialog('Very well. Perhaps later..',
+                                    player,
+                                    {x:m.pos.x+64, y:m.pos.y+64}
+                                )    
+                            }
+                        }        
+                    )
         })
 
         keyDown('left', () => {
@@ -451,7 +580,9 @@
                 camPos(player.pos.x - width() / 4, currCam.y);
             }
         })
-
+        onKeyPress('up', () => {
+            keystate = 'up'
+        })
         keyDown('up', () => {
             if(dialogOpen) return
             player.move(0, -MOVE_SPEED)
@@ -463,7 +594,9 @@
             }
 
         })
-
+        onKeyPress('down', () => {
+            keystate = 'down'
+        })
         keyDown('down', () => {
             if(dialogOpen) return
             player.move(0, MOVE_SPEED)
@@ -476,14 +609,18 @@
         })
 
         keyRelease(['up', 'down', ], () => {
+            //keystate = ''
             player.dir.y = 0
             player.setState('Idle')
         })
         keyRelease(['left', 'right'], () => {
+            //keystate = ''
             player.dir.x = 0
             player.setState('Idle')
         })
-
+        keyRelease('space', ()=>{
+            //keystate = ''
+        })
         function spawnSpell(p) {
             const obj = add([sprite('explosion'), pos(p), area(), origin('center'), 'spell'])
             wait(1, () => {
@@ -493,8 +630,11 @@
                 destroy(obj)
             })
         }
-
+        onKeyPress('space', () => {
+            keystate = 'space'
+        })
         keyPress('space', () => {
+            keystate = 'space'
             if(!dialogOpen){
                 shake(4)
                 spawnSpell(player.pos.add(player.dir.scale(48)))    
