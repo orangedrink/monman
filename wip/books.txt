@@ -1,0 +1,8 @@
+Volume 1: Outline
+The monster maker machine is configured by setting four bits which are located in various rooms around the mansion. The configuration switches to set these bits can be found at the following locations:
+
+
+Configuration bit 1: The cellar
+Configuration bit 2: The parlour
+Configuration bit 3: The galley
+Configuration bit 4: The tower

@@ -42,7 +42,7 @@
                 size: 12,
                 width:300
             }),
-            pos(p.x, p.y-40),
+            pos(p.x, p.y-(choices&&choices.length?40:8)),
             origin('center')
         ]))
         if(choices){
@@ -466,11 +466,15 @@
         ])
         if(newGame){
             newgame = false;
+            //dialog('1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n16',
+            //  player,
+            //    player.pos,
+            //)
             dialog('Yawn... Another fine evening... TO MAKE THOSE MISERABLE VILLIAGERS PAY!\n\nHAHAHAHA!\n\nTo the Monster Maker Machine!',
                 player,
                 player.pos,
             )
-            player.play("Laugh")
+      player.play("Laugh")
         }else{
             player.play("Idle")
 
