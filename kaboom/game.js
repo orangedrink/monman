@@ -1,3 +1,4 @@
+
     kaboom({
         global: true,
         fullscreen: true,
@@ -6,8 +7,15 @@
         background: [0, 0, 0, 1],
     })
     //globals
-    var dialogOpen = false;
+    let dialogOpen = false;
     let keystate
+    let gamestate = {
+        mmFound: false,
+        bit1: false,
+        bit2: false,
+        bit3: false,
+        bit4: false,
+    }
     // Constants
     const MOVE_SPEED = 120
     const dialog = function(message, player, p, choices, callback){
@@ -174,7 +182,7 @@
     })
     loadAseprite("doctor", "doctor.png", "doctor.json");
     loadAseprite('monmach', 'monmach.png', 'monmach.json')
-    scene('game', ({
+    scene('mansion', ({
         level,
         startX,
         startY,
@@ -186,7 +194,7 @@
             [
                 'yccccw',
                 'akjikb',
-                 'aqrrsb',
+                'aqrrsb',
                 'atuuvb',
                 'aABBCb',
                 'xgiihz',
@@ -196,7 +204,7 @@
                 ' xddz  ',
             ],
             [
-                '        yccw     M N     yccw',
+                '        yccw     M       yccw',
                 '        a3ib   ycccccw   a1ib',
                 '        aiib   aiiiiib   aiib',
                 '        aiib   aiqrsib   aiib',
@@ -205,8 +213,8 @@
                 '    aifcccccccceituvifcccccccceib',
                 '    aiiiiiiiiiiIituviIiiiiiiiiiib',
                 '    xdddgiippiiIituviIiippiihdddz',
-                '        aiippiiIituviIiippiib',
-                '        aiippiiIituviIiippiib',
+//                '        aiippiiIituviIiippiib',
+//                '        aiippiiIituviIiippiib',
                 'aVb     aiippiiIituviIiippiib     a^b',
                 'aib     aiippiiIituviIiippiib     aib',
                 'aifccccceiiiiiiiituviiiiiiiifccccceib',
@@ -229,21 +237,30 @@
                 '       aiiiiiib',
                 '       aiiiiiib',
                 '       aiiiiiib',
+                'ycccccceiiiiiifcccccccw',
+                'aiiiiiiiiiiiiiiiiiiiiib',
+                'xddddddgiiiiiihdddddddz',
                 '       aiiiiiib',
                 '       aiiiiiib',
                 '       aiiiiiib',
+                'ycccccceiiiiiifccccccVw',
+                'aiiiiiiiiiiiiiiiiiiiiib',
+                'xddddddddgiihdddddddddz',
+                '         aiib',
+                '         aiib',
+                '         aiib',
+                '         xddz',
+            ],
+            [
+                'ycccccccccccccccccccccw',
+                'aiiiiiiiiiiiiiiiiiiiiib',
+                'xddddddgiiiiiihdddddddz',
                 '       aiiiiiib',
                 '       aiiiiiib',
                 '       aiiiiiib',
-                '       aiiiiiib',
-                '       aiiiiiib',
-                '       aiiiiiib',
-                '       aiiiiiib',
-                '       aiiiiiib',
-                '       aiiiiiib',
-                '       aiiiiiib',
-                '       aiiiiiib',
-                '       aiiiiiib',
+                'ycccccceiiiiiifcccccccw',
+                'aiiiiiiiiiiiiiiiiiiiiib',
+                'xddddddgiiiiiihdddddddz',
                 '       aiiiiiib',
                 '       aiiiiiib',
                 '       aiiiiiib',
@@ -332,12 +349,32 @@
                 '^': {
                     targetLevel: 3,
                     targetX: 192,
-                    targetY: 400
+                    targetY: 400,
+                    keys: [
+                        ()=>{
+                            if(gamestate.mmFound){
+                                return true;
+                            }else{
+                                dialog('That Monster Maker is around here somewhere! I can\'t leave until I find it.', player, player.pos)
+                                return false;
+                            }
+                        },
+                    ]
                 },
                 'v':{
                     targetLevel: 1,
                     targetX: 508,
-                    targetY: 260
+                    targetY: 260,
+                    keys: [
+                        ()=>{
+                            if(gamestate.mmFound){
+                                return true;
+                            }else{
+                                dialog('Where in the blazes is that Monster Maker Machine? I can\'t leave here until I find it.', player, player.pos)
+                                return false;
+                            }
+                        },
+                    ]
                 }
             },
             2: {
@@ -371,7 +408,17 @@
                 2:{
                     targetLevel: 2,
                     targetX: 708,
-                    targetY: 260
+                    targetY: 260,
+                    keys:[
+                        ()=>{
+                            if(gamestate.mmFound){
+                                return true;
+                            }else{
+                                dialog('Where in the blazes is that Monster Maker Machine? I can\'t leave until I find it.', player, player.pos)
+                                return false;
+                            }
+                        }
+                    ]
                 }
             },
             2:{},
@@ -434,6 +481,10 @@
                 stairLookup: 2
             }],
         }
+        if(gamestate.mmFound){
+            levelCfg.j = () => [sprite('bed2'), layer('mg'), area(), solid(), 'replace', 'bean'];
+        }
+
         addLevel(maps[level], levelCfg)
 
         const player = add([
@@ -509,29 +560,55 @@
         })
 
         player.onCollide('door', (d) => {
-            destroy(d)
-            wait(.2, () => {
-                go('game', {
-                    level: doorMappings[level][d.doorLookup].targetLevel,
-                    //score: scoreLabel.value,
-                    startX: doorMappings[level][d.doorLookup].targetX,
-                    startY: doorMappings[level][d.doorLookup].targetY,
+            const doorMapping = doorMappings[level][d.doorLookup];
+            let LockFlag = true;
+            if(doorMapping.keys){
+                doorMapping.keys.forEach((callback)=>{
+                    if(callback()){
+                        LockFlag = false;
+                    }
                 })
-            })
+            }else{
+                LockFlag = false
+            }
+            if(!LockFlag){
+                destroy(d)
+                wait(.2, () => {
+                    go('mansion', {
+                        level: doorMapping.targetLevel,
+                        //score: scoreLabel.value,
+                        startX: doorMapping.targetX,
+                        startY: doorMapping.targetY,
+                    })
+                })    
+            }
         })
         player.onCollide('stairs', (d) => {
-            //parse level data to find level and xy
-                go('game', {
-                    level: stairMappings[level][d.stairLookup].targetLevel,
-                    //score: scoreLabel.value,
-                    startX: stairMappings[level][d.stairLookup].targetX,
-                    startY: stairMappings[level][d.stairLookup].targetY,
+            const stairMapping = stairMappings[level][d.stairLookup];
+            let LockFlag = true;
+            if(stairMapping.keys){
+                stairMapping.keys.forEach((callback)=>{
+                    if(callback()){
+                        LockFlag = false;
+                    }
                 })
+            }else{
+                LockFlag = false
+            }
+            if(!LockFlag){
+                go('mansion', {
+                    level: stairMapping.targetLevel,
+                    //score: scoreLabel.value,
+                    startX: stairMapping.targetX,
+                    startY: stairMapping.targetY,
+                })
+            }
         })
         player.onCollide('monmach', (m) => {
             if(!m.open){
                 shake(2,3)
                 wait(1, ()=>{
+                    gamestate.mmFound=true
                     dialog('Ah the Monster Machine. How Lovely. It seems to be ready to accept a cofiguration. Now I know those buttons are around this old place somewhere.. . Perhaps I should head to the Library to refresh myself on the Users\' Manuals', 
                         player, 
                         {x:m.pos.x+96, y:m.pos.y+64}
@@ -659,4 +736,4 @@
 
     })
 
-    go ('game', { level: 0, score: 0, startX: 192, startY:216, newGame:true })
+    go ('mansion', { level: 0, score: 0, startX: 192, startY:216, newGame:true })
