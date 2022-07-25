@@ -1,4 +1,3 @@
-
     kaboom({
         global: true,
         fullscreen: true,
@@ -166,6 +165,7 @@
     loadSprite('table2', 'table2.png')
     loadSprite('column', 'column.png')
     loadSprite('statue', 'statue.png')
+    loadSprite('bookshelf', 'bookshelf.png')
     loadSprite('slime', 'slime.png', {
         sliceX: 3,
         sliceY: 3,
@@ -227,11 +227,29 @@
                 '                         aiib',
             ],
             [
+                '  yccEccw',
+                'yFeiiiiifGw',
+                'aiiiiiiiiib',
+                'xdgiiiiihdz',
+                '  aoiiiib',
+                '  aiiiiib',
+                '  aiiiiib',
+                'yHeiiiiifJw',
+                'aiiiiiiiiib',
+                'xdgiiiiihdz',
+                '  aiiiiib',
+                '  xdgihdz',
+                '    aib',
+                '    aib',
+                '    aib',
+                '    x>z',
+            ],
+            [
                 '         yccw',
                 '         aiib',
                 '         aiib',
                 '         aiib',
-                'ycccccccceiifcccccccccw',
+                'yccccEccceiifcccccccccw',
                 'aiiiiiiiiiiiiiiiiiiiiib',
                 'xddddddgiiiiiihdddddddz',
                 '       aiiiiiib',
@@ -253,7 +271,7 @@
             ],
             [
                 'ycccccccccccccccccccccw',
-                'aiiiiiiiiiiiiiiiiiiiiib',
+                'aiiiiiiiiiiiiiiiiiiiib',
                 'xddddddgiiiiiihdddddddz',
                 '       aiiiiiib',
                 '       aiiiiiib',
@@ -274,7 +292,7 @@
             ],
             [
                 'yccccw',
-                'akDikb',
+                'akJikb',
                 'aqrrsb',
                 'atuuvb',
                 'aABBCb',
@@ -346,6 +364,21 @@
         ]
         const doorMappings = {
             1: {
+                '>': {
+                    targetLevel: 2,
+                    targetX: 352,
+                    targetY: 932,
+                    keys: [
+                        ()=>{
+                            if(gamestate.mmFound){
+                                return true;
+                            }else{
+                                dialog('That Monster Maker is around here somewhere! I can\'t leave until I find it.', player, player.pos)
+                                return false;
+                            }
+                        },
+                    ]
+                },
                 '^': {
                     targetLevel: 3,
                     targetX: 192,
@@ -378,16 +411,11 @@
                 }
             },
             2: {
-                '^': {
-                    targetLevel: 0,
-                    targetX: 192,
-                    targetY: 400
-                },
-                'v':{
+                '>': {
                     targetLevel: 1,
-                    targetX: 508,
-                    targetY: 260
-                }
+                    targetX: 353,
+                    targetY: 345,
+                },
             },
 
         }
@@ -431,6 +459,30 @@
                 
             }
         }
+        const bookMappings = {
+            'manual': ()=>{
+                dialog('Volume I: Overview\n\nThe Monser Maker Machine is configured by setting the four bits that make up the Monster Byte.\nThe levers that allow for setting and unsetting the bits in the Monster Byte are located in the Mansion as follows:\n\nBit 1:\tThe Parlor\nBit 2:\tThe Cellar\nBit 3:\tThe Galley\nBit 4:\tThe Tower\n', player, player.pos)
+            },
+            'bit1': ()=>{
+                dialog('Volume II: Monster Byte Bit 1 Settings and Corresponding Monster Types\nSkeleton:\t1\nBoar:\t0\nBeast:\t0\nMushroom:\t1\ntroll:\t1\nreaver:\t0\nDraconian:\t1\nelemental:\t0\niron Golem:\t1\nGiant mushroom:\t0\nGiant troll:\t0\nGiant Beast:\t1\nGiant Boar:\t1\nDragonman:\t0\nGiant Iron Golem:\t1', player, player.pos)
+            },
+            'bit2': ()=>{
+                dialog('Volume III: Monster Byte Bit 2 Settings and Corresponding Monster Types\nSkeleton\t0\nBoar\t1\nBeast\t0\nMushroom\t1\ntroll\t0\nreaver\t1\nDraconian\t1\nelemental\t0\niron Golem\t0\nGiant mushroom\t1\nGiant troll\t0\nGiant Beast\t1\nGiant Boar\t0\nDragonman\t1\nGiant Iron Golem\t1', player, player.pos)
+
+            },
+            'bit3': ()=>{
+                dialog('Volume IV: Monster Byte Bit 3 Settings and Corresponding Monster Types\nSkeleton\t0\nBoar\t0\nBeast\t1\nMushroom\t0\ntroll\t1\nreaver\t1\nDraconian\t1\nelemental\t0\niron Golem\t0\nGiant mushroom\t0\nGiant troll\t1\nGiant Beast\t0\nGiant Boar\t1\nDragonman\t1\nGiant Iron Golem\t1', player, player.pos)
+            },
+            'bit4': ()=>{
+                dialog('Volume V: Monster Byte Bit 4 Settings and Corresponding Monster Types\nSkeleton\t0\nBoar\t0\nBeast\t0\nMushroom\t0\ntroll\t0\nreaver\t0\nDraconian\t0\nelemental\t1\niron Golem\t1\nGiant mushroom\t1\nGiant troll\t1\nGiant Beast\t1\nGiant Boar\t1\nDragonman\t1\nGiant Iron Golem\t1', player, player.pos)
+            },
+            'appendixa': ()=>{
+                dialog('Appendix A: Other features and settings\n\n', player, player.pos)
+            },
+            'appendixb': ()=>{
+                dialog('Appendix B: Power and Maintenance\n\n', player, player.pos)
+            },
+        }
         const levelCfg = {
             width: 64,
             height: 64,
@@ -466,8 +518,19 @@
             B: () => [sprite('bottom-carpet'), layer('bg')],
             C: () => [sprite('bottom-right-carpet'), layer('bg')],
             D: () => [sprite('bed2'), layer('bg'), layer('mg'), area(), solid(), 'replace', 'bean'],
+            E: () => [sprite('bookshelf'), layer('bg'), layer('mg'), area(), solid(), 'book' , {book: 'manual'}],
+            F: () => [sprite('bookshelf'), layer('bg'), layer('mg'), area(), solid(), 'book' , {book: 'bit1'}],
+            G: () => [sprite('bookshelf'), layer('bg'), layer('mg'), area(), solid(), 'book' , {book: 'bit2'}],
+            H: () => [sprite('bookshelf'), layer('bg'), layer('mg'), area(), solid(), 'book' , {book: 'bit3'}],
             I: () => [sprite('column'), layer('mg'), area(), solid(), 'replace'],
+            J: () => [sprite('bookshelf'), layer('bg'), layer('mg'), area(), solid(), 'book', {book: 'bit4'}],
             M: () => [sprite('monmach'), {frame: 0}, area(), solid(), layer('mg'), 'monmach'],
+            '>': () => [sprite('top-door'), area(), 'door', 'replace', {
+                doorLookup: '>'
+            }],
+            '<': () => [sprite('top-door'), area(), 'door', 'replace', {
+                doorLookup: '<'
+            }],
             '^': () => [sprite('top-door'), area(), 'door', 'replace', {
                 doorLookup: '^'
             }],
@@ -533,6 +596,7 @@
 
         camPos(startX, startY)
         player.onUpdate(() => {
+            console.log(player.pos)
             if (player.dir.y != player.animDir.y || player.dir.x != player.animDir.x) {
                 player.animDir.x = player.dir.x;
                 player.animDir.y = player.dir.y;
@@ -562,7 +626,7 @@
         player.onCollide('door', (d) => {
             const doorMapping = doorMappings[level][d.doorLookup];
             let LockFlag = true;
-            if(doorMapping.keys){
+            if(doorMapping&&doorMapping.keys){
                 doorMapping.keys.forEach((callback)=>{
                     if(callback()){
                         LockFlag = false;
@@ -586,7 +650,7 @@
         player.onCollide('stairs', (d) => {
             const stairMapping = stairMappings[level][d.stairLookup];
             let LockFlag = true;
-            if(stairMapping.keys){
+            if(stairMapping&&stairMapping.keys){
                 stairMapping.keys.forEach((callback)=>{
                     if(callback()){
                         LockFlag = false;
@@ -604,8 +668,11 @@
                 })
             }
         })
+        player.onCollide('book', (m) => {
+            bookMappings[m.book]();
+        });
         player.onCollide('monmach', (m) => {
-            if(!m.open){
+                if(!m.open){
                 shake(2,3)
                 wait(1, ()=>{
                     gamestate.mmFound=true
@@ -726,6 +793,17 @@
             if(!s.tilereplaced){
                 add([
                     sprite('floor'), 
+                    layer('bg'),
+                    pos(s.pos.x, s.pos.y)
+                ])
+                s.tilereplaced = true;
+            } 
+        
+        })
+        onUpdate('book', (s) => {
+            if(!s.tilereplaced){
+                add([
+                    sprite('top-wall'), 
                     layer('bg'),
                     pos(s.pos.x, s.pos.y)
                 ])
