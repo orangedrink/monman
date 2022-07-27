@@ -1,3 +1,7 @@
+    String.prototype.replaceAt = function(index, replacement) {
+        return this.substring(0, index) + replacement + this.substring(index + replacement.length);
+    }
+
     kaboom({
         global: true,
         fullscreen: true,
@@ -156,6 +160,7 @@
     loadSprite('bottom-carpet', 'carpet-bottom.png')
     loadSprite('bottom-left-carpet', 'carpet-bottom-left.png')
     loadSprite('bed', 'bed.png')
+    loadSprite('couch', 'couch.png')
     loadSprite('bed2', 'bed2.png')
     loadSprite('dialog', 'dialog.png')
     loadSprite('chair', 'chair.png')
@@ -165,6 +170,7 @@
     loadSprite('table2', 'table2.png')
     loadSprite('column', 'column.png')
     loadSprite('statue', 'statue.png')
+    loadSprite('button2', 'button2.png')
     loadSprite('bookshelf', 'bookshelf.png')
     loadSprite('slime', 'slime.png', {
         sliceX: 3,
@@ -182,6 +188,9 @@
     })
     loadAseprite("doctor", "doctor.png", "doctor.json");
     loadAseprite('monmach', 'monmach.png', 'monmach.json')
+    loadAseprite('button', 'button.png', 'button.json')
+    loadAseprite('ghoulie', 'ghoulies.png', 'ghoulies.json')
+    loadAseprite('bone', 'bone.png', 'bone.json')
     scene('mansion', ({
         level,
         startX,
@@ -189,7 +198,7 @@
         newGame,
     }) => {
         layers(['bg', 'mg', 'fg', 'obj', 'ui'], 'obj')
-
+        let buttonsPressed = 0
         const maps = [
             [
                 'yccccw',
@@ -227,14 +236,14 @@
                 '                         aiib',
             ],
             [
-                '  yccEccw',
+                '  yEEEEEw',
                 'yFeiiiiifGw',
                 'aiiiiiiiiib',
-                'xdgiiiiihdz',
-                '  aoiiiib',
-                '  aiiiiib',
-                '  aiiiiib',
-                'yHeiiiiifJw',
+                'xdgiqrsihdz',
+                '  aotuvib',
+                '  aituvib',
+                '  aituvib',
+                'yHeiABCifJw',
                 'aiiiiiiiiib',
                 'xdgiiiiihdz',
                 '  aiiiiib',
@@ -245,60 +254,48 @@
                 '    x>z',
             ],
             [
-                '         yccw',
-                '         aiib',
-                '         aiib',
-                '         aiib',
-                'yccccEccceiifcccccccccw',
-                'aiiiiiiiiiiiiiiiiiiiiib',
-                'xddddddgiiiiiihdddddddz',
-                '       aiiiiiib',
-                '       aiiiiiib',
-                '       aiiiiiib',
-                'ycccccceiiiiiifcccccccw',
-                'aiiiiiiiiiiiiiiiiiiiiib',
-                'xddddddgiiiiiihdddddddz',
-                '       aiiiiiib',
-                '       aiiiiiib',
-                '       aiiiiiib',
-                'ycccccceiiiiiifccccccVw',
-                'aiiiiiiiiiiiiiiiiiiiiib',
-                'xddddddddgiihdddddddddz',
-                '         aiib',
-                '         aiib',
-                '         aiib',
-                '         xddz',
-            ],
-            [
-                'ycccccccccccccccccccccw',
-                'aiiiiiiiiiiiiiiiiiiiib',
-                'xddddddgiiiiiihdddddddz',
-                '       aiiiiiib',
-                '       aiiiiiib',
-                '       aiiiiiib',
-                'ycccccceiiiiiifcccccccw',
-                'aiiiiiiiiiiiiiiiiiiiiib',
-                'xddddddgiiiiiihdddddddz',
-                '       aiiiiiib',
-                '       aiiiiiib',
-                '       aiiiiiib',
-                'ycccccceiiiiiifccccccVw',
-                'aiiiiiiiiiiiiiiiiiiiiib',
-                'xddddddddgiihdddddddddz',
-                '         aiib',
-                '         aiib',
-                '         aiib',
-                '         xddz',
+                '          y^w',
+                '          aib',
+                '          aib',
+                '          aib',
+                'yLcKccKccceifccKccKccLw',
+                'aiNiiNiiiiiNNiiiiNiiiNb',
+                'xdddddddgiqrsihdddddddz',
+                '        aItuvIb',
+                '        aituvib',
+                '        aItuvIb',
+                'yLcKccKceituvifKccKccLwcccccccccc<cLw',
+                'aNiiiNiiiituviiiiNiiiNOiiiiiiiiiiiiib',
+                'xdddddddgituvihdddddddzdddddddddddddz',
+                '        aItuvIb',
+                '        aituvib',
+                '        aItuvIb',
+                'yLcKccKceituvifKccKccLw',
+                'aiNiiNiiiiABCiiiiNiiiNb',
+                'xdddddddddgihdddddddddz',
+                '          x>z',
             ],
             [
                 'yccccw',
-                'akJikb',
+                'aiiiib',
                 'aqrrsb',
                 'atuuvb',
                 'aABBCb',
                 'xgiihz',
                 ' aiib ',
-                ' a2ib ',
+                ' a1ib ',
+                ' aiib ',
+                ' xddz  ',
+            ],
+            [
+                'yccccw',
+                'akDikb',
+                'aqrrsb',
+                'atuuvb',
+                'aABBCb',
+                'xgiihz',
+                ' aiib ',
+                ' a1ib ',
                 ' aiib ',
                 ' xddz  ',
             ],
@@ -364,6 +361,18 @@
         ]
         const doorMappings = {
             1: {
+                '<': {
+                    targetLevel: 2,
+                    targetX: 352,
+                    targetY: 932,
+                    keys: [
+                        ()=>{
+                            dialog('The Galley is under construction.', player, player.pos)
+                            return false;
+                        }
+                    ]
+
+                },
                 '>': {
                     targetLevel: 2,
                     targetX: 352,
@@ -381,8 +390,8 @@
                 },
                 '^': {
                     targetLevel: 3,
-                    targetX: 192,
-                    targetY: 400,
+                    targetX: 737,
+                    targetY: 1182,
                     keys: [
                         ()=>{
                             if(gamestate.mmFound){
@@ -395,12 +404,13 @@
                     ]
                 },
                 'v':{
-                    targetLevel: 1,
-                    targetX: 508,
-                    targetY: 260,
+                    targetLevel: 5,
+                    targetX: 194,
+                    targetY: 428,
                     keys: [
                         ()=>{
                             if(gamestate.mmFound){
+                                
                                 return true;
                             }else{
                                 dialog('Where in the blazes is that Monster Maker Machine? I can\'t leave here until I find it.', player, player.pos)
@@ -417,6 +427,46 @@
                     targetY: 345,
                 },
             },
+            3:{
+                '^': {
+                    targetLevel: 3,
+                    targetX: 737,
+                    targetY: 1182,
+                    keys: [
+                        ()=>{
+                            if(buttonsPressed==6){
+                                return true;
+                            }else{
+                                let left = 6-buttonsPressed
+                                dialog('There are '+ left+' unpressed buttons remaining.', player, player.pos)
+                            }
+                        }
+                    ]
+                },
+                '<': {
+                    targetLevel: 4,
+                    targetX: 194,
+                    targetY: 428,
+                    keys: [
+                        ()=>{
+                            if(buttonsPressed==7){
+                                return true;
+                            }else{
+                                let left = 7-buttonsPressed
+                                dialog('There are '+ left+' unpressed buttons remaining.', player, player.pos)
+                            }
+                        }
+                    ]
+                },
+                '>':{
+                    targetLevel: 1,
+                    targetX: 2272,
+                    targetY: 664,
+                }
+            },
+            4:{},
+            5: {
+            }
 
         }
         const stairMappings = {
@@ -434,17 +484,31 @@
                     targetY: 428
                 },
                 2:{
-                    targetLevel: 2,
+                    targetLevel: 3,
                     targetX: 708,
                     targetY: 260,
                     keys:[
                         ()=>{
                             if(gamestate.mmFound){
-                                return true;
+                                dialog('The Cellar is under construction.', player, player.pos)
+                                return false;
+    
+                                //return true;
                             }else{
                                 dialog('Where in the blazes is that Monster Maker Machine? I can\'t leave until I find it.', player, player.pos)
                                 return false;
                             }
+                        }
+                    ]
+                },
+                3:{
+                    targetLevel: 3,
+                    targetX: 708,
+                    targetY: 260,
+                    keys:[
+                        ()=>{
+                            dialog('The tower is under construction.', player, player.pos)
+                            return false;
                         }
                     ]
                 }
@@ -457,7 +521,22 @@
                     targetY: 786
                 }
                 
+            },
+            4:{
+                1:{
+                    targetLevel: 3,
+                    targetX: 737,
+                    targetY: 76,
+                }
+            },
+            5: {
+                1: {
+                    targetLevel: 1,
+                    targetX: 98,
+                    targetY: 657
+                }
             }
+
         }
         const bookMappings = {
             'manual': ()=>{
@@ -517,24 +596,29 @@
             A: () => [sprite('bottom-left-carpet'), layer('bg')],
             B: () => [sprite('bottom-carpet'), layer('bg')],
             C: () => [sprite('bottom-right-carpet'), layer('bg')],
-            D: () => [sprite('bed2'), layer('bg'), layer('mg'), area(), solid(), 'replace', 'bean'],
-            E: () => [sprite('bookshelf'), layer('bg'), layer('mg'), area(), solid(), 'book' , {book: 'manual'}],
-            F: () => [sprite('bookshelf'), layer('bg'), layer('mg'), area(), solid(), 'book' , {book: 'bit1'}],
-            G: () => [sprite('bookshelf'), layer('bg'), layer('mg'), area(), solid(), 'book' , {book: 'bit2'}],
-            H: () => [sprite('bookshelf'), layer('bg'), layer('mg'), area(), solid(), 'book' , {book: 'bit3'}],
+            D: () => [sprite('bed'), layer('bg'), layer('mg'), area(), solid(), 'replace', 'bean'],
+            E: () => [sprite('bookshelf'), layer('bg'), layer('mg'), area(), solid(), 'book' , 'replace-wall', {book: 'manual'}],
+            F: () => [sprite('bookshelf'), layer('bg'), layer('mg'), area(), solid(), 'book' , 'replace-wall', {book: 'bit1'}],
+            G: () => [sprite('bookshelf'), layer('bg'), layer('mg'), area(), solid(), 'book' , 'replace-wall', {book: 'bit2'}],
+            H: () => [sprite('bookshelf'), layer('bg'), layer('mg'), area(), solid(), 'book' , 'replace-wall', {book: 'bit3'}],
             I: () => [sprite('column'), layer('mg'), area(), solid(), 'replace'],
-            J: () => [sprite('bookshelf'), layer('bg'), layer('mg'), area(), solid(), 'book', {book: 'bit4'}],
+            J: () => [sprite('bookshelf'), layer('mg'), area(), solid(), 'book', 'replace-wall', {book: 'bit4'}],
+            K: () => [sprite('couch'), layer('mg'), area(), solid(), 'replace-wall'],
+            L: () => [sprite('button'), layer('mg'), area(), solid(), 'button', 'replace-wall'],
             M: () => [sprite('monmach'), {frame: 0}, area(), solid(), layer('mg'), 'monmach'],
-            '>': () => [sprite('top-door'), area(), 'door', 'replace', {
+            N: () => [sprite('ghoulie'), {frame: 0}, area({scale:.6}), solid(), layer('mg'), 'ghoulie', 'replace', 'destructible', 'hurts', { dir: -1, timer: 0 }],
+            O: () => [sprite('left-wall'), area(), solid(), 'wall', 'replace', 'destructible'],
+
+            '>': () => [sprite('top-door'), area(), layer('mg'), solid(), 'door', 'replace', {
                 doorLookup: '>'
             }],
-            '<': () => [sprite('top-door'), area(), 'door', 'replace', {
+            '<': () => [sprite('top-door'), area(), layer('mg'), solid(), 'door', 'replace', {
                 doorLookup: '<'
             }],
-            '^': () => [sprite('top-door'), area(), 'door', 'replace', {
+            '^': () => [sprite('top-door'), area(), layer('mg'), solid(), 'door', 'replace', {
                 doorLookup: '^'
             }],
-            'V': () => [sprite('top-door'), area(), 'door', 'replace', {
+            'V': () => [sprite('top-door'), area(), layer('mg'), solid(), 'door', 'replace', {
                 doorLookup: 'v'
             }],
             1: () => [sprite('stairs-up'), layer('mg'), area(), 'stairs', 'replace', {
@@ -543,9 +627,12 @@
             2: () => [sprite('stairs-dn'), layer('mg'), area(), 'stairs', 'replace', {
                 stairLookup: 2
             }],
+            3: () => [sprite('stairs-up'), layer('mg'), area(), 'stairs', 'replace', {
+                stairLookup: 3
+            }],
         }
         if(gamestate.mmFound){
-            levelCfg.j = () => [sprite('bed2'), layer('mg'), area(), solid(), 'replace', 'bean'];
+            levelCfg.D = () => [sprite('bed2'), layer('mg'), area(), solid(), 'replace', 'bean'];
         }
 
         addLevel(maps[level], levelCfg)
@@ -671,15 +758,37 @@
         player.onCollide('book', (m) => {
             bookMappings[m.book]();
         });
+        player.onCollide('button', (m) => {
+            if(!m.pressed){
+                m.pressed = true
+                m.frame=1
+                buttonsPressed++
+                //dialog(buttonsPressed+' buttons activated', player, m.pos)
+                shake(5)
+            }
+        });
         player.onCollide('monmach', (m) => {
                 if(!m.open){
-                shake(2,3)
+                shake(10,5)
                 wait(1, ()=>{
-                    gamestate.mmFound=true
-                    dialog('Ah the Monster Machine. How Lovely. It seems to be ready to accept a cofiguration. Now I know those buttons are around this old place somewhere.. . Perhaps I should head to the Library to refresh myself on the Users\' Manuals', 
-                        player, 
-                        {x:m.pos.x+96, y:m.pos.y+64}
-                    )
+                    if(!gamestate.bit1&&!gamestate.bit2&&!gamestate.bit3&&!gamestate.bit4){
+                        gamestate.mmFound=true
+                        dialog('Ah the Monster Maker Machine. How Lovely. It seems to be ready to accept a cofiguration. Now I know those buttons are around this old place somewhere.. . Perhaps I should head to the Library to refresh myself on the Users\' Manuals', 
+                            player, 
+                            {x:m.pos.x+96, y:m.pos.y+64}
+                        )    
+                    }else{
+                        const monByte = '0000'
+                        if(gamestate.bit1) monByte.replaceAt(0, '1')
+                        if(gamestate.bit2) monByte.replaceAt(1, '1')
+                        if(gamestate.bit3) monByte.replaceAt(2, '1')
+                        if(gamestate.bit4) monByte.replaceAt(3, '1')
+                        dialog('The Monster Maker Machine is configured with the following Monster Byte:\n\n'+monByte+'\n\n', 
+                            player, 
+                            {x:m.pos.x+96, y:m.pos.y+64}
+                        )    
+
+                    }
                 })
                  m.open = true;
                 m.play('open', {loop:false})    
@@ -708,7 +817,7 @@
         })
 
         keyDown('left', () => {
-            if(dialogOpen) return
+            if(dialogOpen || player.dead) return
             player.move(-MOVE_SPEED, 0)
             player.dir.x = -1;
             player.setState('W-Walk')
@@ -719,7 +828,7 @@
         })
 
         keyDown('right', () => {
-            if(dialogOpen) return
+            if(dialogOpen || player.dead) return
             player.move(MOVE_SPEED, 0)
             player.dir.x = 1
             player.setState('E-Walk')
@@ -732,7 +841,7 @@
             keystate = 'up'
         })
         keyDown('up', () => {
-            if(dialogOpen) return
+            if(dialogOpen || player.dead) return
             player.move(0, -MOVE_SPEED)
             player.dir.y = -1
             player.setState('N-Walk')
@@ -746,7 +855,7 @@
             keystate = 'down'
         })
         keyDown('down', () => {
-            if(dialogOpen) return
+            if(dialogOpen || player.dead) return
             player.move(0, MOVE_SPEED)
             player.dir.y = 1
             player.setState('S-walk')
@@ -772,7 +881,7 @@
         function spawnSpell(p) {
             const obj = add([sprite('explosion'), pos(p), area(), origin('center'), 'spell'])
             wait(1, () => {
-                if (player.state == 'Idle') {
+                if (player.state == 'Idle' && !player.dead) {
                     player.setState('Laugh')
                 }
                 destroy(obj)
@@ -783,7 +892,7 @@
         })
         keyPress('space', () => {
             keystate = 'space'
-            if(!dialogOpen){
+            if(!dialogOpen && !player.dead){
                 shake(4)
                 spawnSpell(player.pos.add(player.dir.scale(48)))    
             }
@@ -800,7 +909,7 @@
             } 
         
         })
-        onUpdate('book', (s) => {
+        onUpdate('replace-wall', (s) => {
             if(!s.tilereplaced){
                 add([
                     sprite('top-wall'), 
@@ -810,6 +919,73 @@
                 s.tilereplaced = true;
             } 
         
+        })
+        const die = ()=>{
+            if (player.dead) return
+            player.dead = true;
+            player.play('Die', {speed:15});
+            shake(5)
+            wait(1.5,()=>{
+                player.dead = false
+                go ('mansion', { level: 0, score: 0, startX: 192, startY:216, newGame:true })
+            })
+        }
+        const addProjectile = (spr, g, vel, lifespan)=>{
+            const p = add([
+                sprite(spr),
+                area(),
+                pos(g.pos),
+                layer('fg'),
+                vel,
+                'projectile',
+                'destructible',
+                'hurts'
+            ])
+            p.play('idle', {speed:30})
+            wait(lifespan, ()=>{
+                destroy(p)
+            })
+        }
+        onUpdate('projectile', (p)=>{
+            p.move(p.xv, p.yv)
+        })
+        player.onCollide('hurts', (s) => {
+            if (player.dead) return
+            if(!player.dead){
+                die();
+            }
+        })
+        onCollide('spell', 'destructible', (k,s) => {
+            //wait(1, () => {
+            //  destroy(k)
+            //})
+            destroy(s)
+          })      
+        onUpdate('ghoulie', (g)=>{
+                g.move(0, g.dir * 50)
+            g.timer -= dt()
+            if(!g.shooting && Math.abs(player.pos.y-g.pos.y)<20){
+                if(player.pos.x - g.pos.x > 0){
+                    g.play('throw-e')
+                    addProjectile('bone', g, {xv:100, yv:0}, 3)
+                }else{
+                    g.play('throw-w')
+                    addProjectile('bone', g, {xv:-100, yv:0}, 3)
+                }
+                console.log('throw')
+                g.shooting = true
+                g.timer = .25
+            }
+            if (g.timer <= 0) {
+              g.shooting = false;
+              g.dir = -g.dir
+              if(g.dir > 0){
+                g.play('walk-s')
+              }else{
+                g.play('walk-n')
+              }
+              g.timer = rand(2)+1
+            }     
         })
 
     })
