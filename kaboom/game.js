@@ -172,25 +172,15 @@
     loadSprite('statue', 'statue.png')
     loadSprite('button2', 'button2.png')
     loadSprite('bookshelf', 'bookshelf.png')
-    loadSprite('slime', 'slime.png', {
-        sliceX: 3,
-        sliceY: 3,
-        anims: {
-            idle: {
-                from: 0,
-                to: 0
-            },
-            pulse: {
-                from: 0,
-                to: 8
-            },
-        }
-    })
+    loadSprite('shelf', 'shelf.png')
     loadAseprite("doctor", "doctor.png", "doctor.json");
     loadAseprite('monmach', 'monmach.png', 'monmach.json')
+    loadAseprite('switch', 'switch.png', 'switch.json')
     loadAseprite('button', 'button.png', 'button.json')
     loadAseprite('ghoulie', 'ghoulies.png', 'ghoulies.json')
     loadAseprite('bone', 'bone.png', 'bone.json')
+    loadAseprite('skull', 'skull.png', 'skull.json')
+    loadAseprite('slime', 'slime.png', 'slime.json')
     scene('mansion', ({
         level,
         startX,
@@ -203,6 +193,7 @@
             [
                 'yccccw',
                 'akjikb',
+//                'aUUUUb',
                 'aqrrsb',
                 'atuuvb',
                 'aABBCb',
@@ -277,7 +268,7 @@
             ],
             [
                 'yccccw',
-                'aiiiib',
+                'aiSiib',
                 'aqrrsb',
                 'atuuvb',
                 'aABBCb',
@@ -300,21 +291,122 @@
                 ' xddz  ',
             ],
             [
+                '                            ycw',
+                '                            aib',
+                '                            aib',
+                '                            aib',
+                'ycLcTcccTcccTcccTcccTcccTccceifTcccTcccTcccTcccTcccTccccLcw',
+                'aUUUiUiUiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiUiiiiUiiUiiUUUb',
+                'aUUUiiUiiUiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiUiUiUUUb',
+                'xdddddddddddddddddddgiiUiqrrrrrrrsiiiihdddddddddddddddddddz',
+                '                    aimnltuuuuuuuvmnUlb',
+                '                    aiiUUtuuuuuuuvIUUib',
+                '                    aminltuuuuuuuvmnlib',
+                '                    aiiiituuuuuuuviiiib',
+                '                    amniltuuuuuuuvmnlib',
+                '                    aiiiiABBBBBBBCiiiib',
+                '                    xdddddddgihdddddddz',
+                '                            aib',
+                '                            aib',
+                '                            aib',
+                '                            xdz',
+            ],
+            [
+                'yccccw',
+                'aiSiib',
+                'aqrrsb',
+                'atuuvb',
+                'aABBCb',
+                'xgiihz',
+                ' aiib ',
+                ' a1ib ',
+                ' aiib ',
+                ' xddz  ',
+            ],
+            [
                 '         yccw',
                 '         aiib',
                 '         aiib',
                 '         aiib',
                 'ycccccccceiifcccccccccw',
                 'aiiiiiiiiiiiiiiiiiiiiib',
-                'xddddddgiiiiiihdddddddz',
-                '       aiiiiiib',
-                '       aiiiiiib',
-                '       aiiiiiib',
-                '       aiiiiiib',
-                '       aiiiiiib',
-                '       aiiiiiib',
-                '       aiiiiiib',
-                'ycccccceiiiiiifccccccVw',
+                'xddddddddgiihdddddddddz',
+                '         aiib',
+                '         aiib',
+                '         aiib',
+                '         xddz',
+            ],
+            [
+                '         yccw',
+                '         aiib',
+                '         aiib',
+                '         aiib',
+                'ycccccccceiifcccccccccw',
+                'aiiiiiiiiiiiiiiiiiiiiib',
+                'xddddddddgiihdddddddddz',
+                '         aiib',
+                '         aiib',
+                '         aiib',
+                '         xddz',
+            ],
+            [
+                '         yccw',
+                '         aiib',
+                '         aiib',
+                '         aiib',
+                'ycccccccceiifcccccccccw',
+                'aiiiiiiiiiiiiiiiiiiiiib',
+                'xddddddddgiihdddddddddz',
+                '         aiib',
+                '         aiib',
+                '         aiib',
+                '         xddz',
+            ],
+            [
+                '         yccw',
+                '         aiib',
+                '         aiib',
+                '         aiib',
+                'ycccccccceiifcccccccccw',
+                'aiiiiiiiiiiiiiiiiiiiiib',
+                'xddddddddgiihdddddddddz',
+                '         aiib',
+                '         aiib',
+                '         aiib',
+                '         xddz',
+            ],
+            [
+                '         yccw',
+                '         aiib',
+                '         aiib',
+                '         aiib',
+                'ycccccccceiifcccccccccw',
+                'aiiiiiiiiiiiiiiiiiiiiib',
+                'xddddddddgiihdddddddddz',
+                '         aiib',
+                '         aiib',
+                '         aiib',
+                '         xddz',
+            ],
+            [
+                '         yccw',
+                '         aiib',
+                '         aiib',
+                '         aiib',
+                'ycccccccceiifcccccccccw',
+                'aiiiiiiiiiiiiiiiiiiiiib',
+                'xddddddddgiihdddddddddz',
+                '         aiib',
+                '         aiib',
+                '         aiib',
+                '         xddz',
+            ],
+            [
+                '         yccw',
+                '         aiib',
+                '         aiib',
+                '         aiib',
+                'ycccccccceiifcccccccccw',
                 'aiiiiiiiiiiiiiiiiiiiiib',
                 'xddddddddgiihdddddddddz',
                 '         aiib',
@@ -362,13 +454,17 @@
         const doorMappings = {
             1: {
                 '<': {
-                    targetLevel: 2,
-                    targetX: 352,
-                    targetY: 932,
+                    targetLevel: 6,
+                    targetX: 1888,
+                    targetY: 1080,
                     keys: [
                         ()=>{
-                            dialog('The Galley is under construction.', player, player.pos)
-                            return false;
+                            if(gamestate.mmFound){
+                                return true;
+                            }else{
+                                dialog('That Monster Maker is around here somewhere! I can\'t leave until I find it.', player, player.pos)
+                                return false;
+                            }
                         }
                     ]
 
@@ -540,7 +636,7 @@
         }
         const bookMappings = {
             'manual': ()=>{
-                dialog('Volume I: Overview\n\nThe Monser Maker Machine is configured by setting the four bits that make up the Monster Byte.\nThe levers that allow for setting and unsetting the bits in the Monster Byte are located in the Mansion as follows:\n\nBit 1:\tThe Parlor\nBit 2:\tThe Cellar\nBit 3:\tThe Galley\nBit 4:\tThe Tower\n', player, player.pos)
+                dialog('Volume I: Overview\n\nThe Monser Maker Machine is configured by setting the four bits that make up the Monster Byte.\nThe levers that allow for setting and unsetting the bits in the Monster Byte are located in the Mansion as follows:\n\nBit 1:\tThe Galley\nBit 2:\tThe Cellar\nBit 3:\tThe Tower\nBit 4:\tThe Parlor\n', player, player.pos)
             },
             'bit1': ()=>{
                 dialog('Volume II: Monster Byte Bit 1 Settings and Corresponding Monster Types\nSkeleton:\t1\nBoar:\t0\nBeast:\t0\nMushroom:\t1\ntroll:\t1\nreaver:\t0\nDraconian:\t1\nelemental:\t0\niron Golem:\t1\nGiant mushroom:\t0\nGiant troll:\t0\nGiant Beast:\t1\nGiant Boar:\t1\nDragonman:\t0\nGiant Iron Golem:\t1', player, player.pos)
@@ -604,11 +700,16 @@
             I: () => [sprite('column'), layer('mg'), area(), solid(), 'replace'],
             J: () => [sprite('bookshelf'), layer('mg'), area(), solid(), 'book', 'replace-wall', {book: 'bit4'}],
             K: () => [sprite('couch'), layer('mg'), area(), solid(), 'replace-wall'],
-            L: () => [sprite('button'), layer('mg'), area(), solid(), 'button', 'replace-wall'],
+            L: () => [sprite('button'), layer('mg'), area(), solid(), 'button', 'replace-wall', {replaceNotSolid:true}],
             M: () => [sprite('monmach'), {frame: 0}, area(), solid(), layer('mg'), 'monmach'],
-            N: () => [sprite('ghoulie'), {frame: 0}, area({scale:.6}), solid(), layer('mg'), 'ghoulie', 'replace', 'destructible', 'hurts', { dir: -1, timer: 0 }],
-            O: () => [sprite('left-wall'), area(), solid(), 'wall', 'replace', 'destructible'],
-
+            N: () => [sprite('ghoulie'), {frame: 0}, area({scale:.6}), solid(), layer('mg'), 'ghoulie', 'replace', 'destructible', 'hurts', { dir: -1, timer: 0, expSpr:'bone'  }],
+            O: () => [sprite('left-wall'), area(), solid(), 'wall', 'replace', 'destructible', ],
+            P: () => [sprite('switch'), {frame: 0}, area(), solid(), layer('mg'), 'replace', 'switch', {bit:1}],
+            Q: () => [sprite('switch'), {frame: 0}, area(), solid(), layer('mg'), 'replace', 'switch', {bit:2}],
+            R: () => [sprite('switch'), {frame: 0}, area(), solid(), layer('mg'), 'replace', 'switch', {bit:3}],
+            S: () => [sprite('switch'), {frame: 0}, area(), solid(), layer('mg'), 'replace', 'switch', {bit:4}],
+            T: () => [sprite('shelf'), layer('mg'), 'replace-wall'],
+            U: () => [sprite('slime'), {frame: 0}, area({scale:.6}), solid(), layer('mg'), scale(2),  'slime', 'replace', 'hurts', { dir: -1, timer: 0, ready: true}],
             '>': () => [sprite('top-door'), area(), layer('mg'), solid(), 'door', 'replace', {
                 doorLookup: '>'
             }],
@@ -671,7 +772,7 @@
             //  player,
             //    player.pos,
             //)
-            dialog('Yawn... Another fine evening... TO MAKE THOSE MISERABLE VILLIAGERS PAY!\n\nHAHAHAHA!\n\nTo the Monster Maker Machine!',
+            dialog('Yawn... Another fine morning... TO MAKE THOSE MISERABLE VILLIAGERS PAY!\n\nHAHAHAHA!\n\nTo the Monster Maker Machine!',
                 player,
                 player.pos,
             )
@@ -683,7 +784,7 @@
 
         camPos(startX, startY)
         player.onUpdate(() => {
-            console.log(player.pos)
+            //console.log(player.pos)
             if (player.dir.y != player.animDir.y || player.dir.x != player.animDir.x) {
                 player.animDir.x = player.dir.x;
                 player.animDir.y = player.dir.y;
@@ -768,21 +869,22 @@
             }
         });
         player.onCollide('monmach', (m) => {
+                console.log(gamestate)
                 if(!m.open){
                 shake(10,5)
                 wait(1, ()=>{
                     if(!gamestate.bit1&&!gamestate.bit2&&!gamestate.bit3&&!gamestate.bit4){
                         gamestate.mmFound=true
-                        dialog('Ah the Monster Maker Machine. How Lovely. It seems to be ready to accept a cofiguration. Now I know those buttons are around this old place somewhere.. . Perhaps I should head to the Library to refresh myself on the Users\' Manuals', 
+                        dialog('Ah the Monster Maker Machine. How Lovely. It seems to be ready to accept a cofiguration. Now I know those bit switches are around this old place somewhere.. . Perhaps I should head to the Library to refresh myself on the Users\' Manuals', 
                             player, 
                             {x:m.pos.x+96, y:m.pos.y+64}
                         )    
                     }else{
-                        const monByte = '0000'
-                        if(gamestate.bit1) monByte.replaceAt(0, '1')
-                        if(gamestate.bit2) monByte.replaceAt(1, '1')
-                        if(gamestate.bit3) monByte.replaceAt(2, '1')
-                        if(gamestate.bit4) monByte.replaceAt(3, '1')
+                        let monByte = '0000'
+                        if(gamestate.bit1) monByte = monByte.replaceAt(0, '1')
+                        if(gamestate.bit2) monByte = monByte.replaceAt(1, '1')
+                        if(gamestate.bit3) monByte = monByte.replaceAt(2, '1')
+                        if(gamestate.bit4) monByte = monByte.replaceAt(3, '1')
                         dialog('The Monster Maker Machine is configured with the following Monster Byte:\n\n'+monByte+'\n\n', 
                             player, 
                             {x:m.pos.x+96, y:m.pos.y+64}
@@ -914,7 +1016,9 @@
                 add([
                     sprite('top-wall'), 
                     layer('bg'),
-                    pos(s.pos.x, s.pos.y)
+                    pos(s.pos.x, s.pos.y),
+                    area(),
+                    !s.replaceNotSolid?solid():'',
                 ])
                 s.tilereplaced = true;
             } 
@@ -930,21 +1034,33 @@
                 go ('mansion', { level: 0, score: 0, startX: 192, startY:216, newGame:true })
             })
         }
-        const addProjectile = (spr, g, vel, lifespan)=>{
+        const addProjectile = (spr, ps, vel, lifespan, effect)=>{
+            console.log(ps)
+            console.log(vel)
             const p = add([
                 sprite(spr),
                 area(),
-                pos(g.pos),
+                pos(ps),
                 layer('fg'),
                 vel,
                 'projectile',
-                'destructible',
-                'hurts'
+                !effect?'destructible':'',
+                !effect?'hurts':''
             ])
             p.play('idle', {speed:30})
             wait(lifespan, ()=>{
                 destroy(p)
             })
+        }
+        const addExplosion = (spr, p, vel, lifespan, count)=>{
+            for (let index = 0; index < count; index++) {
+                const xv = vel.xv
+                const yv = vel.yv
+                vel.xv = (rand(xv)-xv)
+                vel.yv = (rand(yv*2)-yv)
+                addProjectile(spr, p, vel, lifespan, true)
+            }
+            if(spr=='bone') addProjectile('skull', p, {xv:0, yv:-200}, lifespan, true)
         }
         onUpdate('projectile', (p)=>{
             p.move(p.xv, p.yv)
@@ -955,22 +1071,66 @@
                 die();
             }
         })
+        player.onCollide('switch', (s) => {
+            let bitKey = 'bit'+s.bit;
+            dialog('Do you want to set bit '+s.bit+'?',
+            player,
+            s.pos,
+            ['Set','Unset'],
+            (i)=>{
+                if(!i){
+                    gamestate[bitKey] = 1
+                    s.frame = 1
+                }else{
+                    gamestate[bitKey] = 0
+                    s.frame = 0
+                }
+            }
+            )
+        })
         onCollide('spell', 'destructible', (k,s) => {
             //wait(1, () => {
             //  destroy(k)
             //})
+            if(s.expSpr) addExplosion(s.expSpr , s.pos,  {xv:200, yv:200}, .5, 10)
             destroy(s)
-          })      
+        })      
+        onCollide('spell', 'slime', (k,s) => {
+            //wait(1, () => {
+            //  destroy(k)
+            //})
+            if(!s.ready) return
+            if(s.small){
+                destroy(s)
+                addExplosion('slime', s.pos, {xv:200, yv:200}, .5, 3)
+            }else{
+                s.small = true;
+                const count = rand(3)+2
+                for (let index = 0; index < count; index++) {
+                    const ns = add([sprite('slime'), pos(s.pos.x+rand(32)-16, s.pos.y+rand(32)-16), area({scale:.6}), solid(), layer('fg'), 'slime', 'hurts', { dir: -1, timer: 0, small: true, ready: false}])
+                    wait(1, ()=>{
+                        ns.ready = true;
+                    })
+                    ns.play('idle')                        
+                }
+                addExplosion('slime', s.pos,  {xv:200, yv:200}, .5, 3)
+                s.scale = 1;
+                s.play('idle')
+            }
+        })      
+        onUpdate('slime', (s)=>{
+
+        })
         onUpdate('ghoulie', (g)=>{
-                g.move(0, g.dir * 50)
+            g.move(0, g.dir * 50)
             g.timer -= dt()
             if(!g.shooting && Math.abs(player.pos.y-g.pos.y)<20){
                 if(player.pos.x - g.pos.x > 0){
                     g.play('throw-e')
-                    addProjectile('bone', g, {xv:100, yv:0}, 3)
+                    addProjectile('bone', g.pos, {xv:100, yv:0}, 3)
                 }else{
                     g.play('throw-w')
-                    addProjectile('bone', g, {xv:-100, yv:0}, 3)
+                    addProjectile('bone', g.pos, {xv:-100, yv:0}, 3)
                 }
                 console.log('throw')
                 g.shooting = true
