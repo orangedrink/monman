@@ -193,7 +193,7 @@
             [
                 'yccccw',
                 'akjikb',
-//                'aUUUUb',
+                'aUUUNb',
                 'aqrrsb',
                 'atuuvb',
                 'aABBCb',
@@ -982,7 +982,7 @@
         })
         function spawnSpell(p) {
             const obj = add([sprite('explosion'), pos(p), area(), origin('center'), 'spell'])
-            wait(1, () => {
+            wait(.5, () => {
                 if (player.state == 'Idle' && !player.dead) {
                     player.setState('Laugh')
                 }
@@ -1054,11 +1054,9 @@
         }
         const addExplosion = (spr, p, vel, lifespan, count)=>{
             for (let index = 0; index < count; index++) {
-                const xv = vel.xv
-                const yv = vel.yv
-                vel.xv = (rand(xv)-xv)
-                vel.yv = (rand(yv*2)-yv)
-                addProjectile(spr, p, vel, lifespan, true)
+                const xv = (rand(vel.xv*2)-vel.xv)
+                const yv = (rand(vel.yv)-vel.yv)
+                addProjectile(spr, p, {xv:xv, yv:yv}, lifespan, true)
             }
             if(spr=='bone') addProjectile('skull', p, {xv:0, yv:-200}, lifespan, true)
         }
@@ -1092,7 +1090,7 @@
             //wait(1, () => {
             //  destroy(k)
             //})
-            if(s.expSpr) addExplosion(s.expSpr , s.pos,  {xv:200, yv:200}, .5, 10)
+            if(s.expSpr) addExplosion(s.expSpr , s.pos,  {xv:200, yv:200}, .5, 5)
             destroy(s)
         })      
         onCollide('spell', 'slime', (k,s) => {
@@ -1113,7 +1111,7 @@
                     })
                     ns.play('idle')                        
                 }
-                addExplosion('slime', s.pos,  {xv:200, yv:200}, .5, 3)
+                addExplosion('slime', s.pos,  {xv:200, yv:200}, .5, 10)
                 s.scale = 1;
                 s.play('idle')
             }
