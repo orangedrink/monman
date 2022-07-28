@@ -709,7 +709,7 @@
             R: () => [sprite('switch'), {frame: 0}, area(), solid(), layer('mg'), 'replace', 'switch', {bit:3}],
             S: () => [sprite('switch'), {frame: 0}, area(), solid(), layer('mg'), 'replace', 'switch', {bit:4}],
             T: () => [sprite('shelf'), layer('mg'), 'replace-wall'],
-            U: () => [sprite('slime'), {frame: 0}, area({scale:.6}), solid(), layer('mg'), scale(2),  'slime', 'replace', 'hurts', { dir: -1, timer: 0, ready: true}],
+            U: () => [sprite('slime', {anim: "idle"}), {frame: 0}, area({scale:.6}), solid(), layer('mg'), scale(2),  'slime', 'replace', 'hurts', { dir: -1, timer: 0, ready: true}],
             '>': () => [sprite('top-door'), area(), layer('mg'), solid(), 'door', 'replace', {
                 doorLookup: '>'
             }],
@@ -1105,7 +1105,7 @@
                 s.small = true;
                 const count = rand(3)+2
                 for (let index = 0; index < count; index++) {
-                    const ns = add([sprite('slime'), pos(s.pos.x+rand(32)-16, s.pos.y+rand(32)-16), area({scale:.6}), solid(), layer('fg'), 'slime', 'hurts', { dir: -1, timer: 0, small: true, ready: false}])
+                    const ns = add([sprite('slime'), pos(s.pos.x+rand(32), s.pos.y+rand(32)), area({scale:.6}), solid(), layer('fg'), 'slime', 'hurts', { dir: -1, timer: 0, small: true, ready: false}])
                     wait(1, ()=>{
                         ns.ready = true;
                     })
