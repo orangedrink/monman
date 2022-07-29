@@ -181,6 +181,7 @@
     loadAseprite('bone', 'bone.png', 'bone.json')
     loadAseprite('skull', 'skull.png', 'skull.json')
     loadAseprite('slime', 'slime.png', 'slime.json')
+    loadAseprite('slime-drop', 'slime-drop.png', 'slime-drop.json')
     scene('mansion', ({
         level,
         startX,
@@ -193,7 +194,7 @@
             [
                 'yccccw',
                 'akjikb',
-                'aUUUNb',
+//                'aiiiNb',
                 'aqrrsb',
                 'atuuvb',
                 'aABBCb',
@@ -268,7 +269,7 @@
             ],
             [
                 'yccccw',
-                'aiSiib',
+                'aiRiib',
                 'aqrrsb',
                 'atuuvb',
                 'aABBCb',
@@ -291,25 +292,22 @@
                 ' xddz  ',
             ],
             [
-                '                            ycw',
-                '                            aib',
-                '                            aib',
-                '                            aib',
-                'ycLcTcccTcccTcccTcccTcccTccceifTcccTcccTcccTcccTcccTccccLcw',
-                'aUUUiUiUiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiUiiiiUiiUiiUUUb',
-                'aUUUiiUiiUiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiUiUiUUUb',
-                'xdddddddddddddddddddgiiUiqrrrrrrrsiiiihdddddddddddddddddddz',
-                '                    aimnltuuuuuuuvmnUlb',
-                '                    aiiUUtuuuuuuuvIUUib',
-                '                    aminltuuuuuuuvmnlib',
-                '                    aiiiituuuuuuuviiiib',
-                '                    amniltuuuuuuuvmnlib',
-                '                    aiiiiABBBBBBBCiiiib',
-                '                    xdddddddgihdddddddz',
-                '                            aib',
-                '                            aib',
-                '                            aib',
-                '                            xdz',
+                '                        y^w',
+                '                        aib',
+                '                        aib',
+                '                        aib',
+                'ycLcTcccTcccTcccTcccTccceifTcccTcccTcccTcccTccccLcw',
+                'aiUiiUiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiUiiiiiUiiib',
+                'aiiiiiUiiiiiUiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiUiiiiiUb',
+                'xdddddddddddddddgiiUiqrrrrrrrsiUiihdddddddddddddddz',
+                '                aimnltuuuuuuuvmnilb',
+                '                amniltuuuuuuuvmnlib',
+                '                aiiiiABBBBBBBCiiiib',
+                '                xdddddddgihdddddddz',
+                '                        aib',
+                '                        aib',
+                '                        aib',
+                '                        xVz',
             ],
             [
                 'yccccw',
@@ -324,139 +322,254 @@
                 ' xddz  ',
             ],
             [
-                '         yccw',
-                '         aiib',
-                '         aiib',
-                '         aiib',
-                'ycccccccceiifcccccccccw',
-                'aiiiiiiiiiiiiiiiiiiiiib',
-                'xddddddddgiihdddddddddz',
-                '         aiib',
-                '         aiib',
-                '         aiib',
-                '         xddz',
+                'yTcccTcccTcccTcccTcccTcccTcccTcccTcccTcccc>cw',
+                'aiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiUiiiiiUiiib',
+                'aiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiUiiiiiUb',
+                'xd<dddddddddddddddddddddddddddddddddddddddddz',
             ],
             [
-                '         yccw',
-                '         aiib',
-                '         aiib',
-                '         aiib',
-                'ycccccccceiifcccccccccw',
-                'aiiiiiiiiiiiiiiiiiiiiib',
-                'xddddddddgiihdddddddddz',
-                '         aiib',
-                '         aiib',
-                '         aiib',
-                '         xddz',
+                'yTcccTcccTcccTcccTcccTcccTcccTcccTcccTcccTcccc>cw',
+                'aiiiiiiiiiiiiiiiiiiiiiiiiiiiUUiiiiiiiiUiiiiiUiiib',
+                'xd<dddddddddddddddddddddddddddddddddddddddddddddz',
             ],
             [
-                '         yccw',
-                '         aiib',
-                '         aiib',
-                '         aiib',
-                'ycccccccceiifcccccccccw',
-                'aiiiiiiiiiiiiiiiiiiiiib',
-                'xddddddddgiihdddddddddz',
-                '         aiib',
-                '         aiib',
-                '         aiib',
-                '         xddz',
+                '              yccw',
+                '       yc/c\\cwa1ibyc<c>cw',
+                '       aiiiiibaiibaiiiiib',
+                '       xdddddzaiibxdddddz',
+                '   ycVcccccccceiifcccccccc^cw',
+                '   aiiiiiiiiiiiiiiiiiiiiiiiib',
+                '   xddddddddddddddddddddddddz',
+                'yccccccccccccccccccccccccccccccw',
+                'aiiiiiiiiiiiiiiiiiiiiiiiiiiiiiib',
+                'xd[dddddddddddddddddddddddddd]dz',
             ],
             [
-                '         yccw',
-                '         aiib',
-                '         aiib',
-                '         aiib',
-                'ycccccccceiifcccccccccw',
-                'aiiiiiiiiiiiiiiiiiiiiib',
-                'xddddddddgiihdddddddddz',
-                '         aiib',
-                '         aiib',
-                '         aiib',
-                '         xddz',
+                '         y^w',
+                '         aib',
+                '         aib',
+                '         aib',
+                '         aib',
+                '         aib',
+                '         aib',
+                '         aib',
+                '         aib',
+                'yc<cccccceifcccccc>cw',
+                'aiiiiiiiiiiiiiiiiiiib',
+                'xddddddddgihddddddddz',
+                '         aib',
+                '         aib',
+                '         aib',
+                '         aib',
+                '         aib',
+                '         aib',
+                '         aib',
+                '         aib',
+                '         xVz',
             ],
             [
-                '         yccw',
-                '         aiib',
-                '         aiib',
-                '         aiib',
-                'ycccccccceiifcccccccccw',
-                'aiiiiiiiiiiiiiiiiiiiiib',
-                'xddddddddgiihdddddddddz',
-                '         aiib',
-                '         aiib',
-                '         aiib',
-                '         xddz',
+                'ycccw',
+                'aiiib',
+                'aiiib',
+                'xgihz',
+                ' aib',
+                ' aib',
+                ' aib',
+                ' xVz',
             ],
             [
-                '         yccw',
-                '         aiib',
-                '         aiib',
-                '         aiib',
-                'ycccccccceiifcccccccccw',
-                'aiiiiiiiiiiiiiiiiiiiiib',
-                'xddddddddgiihdddddddddz',
-                '         aiib',
-                '         aiib',
-                '         aiib',
-                '         xddz',
+                'yccccw',
+                'aiQiib',
+                'aqrrsb',
+                'atuuvb',
+                'aABBCb',
+                'xgiihz',
+                ' aiib ',
+                ' a1ib ',
+                ' aiib ',
+                ' xddz  ',
             ],
             [
-                '         yccw',
-                '         aiib',
-                '         aiib',
-                '         aiib',
-                'ycccccccceiifcccccccccw',
-                'aiiiiiiiiiiiiiiiiiiiiib',
-                'xddddddddgiihdddddddddz',
-                '         aiib',
-                '         aiib',
-                '         aiib',
-                '         xddz',
+                '         y^w',
+                '         aib',
+                '         aib',
+                '         aib',
+                '         aib',
+                '         aib',
+                '         aib',
+                '         aib',
+                '         aib',
+                'yc<cccccceifcccccc>cw',
+                'aiiiiiiiiiiiiiiiiiiib',
+                'xddddddddgihddddddddz',
+                '         aib',
+                '         aib',
+                '         aib',
+                '         aib',
+                '         aib',
+                '         aib',
+                '         aib',
+                '         aib',
+                '         xVz',
             ],
             [
-                '         yccw',
-                '         aiib',
-                '         aiib',
-                '         aiib',
-                'ycccccccceiifcccccccccw',
-                'aiiiiiiiiiiiiiiiiiiiiib',
-                'xddddddddgiihdddddddddz',
-                '         aiib',
-                '         aiib',
-                '         aiib',
-                '         xddz',
+                '         y^w',
+                '         aib',
+                '         aib',
+                '         aib',
+                '         aib',
+                '         aib',
+                '         aib',
+                '         aib',
+                '         aib',
+                'yc<cccccceifcccccc>cw',
+                'aiiiiiiiiiiiiiiiiiiib',
+                'xddddddddgihddddddddz',
+                '         aib',
+                '         aib',
+                '         aib',
+                '         aib',
+                '         aib',
+                '         aib',
+                '         aib',
+                '         aib',
+                '         xVz',
             ],
             [
-                'yccw     yccw      yccw',
-                'aiib     aiib      a1ib',
-                'aiib     aiib      aiib',
-                'aiib     aiib      aiib',
-                'aiifccccceiifcccccceiib',
-                'aiiiiiiiiiiiiiiiiiiiiib',
-                'xddddddgiiiiiihdddddddz',
-                '       aiiiiiib',
-                '       aiiiiiib',
-                '       aiiiiiib',
-                '       aiiiiiib',
-                '       aiiiiiib',
-                '       aiiiiiib',
-                '       aiiiiiib',
-                'ycccccceiiiiiifcccccccw',
-                'aiiiiiiiiiiiiiiiiiiiiib',
-                'xddddddddgiihdddddddddz',
-                '         aiib',
-                '         a2ib',
-                '         aiib',
-                '         xddz',
+                '         y^w',
+                '         aib',
+                '         aib',
+                '         aib',
+                '         aib',
+                '         aib',
+                '         aib',
+                '         aib',
+                '         aib',
+                'yc<cccccceifcccccc>cw',
+                'aiiiiiiiiiiiiiiiiiiib',
+                'xddddddddgihddddddddz',
+                '         aib',
+                '         aib',
+                '         aib',
+                '         aib',
+                '         aib',
+                '         aib',
+                '         aib',
+                '         aib',
+                '         xVz',
             ],
+            [
+                '         y^w',
+                '         aib',
+                '         aib',
+                '         aib',
+                '         aib',
+                '         aib',
+                '         aib',
+                '         aib',
+                '         aib',
+                'yc<cccccceifcccccc>cw',
+                'aiiiiiiiiiiiiiiiiiiib',
+                'xddddddddgihddddddddz',
+                '         aib',
+                '         aib',
+                '         aib',
+                '         aib',
+                '         aib',
+                '         aib',
+                '         aib',
+                '         aib',
+                '         xVz',
+            ],
+            [],
+            [],
+            [
+                'yccccccw',
+                'aiiiiiib',
+                'a2iiiiib',
+                'a1ihgiib',
+                'aiifeiib',
+                'aiiiiiib',
+                'aiiiiiib',
+                'xddddddz',
+            ],
+            [
+                'yccccccw',
+                'aiiiiiib',
+                'a2iiiiib',
+                'a1ihgiib',
+                'aiifeiib',
+                'aiiiiiib',
+                'aiiiiiib',
+                'xddddddz',
+            ],
+            [
+                'yccccccw',
+                'aiiiiiib',
+                'a2iiiiib',
+                'a1ihgiib',
+                'aiifeiib',
+                'aiiiiiib',
+                'aiiiiiib',
+                'xddddddz',
+            ],
+            [
+                'yccccccw',
+                'aiiiiiib',
+                'a2iiiiib',
+                'a1ihgiib',
+                'aiifeiib',
+                'aiiiiiib',
+                'aiiiiiib',
+                'xddddddz',
+            ],
+            [
+                '   yccw',
+                '   a1ib',
+                '   aiib',
+                'ycceiifccw',
+                'aIiqrrsiIb',
+                'aIituuviIb',
+                'aIituuviIb',
+                'aIituuviIb',
+                'aIituuviIb',
+                'aIituuviIb',
+                'aIituuviIb',
+                'aIituuviIb',
+                'aIituuviIb',
+                'aIiABBCiIb',
+                'xddgiihddz',
+                '   a2ib',
+                '   aiib',
+                '   xddz',
+            ],
+            [
+                'ycccw     ycccw     ycccw',
+                'aiiib     aiiib     aiiib',
+                'aiiib     aiiib     aiiib',
+                'aiiib     aiiib     aiiib',
+                'aiiifccccceiiifccccceiiib',
+                'aiiiiiiiiiiiiiiiiiiiiiiib',
+                'xddddddgiiiiiiiiihddddddz',
+                '       aiiiiiiiiib',
+                '       aiiiiiiiiib',
+                'ycccccceiiiiiiiiifcccccccw',
+                'aiiiiiiiiiiiiiiiiiiiiiiiib',
+                'xddddddddgiiiiihdddddddddz',
+                '         aiiiiib',
+                '         aiiiiifcccccccw',
+                '         aiiiiiiiiiiiiib',
+                '         xddddddddddg2ib',
+                '                    aiib',
+            ],
+
         ]
         const doorMappings = {
             1: {
                 '<': {
                     targetLevel: 6,
-                    targetX: 1888,
-                    targetY: 1080,
+                    targetX: 1638,
+                    targetY: 926,
                     keys: [
                         ()=>{
                             if(gamestate.mmFound){
@@ -561,9 +674,197 @@
                 }
             },
             4:{},
-            5: {
-            }
+            5:{},
+            6: {
+                '^':{
+                    targetLevel: 7,
+                    targetX: 194,
+                    targetY: 428,
+                    keys:[
+                        ()=>{
+                            if(buttonsPressed==2){
+                                return true;
+                            }else{
+                                let left = 2-buttonsPressed
+                                dialog('There are '+ left+' unpressed buttons remaining.', player, player.pos)
+                            }
+                        }
+                    ]
+                },
+                'v':{
+                    targetLevel: 1,
+                    targetX: 2015,
+                    targetY: 340,
+                },
+            },
+            7:{},
+            8:{},
+            9:{},
+            10:{
+                '^':{
+                    targetLevel: 10,
+                    targetX: 1890,
+                    targetY: 540
+                },                
+                'v':{
+                    targetLevel: 11,
+                    targetX: 672,
+                    targetY: 1250
+                },                
+                '[':{
+                    targetLevel: 10,
+                    targetX: 1309,
+                    targetY: 150
+                },                
+                ']':{
+                    targetLevel: 10,
+                    targetX: 735,
+                    targetY: 150
+                },                
+                '<':{
+                    targetLevel: 10,
+                    targetX: 160,
+                    targetY: 540
+                },                
+                '>':{
+                    targetLevel: 10,
+                    targetX: 1890,
+                    targetY: 540
+                },                
+                '/':{
+                    targetLevel: 13,
+                    targetX: 194,
+                    targetY: 428
+                },                
+                '\\':{
+                    targetLevel: 10,
+                    targetX: 1890,
+                    targetY: 540
+                },                
+            },
+            11:{
+                '^':{
+                    targetLevel: 11,
+                    targetX: 672,
+                    targetY: 1250
+                },                
+                '>':{
+                    targetLevel: 14,
+                    targetX: 672,
+                    targetY: 1250
+                },                
+                '<':{
+                    targetLevel: 11,
+                    targetX: 672,
+                    targetY: 1250
+                },                
+                'v':{
+                    targetLevel: 10,
+                    targetX: 350,
+                    targetY:350
+                },                
 
+            },
+            12:{
+                'v':{
+                    targetLevel: 10,
+                    targetX: 350,
+                    targetY:350
+                },                
+            },
+            13:{},
+            14:{
+                '^':{
+                    targetLevel: 15,
+                    targetX: 672,
+                    targetY: 1250
+                },                
+                '>':{
+                    targetLevel: 11,
+                    targetX: 672,
+                    targetY: 1250
+                },                
+                '<':{
+                    targetLevel: 11,
+                    targetX: 672,
+                    targetY: 1250
+                },                
+                'v':{
+                    targetLevel: 10,
+                    targetX: 350,
+                    targetY:350
+                },                
+
+            },
+            15:{
+                '^':{
+                    targetLevel: 16,
+                    targetX: 672,
+                    targetY: 1250
+                },                
+                '>':{
+                    targetLevel: 11,
+                    targetX: 672,
+                    targetY: 1250
+                },                
+                '<':{
+                    targetLevel: 11,
+                    targetX: 672,
+                    targetY: 1250
+                },                
+                'v':{
+                    targetLevel: 10,
+                    targetX: 350,
+                    targetY:350
+                },                
+
+            },
+            16:{
+                '^':{
+                    targetLevel: 11,
+                    targetX: 672,
+                    targetY: 1250
+                },                
+                '>':{
+                    targetLevel: 11,
+                    targetX: 672,
+                    targetY: 1250
+                },                
+                '<':{
+                    targetLevel: 17,
+                    targetX: 672,
+                    targetY: 1250
+                },                
+                'v':{
+                    targetLevel: 10,
+                    targetX: 350,
+                    targetY:350
+                },                
+
+            },
+            17:{
+                '^':{
+                    targetLevel: 11,
+                    targetX: 672,
+                    targetY: 1250
+                },                
+                '>':{                    
+                    targetLevel: 12,
+                    targetX: 160,
+                    targetY: 428
+                },                
+                '<':{
+                    targetLevel: 11,
+                    targetX: 672,
+                    targetY: 1250
+                },                
+                'v':{
+                    targetLevel: 10,
+                    targetX: 350,
+                    targetY:350
+                },                
+
+            },
         }
         const stairMappings = {
             0: {
@@ -580,16 +881,16 @@
                     targetY: 428
                 },
                 2:{
-                    targetLevel: 3,
-                    targetX: 708,
-                    targetY: 260,
+                    targetLevel: 10,
+                    targetX: 1026,
+                    targetY: 210,
                     keys:[
                         ()=>{
                             if(gamestate.mmFound){
-                                dialog('The Cellar is under construction.', player, player.pos)
-                                return false;
+                                //dialog('The Cellar is under construction.', player, player.pos)
+                                //return false;
     
-                                //return true;
+                                return true;
                             }else{
                                 dialog('Where in the blazes is that Monster Maker Machine? I can\'t leave until I find it.', player, player.pos)
                                 return false;
@@ -598,13 +899,17 @@
                     ]
                 },
                 3:{
-                    targetLevel: 3,
-                    targetX: 708,
-                    targetY: 260,
+                    targetLevel: 20,
+                    targetX: 100,
+                    targetY: 100,
                     keys:[
                         ()=>{
-                            dialog('The tower is under construction.', player, player.pos)
-                            return false;
+                            if(gamestate.mmFound){   
+                                return true;
+                            }else{
+                                dialog('Where in the blazes is that Monster Maker Machine? I can\'t leave until I find it.', player, player.pos)
+                                return false;
+                            }
                         }
                     ]
                 }
@@ -631,8 +936,96 @@
                     targetX: 98,
                     targetY: 657
                 }
+            },
+            6:{},
+            7:{
+                1:{
+                    targetLevel: 6,
+                    targetX: 1627,
+                    targetY: 98
+                }
+            },
+            10:{
+                1:{
+                    targetLevel: 1,
+                    targetX: 1730,
+                    targetY:1050
+                },                
+            },
+            13:{
+                1:{
+                    targetLevel: 10,
+                    targetX: 1695,
+                    targetY:350
+                },                
+            },
+            20:{
+                1:{
+                    targetLevel: 21,
+                    targetX: 100,
+                    targetY:100
+                },
+                2:{
+                    targetLevel: 1,
+                    targetX: 640,
+                    targetY:200
+                }
+            },
+            21:{
+                1:{
+                    targetLevel: 22,
+                    targetX: 100,
+                    targetY:100
+                },
+                2:{
+                    targetLevel: 20,
+                    targetX: 640,
+                    targetY:200
+                }
+            },
+            22:{
+                1:{
+                    targetLevel: 23,
+                    targetX: 100,
+                    targetY:100
+                },
+                2:{
+                    targetLevel: 21,
+                    targetX: 640,
+                    targetY:200
+                }
+            },
+            23:{
+                1:{
+                    targetLevel: 24,
+                    targetX: 320,
+                    targetY:924
+                },
+                2:{
+                    targetLevel: 22,
+                    targetX: 640,
+                    targetY:200
+                }
+            },
+            24:{
+                1:{
+                    targetLevel: 25,
+                    targetX: 320,
+                    targetY:924
+                },
+                2:{
+                    targetLevel: 23,
+                    targetX: 640,
+                    targetY:200
+                }
+            },
+            25:{
+                2:{
+                    targetLevel: 24,
+                    targetX: 640,
+                    targetY:200
+                }
             }
-
         }
         const bookMappings = {
             'manual': ()=>{
@@ -709,7 +1102,7 @@
             R: () => [sprite('switch'), {frame: 0}, area(), solid(), layer('mg'), 'replace', 'switch', {bit:3}],
             S: () => [sprite('switch'), {frame: 0}, area(), solid(), layer('mg'), 'replace', 'switch', {bit:4}],
             T: () => [sprite('shelf'), layer('mg'), 'replace-wall'],
-            U: () => [sprite('slime', {anim: "idle"}), {frame: 0}, area({scale:.6}), solid(), layer('mg'), scale(2),  'slime', 'replace', 'hurts', { dir: -1, timer: 0, ready: true}],
+            U: () => [sprite('slime', {anim: "idle"}), {frame: 0}, area({scale:.6}), solid(), layer('mg'), scale(2),  'slime', 'replace', 'hurts', { state: 'idle', dir:{x:1,y:1},  timer: 0, ready: true}],
             '>': () => [sprite('top-door'), area(), layer('mg'), solid(), 'door', 'replace', {
                 doorLookup: '>'
             }],
@@ -721,6 +1114,18 @@
             }],
             'V': () => [sprite('top-door'), area(), layer('mg'), solid(), 'door', 'replace', {
                 doorLookup: 'v'
+            }],
+            '/': () => [sprite('top-door'), area(), layer('mg'), solid(), 'door', 'replace', {
+                doorLookup: '/'
+            }],
+            '\\': () => [sprite('top-door'), area(), layer('mg'), solid(), 'door', 'replace', {
+                doorLookup: '\\'
+            }],
+            '[': () => [sprite('top-door'), area(), layer('mg'), solid(), 'door', 'replace', {
+                doorLookup: '['
+            }],
+            ']': () => [sprite('top-door'), area(), layer('mg'), solid(), 'door', 'replace', {
+                doorLookup: ']'
             }],
             1: () => [sprite('stairs-up'), layer('mg'), area(), 'stairs', 'replace', {
                 stairLookup: 1
@@ -784,7 +1189,10 @@
 
         camPos(startX, startY)
         player.onUpdate(() => {
-            //console.log(player.pos)
+            console.log(player.pos)
+            if(player.dead){
+                return
+            }
             if (player.dir.y != player.animDir.y || player.dir.x != player.animDir.x) {
                 player.animDir.x = player.dir.x;
                 player.animDir.y = player.dir.y;
@@ -869,7 +1277,6 @@
             }
         });
         player.onCollide('monmach', (m) => {
-                console.log(gamestate)
                 if(!m.open){
                 shake(10,5)
                 wait(1, ()=>{
@@ -970,12 +1377,12 @@
         keyRelease(['up', 'down', ], () => {
             //keystate = ''
             player.dir.y = 0
-            player.setState('Idle')
+            if(!player.dead) player.setState('Idle')
         })
         keyRelease(['left', 'right'], () => {
             //keystate = ''
             player.dir.x = 0
-            player.setState('Idle')
+            if(!player.dead) player.setState('Idle')
         })
         keyRelease('space', ()=>{
             //keystate = ''
@@ -1035,8 +1442,6 @@
             })
         }
         const addProjectile = (spr, ps, vel, lifespan, effect)=>{
-            console.log(ps)
-            console.log(vel)
             const p = add([
                 sprite(spr),
                 area(),
@@ -1073,7 +1478,7 @@
             let bitKey = 'bit'+s.bit;
             dialog('Do you want to set bit '+s.bit+'?',
             player,
-            s.pos,
+            player.pos,
             ['Set','Unset'],
             (i)=>{
                 if(!i){
@@ -1100,24 +1505,70 @@
             if(!s.ready) return
             if(s.small){
                 destroy(s)
-                addExplosion('slime', s.pos, {xv:200, yv:200}, .5, 3)
+                addExplosion('slime-drop', s.pos, {xv:300, yv:300}, .5, 2)
             }else{
                 s.small = true;
-                const count = rand(3)+2
+                const count = rand(3)+3
                 for (let index = 0; index < count; index++) {
-                    const ns = add([sprite('slime'), pos(s.pos.x+rand(32), s.pos.y+rand(32)), area({scale:.6}), solid(), layer('fg'), 'slime', 'hurts', { dir: -1, timer: 0, small: true, ready: false}])
-                    wait(1, ()=>{
+                    let ns = add([sprite('slime', {anim:'idle'}), pos(s.pos.x+rand(64)-32, s.pos.y+rand(64)-32), area({scale:.6}), solid(), layer('fg'), 'slime', 'hurts', { dir: {x:0, y:0}, timer: 3, small: true, ready: false}])
+                    wait(.6, ()=>{
                         ns.ready = true;
                     })
-                    ns.play('idle')                        
                 }
-                addExplosion('slime', s.pos,  {xv:200, yv:200}, .5, 10)
+                addExplosion('slime-drop', s.pos,  {xv:300, yv:300}, .5, 5)
                 s.scale = 1;
                 s.play('idle')
             }
         })      
         onUpdate('slime', (s)=>{
-
+            if(!s.ready) return
+            if(s.timer<0){
+                s.timer = 2
+                if(player.pos.x-s.pos.x>0 &&player.pos.y-s.pos.y>0){
+                    //player is below and to the right of slime
+                    if(rand(10)>5){
+                        s.dir = {x:1, y:0}
+                        s.state = 'walk-e'
+                    }else{
+                        s.dir = {x:0, y:1}
+                        s.state = 'walk-s'
+                    }
+                }else if(player.pos.x-s.pos.x<=0 && player.pos.y-s.pos.y<=0){
+                    //player is above and to the left of slime                
+                    if(rand(10)>5){
+                        s.dir = {x:-1, y:0}
+                        s.state = 'walk-w'
+                    }else{
+                        s.dir = {x:0, y:-1}
+                        s.state = 'walk-n'
+                    }
+                }else if(player.pos.x-s.pos.x<=0 && player.pos.y-s.pos.y>0){
+                    //player is below and to the left of slime                
+                    if(rand(10)>5){
+                        s.dir = {x:-1, y:0}
+                        s.state = 'walk-w'
+                    }else{
+                        s.dir = {x:0, y:1}
+                        s.state = 'walk-s'
+                    }
+                }else if(player.pos.x-s.pos.x>0 && player.pos.y-s.pos.y<=0){
+                    //player is above and to the right of slime                
+                    if(rand(10)>5){
+                        s.dir = {x:1, y:0}
+                        s.state = 'walk-e'
+                    }else{
+                        s.dir = {x:0, y:-1}
+                        s.state = 'walk-n'
+                    }
+                }    
+            }
+            s.timer -= dt()
+            if(s.state!=s.playing){
+                s.play(s.state)
+                s.playing = s.state
+            }
+            console.log(s.dir)
+            s.move(s.dir.x * 10, s.dir.y * 10)
         })
         onUpdate('ghoulie', (g)=>{
             g.move(0, g.dir * 50)
@@ -1130,7 +1581,6 @@
                     g.play('throw-w')
                     addProjectile('bone', g.pos, {xv:-100, yv:0}, 3)
                 }
-                console.log('throw')
                 g.shooting = true
                 g.timer = .25
             }

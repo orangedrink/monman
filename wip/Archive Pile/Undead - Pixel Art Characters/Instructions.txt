@@ -1,0 +1,40 @@
+Thank you for downloading this asset. 
+The following information is useful when importing the sprite sheets:
+----------------
+
+Arrow.png
+4 frames, frame resolution: 16x16px 
+
+Zombie.png
+42 frames, frame resolution: 80x80px 
+
+Zombie_DeathNoBlood.png
+9 frames, frame resolution: 80x80px 
+
+Skeleton.png
+50 frames, frame resolution: 80x80px 
+
+SkeletonArcher.png
+47 frames, frame resolution: 80x80px 
+
+Wraith.png
+49 frames, frame resolution: 100x100px 
+
+
+Animations:
+🔹 Idle  8 fps
+🔹 Walk  10 fps
+🔹 Run  12 fps
+🔹 Jump  1 fps
+🔹 JumpToFall  12 fps
+🔹 Fall   1 fps
+🔹 Attack  12 fps
+🔹 Hurt  12 fps
+🔹 Death  12 fps
+
+----------------
+Check out the Preview files for more info.
+Thank you for supporting my work and for making it possible for me to continue doing what I love. 
+
+Best regards,
+ Sven
