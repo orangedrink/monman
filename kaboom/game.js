@@ -173,6 +173,8 @@
     loadSprite('button2', 'button2.png')
     loadSprite('bookshelf', 'bookshelf.png')
     loadSprite('shelf', 'shelf.png')
+    loadSprite('web', 'web.png')
+    loadSprite('web2', 'web2.png')
     loadAseprite("doctor", "doctor.png", "doctor.json");
     loadAseprite('monmach', 'monmach.png', 'monmach.json')
     loadAseprite('switch', 'switch.png', 'switch.json')
@@ -182,6 +184,7 @@
     loadAseprite('skull', 'skull.png', 'skull.json')
     loadAseprite('slime', 'slime.png', 'slime.json')
     loadAseprite('slime-drop', 'slime-drop.png', 'slime-drop.json')
+    loadAseprite('spider', 'spider.png', 'spider.json')
     scene('mansion', ({
         level,
         startX,
@@ -338,10 +341,10 @@
                 '       aiiiiibaiibaiiiiib',
                 '       xdddddzaiibxdddddz',
                 '   ycVcccccccceiifcccccccc^cw',
-                '   aiiiiiiiiiiiiiiiiiiiiiiiib',
+                '   aXiiiiiiiiiiiiiiiiiiWXiiib',
                 '   xddddddddddddddddddddddddz',
                 'yccccccccccccccccccccccccccccccw',
-                'aiiiiiiiiiiiiiiiiiiiiiiiiiiiiiib',
+                'aiiiiiiiiiiiiiiiiiiiiiiiiiiiiiWb',
                 'xd[dddddddddddddddddddddddddd]dz',
             ],
             [
@@ -355,7 +358,7 @@
                 '         aib',
                 '         aib',
                 'yc<cccccceifcccccc>cw',
-                'aiiiiiiiiiiiiiiiiiiib',
+                'aiiiiiiiiiWiiiiiiiiWb',
                 'xddddddddgihddddddddz',
                 '         aib',
                 '         aib',
@@ -393,14 +396,14 @@
                 '         y^w',
                 '         aib',
                 '         aib',
-                '         aib',
+                '         aWb',
                 '         aib',
                 '         aib',
                 '         aib',
                 '         aib',
                 '         aib',
                 'yc<cccccceifcccccc>cw',
-                'aiiiiiiiiiiiiiiiiiiib',
+                'aiiiiiiiiiWiiiiiiiiib',
                 'xddddddddgihddddddddz',
                 '         aib',
                 '         aib',
@@ -414,30 +417,7 @@
             ],
             [
                 '         y^w',
-                '         aib',
-                '         aib',
-                '         aib',
-                '         aib',
-                '         aib',
-                '         aib',
-                '         aib',
-                '         aib',
-                'yc<cccccceifcccccc>cw',
-                'aiiiiiiiiiiiiiiiiiiib',
-                'xddddddddgihddddddddz',
-                '         aib',
-                '         aib',
-                '         aib',
-                '         aib',
-                '         aib',
-                '         aib',
-                '         aib',
-                '         aib',
-                '         xVz',
-            ],
-            [
-                '         y^w',
-                '         aib',
+                '         aWb',
                 '         aib',
                 '         aib',
                 '         aib',
@@ -469,7 +449,30 @@
                 '         aib',
                 '         aib',
                 'yc<cccccceifcccccc>cw',
-                'aiiiiiiiiiiiiiiiiiiib',
+                'aWiiiiiiiiWiiiiiiiiib',
+                'xddddddddgihddddddddz',
+                '         aib',
+                '         aib',
+                '         aib',
+                '         aib',
+                '         aib',
+                '         aib',
+                '         aib',
+                '         aib',
+                '         xVz',
+            ],
+            [
+                '         y^w',
+                '         aib',
+                '         aib',
+                '         aib',
+                '         aib',
+                '         aib',
+                '         aib',
+                '         aib',
+                '         aib',
+                'yc<cccccceifcccccc>cw',
+                'aiiiiiiiiiiiiiiiiiiWb',
                 'xddddddddgihddddddddz',
                 '         aib',
                 '         aib',
@@ -485,7 +488,7 @@
             [],
             [
                 'yccccccw',
-                'aiiiiiib',
+                'aiiiiiWb',
                 'a2iiiiib',
                 'a1ihgiib',
                 'aiifeiib',
@@ -544,7 +547,7 @@
                 '   xddz',
             ],
             [
-                'ycccw     ycccw     ycccw',
+                'ycLcw     ycLcw     ycLcw',
                 'aiiib     aiiib     aiiib',
                 'aiiib     aiiib     aiiib',
                 'aiiib     aiiib     aiiib',
@@ -553,7 +556,7 @@
                 'xddddddgiiiiiiiiihddddddz',
                 '       aiiiiiiiiib',
                 '       aiiiiiiiiib',
-                'ycccccceiiiiiiiiifcccccccw',
+                'yc<cccceiiiiiiiiifccccc>cw',
                 'aiiiiiiiiiiiiiiiiiiiiiiiib',
                 'xddddddddgiiiiihdddddddddz',
                 '         aiiiiib',
@@ -562,6 +565,19 @@
                 '         xddddddddddg2ib',
                 '                    aiib',
             ],
+            [
+                'yccccw',
+                'aiPiib',
+                'aqrrsb',
+                'atuuvb',
+                'aABBCb',
+                'xgiihz',
+                ' aiib ',
+                ' a1ib ',
+                ' aiib ',
+                ' xddz  ',
+            ],
+
 
         ]
         const doorMappings = {
@@ -865,6 +881,33 @@
                 },                
 
             },
+            25:{
+                '<':{
+                    targetLevel: 0,
+                    targetX: 0,
+                    targetY:0,
+                    keys:[
+                        ()=>{
+                            return false;
+                        }
+                    ]
+                },
+                '>':{
+                    targetLevel: 26,
+                    targetX: 194,
+                    targetY: 428,
+                    keys:[
+                        ()=>{
+                            if(buttonsPressed==3){
+                                return true;
+                            }else{
+                                let left = 3-buttonsPressed
+                                dialog('There are '+ left+' unpressed buttons remaining.', player, player.pos)
+                            }
+                        }
+                    ]
+                }
+            }
         }
         const stairMappings = {
             0: {
@@ -968,7 +1011,7 @@
                 2:{
                     targetLevel: 1,
                     targetX: 640,
-                    targetY:200
+                    targetY:210
                 }
             },
             21:{
@@ -979,8 +1022,8 @@
                 },
                 2:{
                     targetLevel: 20,
-                    targetX: 640,
-                    targetY:200
+                    targetX: 130,
+                    targetY:360
                 }
             },
             22:{
@@ -991,8 +1034,8 @@
                 },
                 2:{
                     targetLevel: 21,
-                    targetX: 640,
-                    targetY:200
+                    targetX: 130,
+                    targetY:360
                 }
             },
             23:{
@@ -1003,29 +1046,37 @@
                 },
                 2:{
                     targetLevel: 22,
-                    targetX: 640,
-                    targetY:200
+                    targetX: 130,
+                    targetY:360
                 }
             },
             24:{
                 1:{
                     targetLevel: 25,
-                    targetX: 320,
-                    targetY:924
+                    targetX: 1410,
+                    targetY:930
                 },
                 2:{
                     targetLevel: 23,
-                    targetX: 640,
-                    targetY:200
+                    targetX: 130,
+                    targetY:360
                 }
             },
             25:{
                 2:{
                     targetLevel: 24,
-                    targetX: 640,
-                    targetY:200
+                    targetX: 322,
+                    targetY:250
+                }
+            },
+            26:{
+                1:{
+                    targetLevel: 25,
+                    targetX: 1500,
+                    targetY:666        
                 }
             }
+
         }
         const bookMappings = {
             'manual': ()=>{
@@ -1103,6 +1154,8 @@
             S: () => [sprite('switch'), {frame: 0}, area(), solid(), layer('mg'), 'replace', 'switch', {bit:4}],
             T: () => [sprite('shelf'), layer('mg'), 'replace-wall'],
             U: () => [sprite('slime', {anim: "idle"}), {frame: 0}, area({scale:.6}), solid(), layer('mg'), scale(2),  'slime', 'replace', 'hurts', { state: 'idle', dir:{x:1,y:1},  timer: 0, ready: true}],
+            W: () => [sprite('web'), layer('fg'), area(), 'replace', 'destructible'],
+            X: () => [sprite('web2'), layer('fg'), area(), 'replace', 'destructible'],
             '>': () => [sprite('top-door'), area(), layer('mg'), solid(), 'door', 'replace', {
                 doorLookup: '>'
             }],
