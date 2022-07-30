@@ -175,16 +175,19 @@
     loadSprite('shelf', 'shelf.png')
     loadSprite('web', 'web.png')
     loadSprite('web2', 'web2.png')
+    loadSprite('web-line', 'web-line.png')
     loadAseprite("doctor", "doctor.png", "doctor.json");
     loadAseprite('monmach', 'monmach.png', 'monmach.json')
     loadAseprite('switch', 'switch.png', 'switch.json')
     loadAseprite('button', 'button.png', 'button.json')
+    loadAseprite('breaker', 'breaker.png', 'breaker.json')
     loadAseprite('ghoulie', 'ghoulies.png', 'ghoulies.json')
     loadAseprite('bone', 'bone.png', 'bone.json')
     loadAseprite('skull', 'skull.png', 'skull.json')
     loadAseprite('slime', 'slime.png', 'slime.json')
     loadAseprite('slime-drop', 'slime-drop.png', 'slime-drop.json')
     loadAseprite('spider', 'spider.png', 'spider.json')
+    loadAseprite('bat', 'bat.png', 'bat.json')
     scene('mansion', ({
         level,
         startX,
@@ -197,7 +200,7 @@
             [
                 'yccccw',
                 'akjikb',
-//                'aiiiNb',
+//                'aiiiYb',
                 'aqrrsb',
                 'atuuvb',
                 'aABBCb',
@@ -214,7 +217,7 @@
                 '        aiib   aiqrsib   aiib',
                 '    a>b aiifccceituvifccceiib a<b',
                 '    aib aiiiiiiiituviiiiiiiib aib', 
-                '    aifcccccccceituvifcccccccceib',
+                '    aifceiiiiiiiituviiiiiiiifceib',
                 '    aiiiiiiiiiiIituviIiiiiiiiiiib',
                 '    xdddgiippiiIituviIiippiihdddz',
 //                '        aiippiiIituviIiippiib',
@@ -300,7 +303,7 @@
                 '                        aib',
                 '                        aib',
                 'ycLcTcccTcccTcccTcccTccceifTcccTcccTcccTcccTccccLcw',
-                'aiUiiUiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiUiiiiiUiiib',
+                'aiUiiUiiiiiUUUiiiiiiiiiiiiiiiiiiiiiiiiiiUiUUUiUiiib',
                 'aiiiiiUiiiiiUiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiUiiiiiUb',
                 'xdddddddddddddddgiiUiqrrrrrrrsiUiihdddddddddddddddz',
                 '                aimnltuuuuuuuvmnilb',
@@ -338,13 +341,13 @@
             [
                 '              yccw',
                 '       yc/c\\cwa1ibyc<c>cw',
-                '       aiiiiibaiibaiiiiib',
+                '       aiiiiWbaiibaXiiiib',
                 '       xdddddzaiibxdddddz',
-                '   ycVcccccccceiifcccccccc^cw',
-                '   aXiiiiiiiiiiiiiiiiiiWXiiib',
+                '   ycVcccccccceWXfcccccccc^cw',
+                '   aXiiii!iiii!iiiiiiiWZiii!b',
                 '   xddddddddddddddddddddddddz',
                 'yccccccccccccccccccccccccccccccw',
-                'aiiiiiiiiiiiiiiiiiiiiiiiiiiiiiWb',
+                'a!ii!iiYZiiiiiYXiii!iiWXiii!iiWb',
                 'xd[dddddddddddddddddddddddddd]dz',
             ],
             [
@@ -358,7 +361,7 @@
                 '         aib',
                 '         aib',
                 'yc<cccccceifcccccc>cw',
-                'aiiiiiiiiiWiiiiiiiiWb',
+                'aiiiiiiiiiZiiiii!iiWb',
                 'xddddddddgihddddddddz',
                 '         aib',
                 '         aib',
@@ -372,20 +375,20 @@
             ],
             [
                 'ycccw',
-                'aiiib',
-                'aiiib',
+                'aX$Wb',
+                'aWiXb',
                 'xgihz',
-                ' aib',
-                ' aib',
-                ' aib',
+                ' aZb',
+                ' aYb',
+                ' aZb',
                 ' xVz',
             ],
             [
                 'yccccw',
-                'aiQiib',
-                'aqrrsb',
-                'atuuvb',
-                'aABBCb',
+                'aXQiWb',
+                'aiiiib',
+                'aiiiib',
+                'aWiiXb',
                 'xgiihz',
                 ' aiib ',
                 ' a1ib ',
@@ -403,7 +406,7 @@
                 '         aib',
                 '         aib',
                 'yc<cccccceifcccccc>cw',
-                'aiiiiiiiiiWiiiiiiiiib',
+                'aiiiiii!iiWiiiiiiiiib',
                 'xddddddddgihddddddddz',
                 '         aib',
                 '         aib',
@@ -426,7 +429,7 @@
                 '         aib',
                 '         aib',
                 'yc<cccccceifcccccc>cw',
-                'aiiiiiiiiiiiiiiiiiiib',
+                'aiiiiiiiii!iiiiiiiiib',
                 'xddddddddgihddddddddz',
                 '         aib',
                 '         aib',
@@ -443,18 +446,18 @@
                 '         aib',
                 '         aib',
                 '         aib',
-                '         aib',
+                '         aZb',
                 '         aib',
                 '         aib',
                 '         aib',
                 '         aib',
                 'yc<cccccceifcccccc>cw',
-                'aWiiiiiiiiWiiiiiiiiib',
+                'aYZii!iiiiWiii!iYZiib',
                 'xddddddddgihddddddddz',
                 '         aib',
                 '         aib',
                 '         aib',
-                '         aib',
+                '         aYb',
                 '         aib',
                 '         aib',
                 '         aib',
@@ -486,92 +489,94 @@
             ],
             [],
             [],
-            [
-                'yccccccw',
-                'aiiiiiWb',
-                'a2iiiiib',
-                'a1ihgiib',
-                'aiifeiib',
-                'aiiiiiib',
-                'aiiiiiib',
-                'xddddddz',
+            [   
+                ' yccccccw#',
+                '@aiipp1ib ',
+                ' aiiiiiib ',
+                ' aWXhgiib ',
+                ' aiifeWXb ',
+                ' a2iiiiib@',
+                ' aiippiib',
+                ' xddddddz',
             ],
             [
-                'yccccccw',
-                'aiiiiiib',
-                'a2iiiiib',
-                'a1ihgiib',
-                'aiifeiib',
-                'aiiiiiib',
-                'aiiiiiib',
-                'xddddddz',
+                '#yccccccw',
+                ' aXiii1Wb',
+                '@aiiiiiib@',
+                ' aiihgiib',
+                ' aiifeiib#',
+                ' a2iiiiib@',
+                ' aXiiiiWb',
+                ' xddddddz',
             ],
             [
-                'yccccccw',
-                'aiiiiiib',
-                'a2iiiiib',
-                'a1ihgiib',
-                'aiifeiib',
-                'aiiiiiib',
-                'aiiiiiib',
-                'xddddddz',
-            ],
+                ' yccccccw',
+                '@aXiWX1Wb#',
+                '#aiiiiiib#',
+                ' aiihgWXb@',
+                ' aWXfeiib',
+                '@a2WiiXib#',
+                '#aXiWXiWb@',
+                ' xddddddz',
+            ], 
             [
-                'yccccccw',
-                'aiiiiiib',
-                'a2iiiiib',
-                'a1ihgiib',
-                'aiifeiib',
-                'aiiiiiib',
-                'aiiiiiib',
-                'xddddddz',
+                ' yccccccw',
+                '@aXiWX1Wb#',
+                '#aiiiiiib@',
+                '@aiihgWXb#',
+                ' aWXfeiib@',
+                '#a2WiiXib#',
+                '@aXiWXiWb@',
+                ' xddddddz',
             ],
             [
                 '   yccw',
                 '   a1ib',
-                '   aiib',
+                '  #aiib',
                 'ycceiifccw',
-                'aIiqrrsiIb',
-                'aIituuviIb',
-                'aIituuviIb',
-                'aIituuviIb',
-                'aIituuviIb',
-                'aIituuviIb',
-                'aIituuviIb',
-                'aIituuviIb',
-                'aIituuviIb',
-                'aIiABBCiIb',
-                'xddgiihddz',
-                '   a2ib',
+                'aIWqrrsXIb@',
+                'aIituuviIb#',
+                'aIituuviIb@',
+                'aIituuvXIb#',
+                'aIituuviIb@',
+                'aIituuviIb#',
+                'aIituuviIb@',
+                'aIWtuuviIb#',
+                'aIituuviIb@',
+                'aIXABBCWIb#',
+                'xddgWXhddz',
+                '  @a2ib#',
                 '   aiib',
                 '   xddz',
             ],
             [
-                'ycLcw     ycLcw     ycLcw',
-                'aiiib     aiiib     aiiib',
-                'aiiib     aiiib     aiiib',
-                'aiiib     aiiib     aiiib',
-                'aiiifccccceiiifccccceiiib',
-                'aiiiiiiiiiiiiiiiiiiiiiiib',
-                'xddddddgiiiiiiiiihddddddz',
-                '       aiiiiiiiiib',
-                '       aiiiiiiiiib',
-                'yc<cccceiiiiiiiiifccccc>cw',
-                'aiiiiiiiiiiiiiiiiiiiiiiiib',
-                'xddddddddgiiiiihdddddddddz',
-                '         aiiiiib',
-                '         aiiiiifcccccccw',
-                '         aiiiiiiiiiiiiib',
+                'ycLcw @#  ycLcw #@  ycLcw',
+                'aXiWb #@  aXiWb @#  aXiWb',
+                'aqrsb @#  aqrsb #@  aqrsb',
+                'atuvb #@  atuvb @#  atuvb',
+                'atuvfcccccetuvfcccccetuvb',
+                'atuviiWIXiituviiiWIXituvb',
+                'aABCiiXIWiituviiiXIWiABCb',
+                'aWiiiiiiiiituviiiiiiiiiWb',
+                'xddddddgiiituviiihddddddz',
+                '    @# aiiXtuviiib #@',
+                '    #@ aiiituviWib @#',
+                'yc<cccceiiituviiifccccc>cw',
+                'aiiiWXiiiiituviiiiiWXiiiib',
+                'xddddddddgituvihdddddddddz',
+                '    #@   aXtuvWb',
+                '         aWtuvXfcccccccw',
+                '         aXABCiiiWXiiiib',
                 '         xddddddddddg2ib',
                 '                    aiib',
             ],
             [
                 'yccccw',
-                'aiPiib',
+                'aXPiWb',
                 'aqrrsb',
                 'atuuvb',
                 'aABBCb',
-                'xgiihz',
+                'xgXWhz',
                 ' aiib ',
                 ' a1ib ',
                 ' aiib ',
@@ -943,8 +948,8 @@
                 },
                 3:{
                     targetLevel: 20,
-                    targetX: 100,
-                    targetY: 100,
+                    targetX: 192,
+                    targetY: 300,
                     keys:[
                         ()=>{
                             if(gamestate.mmFound){   
@@ -1005,8 +1010,8 @@
             20:{
                 1:{
                     targetLevel: 21,
-                    targetX: 100,
-                    targetY:100
+                    targetX: 192,
+                    targetY:300
                 },
                 2:{
                     targetLevel: 1,
@@ -1017,25 +1022,25 @@
             21:{
                 1:{
                     targetLevel: 22,
-                    targetX: 100,
-                    targetY:100
+                    targetX: 192,
+                    targetY:300
                 },
                 2:{
                     targetLevel: 20,
-                    targetX: 130,
-                    targetY:360
+                    targetX: 448,
+                    targetY:224
                 }
             },
             22:{
                 1:{
                     targetLevel: 23,
-                    targetX: 100,
-                    targetY:100
+                    targetX: 192,
+                    targetY:300
                 },
                 2:{
                     targetLevel: 21,
-                    targetX: 130,
-                    targetY:360
+                    targetX: 448,
+                    targetY:224
                 }
             },
             23:{
@@ -1046,20 +1051,20 @@
                 },
                 2:{
                     targetLevel: 22,
-                    targetX: 130,
-                    targetY:360
+                    targetX: 448,
+                    targetY:224
                 }
             },
             24:{
                 1:{
                     targetLevel: 25,
                     targetX: 1410,
-                    targetY:930
+                    targetY:1064
                 },
                 2:{
                     targetLevel: 23,
-                    targetX: 130,
-                    targetY:360
+                    targetX: 382,
+                    targetY:224
                 }
             },
             25:{
@@ -1136,7 +1141,7 @@
             A: () => [sprite('bottom-left-carpet'), layer('bg')],
             B: () => [sprite('bottom-carpet'), layer('bg')],
             C: () => [sprite('bottom-right-carpet'), layer('bg')],
-            D: () => [sprite('bed'), layer('bg'), layer('mg'), area(), solid(), 'replace', 'bean'],
+            D: () => [sprite('bed'), layer('bg'), layer('mg'), area(), solid(), 'replace'],
             E: () => [sprite('bookshelf'), layer('bg'), layer('mg'), area(), solid(), 'book' , 'replace-wall', {book: 'manual'}],
             F: () => [sprite('bookshelf'), layer('bg'), layer('mg'), area(), solid(), 'book' , 'replace-wall', {book: 'bit1'}],
             G: () => [sprite('bookshelf'), layer('bg'), layer('mg'), area(), solid(), 'book' , 'replace-wall', {book: 'bit2'}],
@@ -1156,6 +1161,13 @@
             U: () => [sprite('slime', {anim: "idle"}), {frame: 0}, area({scale:.6}), solid(), layer('mg'), scale(2),  'slime', 'replace', 'hurts', { state: 'idle', dir:{x:1,y:1},  timer: 0, ready: true}],
             W: () => [sprite('web'), layer('fg'), area(), 'replace', 'destructible'],
             X: () => [sprite('web2'), layer('fg'), area(), 'replace', 'destructible'],
+            Y: () => [sprite('web'), layer('fg'), area(), 'replace', 'destructible', 'trigger-spider'],
+            Z: () => [sprite('web2'), layer('fg'), area(), 'replace', 'destructible', 'trigger-spider'],
+            '!': () => [sprite('spider'), {anim:'Walk-L'}, area({scale:.6}), solid(), layer('mg'), 'spider', 'replace', 'destructible', 'hurts', { dir: -1, timer: 0 }],
+            '@': () => [sprite('bat'), {anim:'Walk-L'}, area({scale:.6}), layer('ui'), 'bat', 'destructible', 'hurts', { dir: -1, timer: 0 }],
+            '#': () => [sprite('bat'), {anim:'Walk-R'}, area({scale:.6}), layer('ui'), 'bat', 'destructible', 'hurts', { dir: 1, timer: 0 }],
+            '$': () => [sprite('breaker'), {frame: gamestate.breakerSet?1:0}, area(), solid(), layer('mg'), 'replace', 'breaker', {reset:false}],
+            
             '>': () => [sprite('top-door'), area(), layer('mg'), solid(), 'door', 'replace', {
                 doorLookup: '>'
             }],
@@ -1190,7 +1202,7 @@
                 stairLookup: 3
             }],
         }
-        if(gamestate.mmFound){
+        if(gamestate.breakerSet){
             levelCfg.D = () => [sprite('bed2'), layer('mg'), area(), solid(), 'replace', 'bean'];
         }
 
@@ -1242,7 +1254,7 @@
 
         camPos(startX, startY)
         player.onUpdate(() => {
-            console.log(player.pos)
+            //console.log(player.pos)
             if(player.dead){
                 return
             }
@@ -1337,7 +1349,7 @@
                         gamestate.mmFound=true
                         dialog('Ah the Monster Maker Machine. How Lovely. It seems to be ready to accept a cofiguration. Now I know those bit switches are around this old place somewhere.. . Perhaps I should head to the Library to refresh myself on the Users\' Manuals', 
                             player, 
-                            {x:m.pos.x+96, y:m.pos.y+64}
+                            {x:player.pos.x, y:player.pos.y}
                         )    
                     }else{
                         let monByte = '0000'
@@ -1377,6 +1389,9 @@
                         }        
                     )
         })
+        player.onCollide('trigger-spider', (m) => {
+            let spider = add([sprite('spider', {anim:'Drop'}), pos(player.pos.x+rand(64)-32, player.pos.y+rand(64)-height()), area({scale:.6}), layer('ui'), 'spider-down', 'hurts', 'destructible', { dir: {x:0, y:0}, timer: 3, webs:[]}])
+        });
 
         keyDown('left', () => {
             if(dialogOpen || player.dead) return
@@ -1384,8 +1399,8 @@
             player.dir.x = -1;
             player.setState('W-Walk')
             var currCam = camPos();
-            if (currCam.x - player.pos.x > width() / 4) {
-                camPos(player.pos.x + width() / 4, currCam.y);
+            if (currCam.x - player.pos.x > width() / 6) {
+                camPos(player.pos.x + width() / 6, currCam.y);
             }
         })
 
@@ -1395,8 +1410,8 @@
             player.dir.x = 1
             player.setState('E-Walk')
             var currCam = camPos();
-            if (player.pos.x - currCam.x > width() / 4) {
-                camPos(player.pos.x - width() / 4, currCam.y);
+            if (player.pos.x - currCam.x > width() / 6) {
+                camPos(player.pos.x - width() / 6, currCam.y);
             }
         })
         onKeyPress('up', () => {
@@ -1408,8 +1423,8 @@
             player.dir.y = -1
             player.setState('N-Walk')
             var currCam = camPos();
-            if (currCam.y - player.pos.y > height() / 3) {
-                camPos(currCam.x, player.pos.y + height() / 3);
+            if (currCam.y - player.pos.y > height() / 6) {
+                camPos(currCam.x, player.pos.y + height() / 6);
             }
 
         })
@@ -1422,8 +1437,8 @@
             player.dir.y = 1
             player.setState('S-walk')
             var currCam = camPos();
-            if (player.pos.y - currCam.y > height() / 3) {
-                camPos(currCam.x, player.pos.y - height() / 3);
+            if (player.pos.y - currCam.y > height() / 6) {
+                camPos(currCam.x, player.pos.y - height() / 6);
             }
         })
 
@@ -1441,6 +1456,7 @@
             //keystate = ''
         })
         function spawnSpell(p) {
+            console.log(p)
             const obj = add([sprite('explosion'), pos(p), area(), origin('center'), 'spell'])
             wait(.5, () => {
                 if (player.state == 'Idle' && !player.dead) {
@@ -1526,6 +1542,20 @@
             if(!player.dead){
                 die();
             }
+        })
+        player.onCollide('breaker', (s) => {
+            if(gamestate.breakerSet) return
+            dialog('Do you want to reset the electrical breaker?',
+            player,
+            player.pos,
+            ['Yes','No'],
+            (i)=>{
+                if(!i){
+                    gamestate.breakerSet = true;
+                    s.frame = 1
+                }
+            }
+            )
         })
         player.onCollide('switch', (s) => {
             let bitKey = 'bit'+s.bit;
@@ -1623,6 +1653,56 @@
             console.log(s.dir)
             s.move(s.dir.x * 10, s.dir.y * 10)
         })
+        onUpdate('spider-down', (s)=>{
+            let w = add([sprite('web-line'), pos(s.pos.x+32, s.pos.y+4), area({scale:.6}), layer('ui')])
+            s.move(0, 270)
+            s.webs.push(w)
+            if(s.pos.y>player.pos.y-16){
+                s.webs.forEach((w, i)=>{
+                    wait(.004*i, ()=>{
+                        destroy(w)
+                    })
+                })
+                destroy(s)
+                let spider = add([sprite('spider', {anim:'Drop'}), pos(s.pos.x, s.pos.y), area({scale:.6}), layer('mg'), solid(), 'spider', 'hurts', 'destructible', { dir: 0, timer: 1, small: true, ready: false}])
+                if(player.pos.x>s.pos.x){
+                    spider.dir=1
+                    spider.play('Walk-R')
+                }else{
+                    spider.dir=-1
+                    spider.play('Walk-L')
+                }
+
+            }
+        })
+        onUpdate('spider', (s)=>{
+            s.move(s.dir * 170, 0)
+            s.timer -= dt()
+            if (s.timer <= 0) {
+                s.dir = -s.dir
+                if(s.dir > 0){
+                  s.play('Walk-R')
+                }else{
+                  s.play('Walk-L')
+                }
+                s.timer = rand(1)+1
+              }       
+        })
+        
+        onUpdate('bat', (s)=>{
+            s.move(s.dir * 120, 0)
+            s.timer -= dt()
+            if (s.timer <= 0) {
+                s.dir = -s.dir
+                if(s.dir > 0){
+                  s.play('Walk-R')
+                }else{
+                  s.play('Walk-L')
+                }
+                s.timer = rand(3)+3
+              }       
+        })
+        
         onUpdate('ghoulie', (g)=>{
             g.move(0, g.dir * 50)
             g.timer -= dt()
