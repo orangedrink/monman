@@ -175,6 +175,7 @@
     loadSprite('shelf', 'shelf.png')
     loadSprite('web', 'web.png')
     loadSprite('web2', 'web2.png')
+    loadSprite('web-line', 'web-line.png')
     loadAseprite("doctor", "doctor.png", "doctor.json");
     loadAseprite('monmach', 'monmach.png', 'monmach.json')
     loadAseprite('switch', 'switch.png', 'switch.json')
@@ -197,7 +198,7 @@
             [
                 'yccccw',
                 'akjikb',
-//                'aiiiNb',
+//                'aiiiYb',
                 'aqrrsb',
                 'atuuvb',
                 'aABBCb',
@@ -341,10 +342,10 @@
                 '       aiiiiibaiibaiiiiib',
                 '       xdddddzaiibxdddddz',
                 '   ycVcccccccceiifcccccccc^cw',
-                '   aXiiiiiiiiiiiiiiiiiiWXiiib',
+                '   aXiiii!iiiii!iWXiiiiWZii!b',
                 '   xddddddddddddddddddddddddz',
                 'yccccccccccccccccccccccccccccccw',
-                'aiiiiiiiiiiiiiiiiiiiiiiiiiiiiiWb',
+                'a!ii!iiYZiiiiiYXiii!iiWXiii!iiWb',
                 'xd[dddddddddddddddddddddddddd]dz',
             ],
             [
@@ -1156,6 +1157,10 @@
             U: () => [sprite('slime', {anim: "idle"}), {frame: 0}, area({scale:.6}), solid(), layer('mg'), scale(2),  'slime', 'replace', 'hurts', { state: 'idle', dir:{x:1,y:1},  timer: 0, ready: true}],
             W: () => [sprite('web'), layer('fg'), area(), 'replace', 'destructible'],
             X: () => [sprite('web2'), layer('fg'), area(), 'replace', 'destructible'],
+            Y: () => [sprite('web'), layer('fg'), area(), 'replace', 'destructible', 'trigger-spider'],
+            Z: () => [sprite('web2'), layer('fg'), area(), 'replace', 'destructible', 'trigger-spider'],
+            '!': () => [sprite('spider'), {anim:'Walk-L'}, area({scale:.6}), solid(), layer('mg'), 'spider', 'replace', 'destructible', 'hurts', { dir: -1, timer: 0 }],
+            
             '>': () => [sprite('top-door'), area(), layer('mg'), solid(), 'door', 'replace', {
                 doorLookup: '>'
             }],
@@ -1242,7 +1247,7 @@
 
         camPos(startX, startY)
         player.onUpdate(() => {
-            console.log(player.pos)
+            //console.log(player.pos)
             if(player.dead){
                 return
             }
@@ -1377,6 +1382,9 @@
                         }        
                     )
         })
+        player.onCollide('trigger-spider', (m) => {
+            let spider = add([sprite('spider', {anim:'Drop'}), pos(player.pos.x+rand(64)-32, player.pos.y+rand(64)-height()), area({scale:.6}), layer('ui'), 'spider-down', 'hurts', 'destructible', { dir: {x:0, y:0}, timer: 3, webs:[]}])
+        });
 
         keyDown('left', () => {
             if(dialogOpen || player.dead) return
@@ -1623,6 +1631,42 @@
             console.log(s.dir)
             s.move(s.dir.x * 10, s.dir.y * 10)
         })
+        onUpdate('spider-down', (s)=>{
+            let w = add([sprite('web-line'), pos(s.pos.x+32, s.pos.y+4), area({scale:.6}), layer('ui')])
+            s.move(0, 270)
+            s.webs.push(w)
+            if(s.pos.y>player.pos.y-16){
+                s.webs.forEach((w, i)=>{
+                    wait(.004*i, ()=>{
+                        destroy(w)
+                    })
+                })
+                destroy(s)
+                let spider = add([sprite('spider', {anim:'Drop'}), pos(s.pos.x, s.pos.y), area({scale:.6}), layer('mg'), solid(), 'spider', 'hurts', 'destructible', { dir: 0, timer: 1, small: true, ready: false}])
+                if(player.pos.x>s.pos.x){
+                    spider.dir=1
+                    spider.play('Walk-R')
+                }else{
+                    spider.dir=-1
+                    spider.play('Walk-L')
+                }
+
+            }
+        })
+        onUpdate('spider', (s)=>{
+            s.move(s.dir * 150, 0)
+            s.timer -= dt()
+            if (s.timer <= 0) {
+                s.dir = -s.dir
+                if(s.dir > 0){
+                  s.play('Walk-R')
+                }else{
+                  s.play('Walk-L')
+                }
+                s.timer = rand(1)+1
+              }       
+        })
+        
         onUpdate('ghoulie', (g)=>{
             g.move(0, g.dir * 50)
             g.timer -= dt()
