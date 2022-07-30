@@ -1085,7 +1085,7 @@
         }
         const bookMappings = {
             'manual': ()=>{
-                dialog('Volume I: Overview\n\nThe Monser Maker Machine is configured by setting the four bits that make up the Monster Byte.\nThe levers that allow for setting and unsetting the bits in the Monster Byte are located in the Mansion as follows:\n\nBit 1:\tThe Galley\nBit 2:\tThe Cellar\nBit 3:\tThe Tower\nBit 4:\tThe Parlor\n', player, player.pos)
+                dialog('Volume I: Overview\n\nThe Monser Maker Machine is configured by setting the four bits that make up the Monster Byte.\nThe levers that allow for setting and unsetting the bits in the Monster Byte are located in the Mansion as follows:\n\nBit 1:\tThe Tower\nBit 2:\tThe Cellar\nBit 3:\tThe Parlor\nBit 4:\tThe Galley\n', player, player.pos)
             },
             'bit1': ()=>{
                 dialog('Volume II: Monster Byte Bit 1 Settings and Corresponding Monster Types\nSkeleton:\t1\nBoar:\t0\nBeast:\t0\nMushroom:\t1\ntroll:\t1\nreaver:\t0\nDraconian:\t1\nelemental:\t0\niron Golem:\t1\nGiant mushroom:\t0\nGiant troll:\t0\nGiant Beast:\t1\nGiant Boar:\t1\nDragonman:\t0\nGiant Iron Golem:\t1', player, player.pos)
