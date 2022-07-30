@@ -1141,7 +1141,7 @@
             A: () => [sprite('bottom-left-carpet'), layer('bg')],
             B: () => [sprite('bottom-carpet'), layer('bg')],
             C: () => [sprite('bottom-right-carpet'), layer('bg')],
-            D: () => [sprite('bed'), layer('bg'), layer('mg'), area(), solid(), 'replace', 'bean'],
+            D: () => [sprite('bed'), layer('bg'), layer('mg'), area(), solid(), 'replace'],
             E: () => [sprite('bookshelf'), layer('bg'), layer('mg'), area(), solid(), 'book' , 'replace-wall', {book: 'manual'}],
             F: () => [sprite('bookshelf'), layer('bg'), layer('mg'), area(), solid(), 'book' , 'replace-wall', {book: 'bit1'}],
             G: () => [sprite('bookshelf'), layer('bg'), layer('mg'), area(), solid(), 'book' , 'replace-wall', {book: 'bit2'}],
