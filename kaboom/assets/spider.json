@@ -1,56 +1,56 @@
 { "frames": [
    {
     "filename": "16x16 Spider 0.aseprite",
-    "frame": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "frame": { "x": 0, "y": 0, "w": 30, "h": 31 },
     "rotated": false,
     "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
-    "sourceSize": { "w": 64, "h": 64 },
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 30, "h": 31 },
+    "sourceSize": { "w": 30, "h": 31 },
     "duration": 100
    },
    {
     "filename": "16x16 Spider 1.aseprite",
-    "frame": { "x": 64, "y": 0, "w": 64, "h": 64 },
+    "frame": { "x": 30, "y": 0, "w": 30, "h": 31 },
     "rotated": false,
     "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
-    "sourceSize": { "w": 64, "h": 64 },
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 30, "h": 31 },
+    "sourceSize": { "w": 30, "h": 31 },
     "duration": 100
    },
    {
     "filename": "16x16 Spider 2.aseprite",
-    "frame": { "x": 128, "y": 0, "w": 64, "h": 64 },
+    "frame": { "x": 60, "y": 0, "w": 30, "h": 31 },
     "rotated": false,
     "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
-    "sourceSize": { "w": 64, "h": 64 },
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 30, "h": 31 },
+    "sourceSize": { "w": 30, "h": 31 },
     "duration": 100
    },
    {
     "filename": "16x16 Spider 3.aseprite",
-    "frame": { "x": 192, "y": 0, "w": 64, "h": 64 },
+    "frame": { "x": 90, "y": 0, "w": 30, "h": 31 },
     "rotated": false,
     "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
-    "sourceSize": { "w": 64, "h": 64 },
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 30, "h": 31 },
+    "sourceSize": { "w": 30, "h": 31 },
     "duration": 200
    },
    {
     "filename": "16x16 Spider 4.aseprite",
-    "frame": { "x": 256, "y": 0, "w": 64, "h": 64 },
+    "frame": { "x": 120, "y": 0, "w": 30, "h": 31 },
     "rotated": false,
     "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
-    "sourceSize": { "w": 64, "h": 64 },
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 30, "h": 31 },
+    "sourceSize": { "w": 30, "h": 31 },
     "duration": 100
    },
    {
     "filename": "16x16 Spider 5.aseprite",
-    "frame": { "x": 320, "y": 0, "w": 64, "h": 64 },
+    "frame": { "x": 150, "y": 0, "w": 30, "h": 31 },
     "rotated": false,
     "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
-    "sourceSize": { "w": 64, "h": 64 },
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 30, "h": 31 },
+    "sourceSize": { "w": 30, "h": 31 },
     "duration": 100
    }
  ],
@@ -59,7 +59,7 @@
   "version": "1.2.37-x64",
   "image": "spider.png",
   "format": "RGBA8888",
-  "size": { "w": 384, "h": 64 },
+  "size": { "w": 180, "h": 31 },
   "scale": "1",
   "frameTags": [
    { "name": "Walk-L", "from": 0, "to": 1, "direction": "forward" },
