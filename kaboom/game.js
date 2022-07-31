@@ -1866,6 +1866,8 @@
             player.onUpdate(()=>{
                 if (!isKeyDown("right")&&!isKeyDown("left")&&player.state=='run') {
                     player.enterState('idle')
+                } else if((isKeyDown("right")||isKeyDown("left"))&&player.state=='idle'){
+                    player.enterState('run')
                 }
                 if(player.state=='run'){
                     let speed = (player.turned?-100:100)
@@ -1912,4 +1914,4 @@
     
     })
     //go ('mansion', { level: 0, score: 0, startX: 192, startY:216, newGame:true })
-    go ('villiage', {monster:'boar'})
+    go ('villiage', {monster:'bean'})
