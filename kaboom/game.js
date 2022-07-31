@@ -146,7 +146,7 @@
     loadSprite('top-left-wall', 'wall-top-left.png')
     loadSprite('top-right-wall', 'wall-top-right.png')
     loadSprite('top-door', 'door.png')
-    loadSprite('explosion', 'explode.png')
+    //loadSprite('explosion', 'explode.png')
     loadSprite('stairs-up', 'stairs-up.png')
     loadSprite('stairs-dn', 'stairs-dn.png')
     loadSprite('floor', 'floor.png')
@@ -176,6 +176,9 @@
     loadSprite('web', 'web.png')
     loadSprite('web2', 'web2.png')
     loadSprite('web-line', 'web-line.png')
+    loadSprite('blank', 'blank.png')
+    loadSprite('terrain-top-center', 'villiage/terrain_top_center_B_full.png')
+    loadSprite('terrain-center', 'villiage/terrain_center.png')
     loadAseprite("doctor", "doctor.png", "doctor.json");
     loadAseprite('monmach', 'monmach.png', 'monmach.json')
     loadAseprite('switch', 'switch.png', 'switch.json')
@@ -188,6 +191,10 @@
     loadAseprite('slime-drop', 'slime-drop.png', 'slime-drop.json')
     loadAseprite('spider', 'spider.png', 'spider.json')
     loadAseprite('bat', 'bat.png', 'bat.json')
+    loadAseprite('explosion', 'explosion.png', 'explosion.json')
+    loadAseprite('steam', 'steam.png', 'steam.json')
+    loadAseprite('bean', 'monsters/bean.png', 'monsters/bean.json')
+    loadAseprite('boar', 'monsters/boar.png', 'monsters/boar.json')
     scene('mansion', ({
         level,
         startX,
@@ -262,9 +269,9 @@
                 '        aItuvIb',
                 '        aituvib',
                 '        aItuvIb',
-                'yLcKccKceituvifKccKccLwcccccccccc<cLw',
-                'aNiiiNiiiituviiiiNiiiNOiiiiiiiiiiiiib',
-                'xdddddddgituvihdddddddzdddddddddddddz',
+                'yLcKccKceituvifKccKccLwyccccccccc<cLw',
+                'aNiiiNiiiituviiiiNiiiNO%iiiiiiiiiiiib',
+                'xdddddddgituvihdddddddzxddddddddddddz',
                 '        aItuvIb',
                 '        aituvib',
                 '        aItuvIb',
@@ -304,7 +311,7 @@
                 '                        aib',
                 'ycLcTcccTcccTcccTcccTccceifTcccTcccTcccTcccTccccLcw',
                 'aiUiiUiiiiiUUUiiiiiiiiiiiiiiiiiiiiiiiiiiUiUUUiUiiib',
-                'aiiiiiUiiiiiUiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiUiiiiiUb',
+                'aiiiiiUiiUUUUiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiUUUUiiUb',
                 'xdddddddddddddddgiiUiqrrrrrrrsiUiihdddddddddddddddz',
                 '                aimnltuuuuuuuvmnilb',
                 '                amniltuuuuuuuvmnlib',
@@ -334,9 +341,9 @@
                 'xd<dddddddddddddddddddddddddddddddddddddddddz',
             ],
             [
-                'yTcccTcccTcccTcccTcccTcccTcccTcccTcccTcccTcccc>cw',
-                'aiiiiiiiiiiiiiiiiiiiiiiiiiiiUUiiiiiiiiUiiiiiUiiib',
-                'xd<dddddddddddddddddddddddddddddddddddddddddddddz',
+                'ycLcw&&&&&yTcccTcccTcccTcccTcccTcccTcccTcccTcccTcccTcccTcccwyc>cw',
+                'aiiiO     %iiiiiiiiiiiiiiiiiiiUUUUiiiiUUUUUUUUUUUiUUiiUiiiiO%iiib',
+                'xdddz&&&&&xd<ddddddddddddddddddddddddddddddddddddddddddddddzxdddz',
             ],
             [
                 '              yccw',
@@ -588,9 +595,9 @@
         const doorMappings = {
             1: {
                 '<': {
-                    targetLevel: 6,
-                    targetX: 1638,
-                    targetY: 926,
+                    targetLevel: 9,
+                    targetX: 801,
+                    targetY: 96,
                     keys: [
                         ()=>{
                             if(gamestate.mmFound){
@@ -713,14 +720,32 @@
                     ]
                 },
                 'v':{
+                    targetLevel: 9,
+                    targetX: 3997,
+                    targetY: 96,
+                },
+            },
+            7:{},
+            8:{},
+            9:{
+                '>':{
+                   targetLevel: 6,
+                   targetX: 1638,
+                   targetY: 926,
+                   keys:[
+                        ()=>{
+                            if(buttonsPressed==1){
+                                return true;
+                            }
+                        }    
+                   ]
+                },
+                '<':{
                     targetLevel: 1,
                     targetX: 2015,
                     targetY: 340,
                 },
             },
-            7:{},
-            8:{},
-            9:{},
             10:{
                 '^':{
                     targetLevel: 10,
@@ -1078,7 +1103,7 @@
                 1:{
                     targetLevel: 25,
                     targetX: 1500,
-                    targetY:666        
+                    targetY:798
                 }
             }
 
@@ -1106,6 +1131,9 @@
             'appendixb': ()=>{
                 dialog('Appendix B: Power and Maintenance\n\n', player, player.pos)
             },
+            'note': ()=>{
+                dialog('A old note written in messy handwriting\n\n"Right, Up, Up, Left, Right"', player, player.pos)
+            },
         }
         const levelCfg = {
             width: 64,
@@ -1123,8 +1151,8 @@
             k: () => [sprite('chair'), layer('mg'), area(), solid(), 'replace'],
             l: () => [sprite('chair2'), layer('mg'), area(), solid(), 'replace'],
             m: () => [sprite('chair3'), layer('mg'), area(), solid(), 'replace'],
-            n: () => [sprite('table'), layer('mg'), area(), solid(), 'replace'],
-            o: () => [sprite('table2'), layer('mg'), area(), solid(), 'replace'],
+            n: () => [sprite('table'), layer('mg'), area(), solid(), 'replace',],
+            o: () => [sprite('table2'), layer('mg'), area(), solid(), 'replace', 'book',  {book: 'note'}],
             p: () => [sprite('statue'), layer('mg'), area(), solid(), 'replace'],
 
             q: () => [sprite('top-left-carpet'), layer('bg')],
@@ -1163,10 +1191,12 @@
             X: () => [sprite('web2'), layer('fg'), area(), 'replace', 'destructible'],
             Y: () => [sprite('web'), layer('fg'), area(), 'replace', 'destructible', 'trigger-spider'],
             Z: () => [sprite('web2'), layer('fg'), area(), 'replace', 'destructible', 'trigger-spider'],
-            '!': () => [sprite('spider'), {anim:'Walk-L'}, area({scale:.6}), solid(), layer('mg'), 'spider', 'replace', 'destructible', 'hurts', { dir: -1, timer: 0 }],
+            '!': () => [sprite('spider'), {anim:'Walk-L'}, area({scale:.6}), solid(), layer('mg'), 'spider', 'replace', 'destructible', 'hurts', { dir: -1, timer: 0, adjusted:false }],
             '@': () => [sprite('bat'), {anim:'Walk-L'}, area({scale:.6}), layer('ui'), 'bat', 'destructible', 'hurts', { dir: -1, timer: 0 }],
             '#': () => [sprite('bat'), {anim:'Walk-R'}, area({scale:.6}), layer('ui'), 'bat', 'destructible', 'hurts', { dir: 1, timer: 0 }],
             '$': () => [sprite('breaker'), {frame: gamestate.breakerSet?1:0}, area(), solid(), layer('mg'), 'replace', 'breaker', {reset:false}],
+            '%': () => [sprite('right-wall'), area(), solid(), 'wall', 'replace', 'destructible', ],
+            '&': () => [sprite('blank'), area(), solid(), 'wall' ],
             
             '>': () => [sprite('top-door'), area(), layer('mg'), solid(), 'door', 'replace', {
                 doorLookup: '>'
@@ -1457,8 +1487,8 @@
         })
         function spawnSpell(p) {
             console.log(p)
-            const obj = add([sprite('explosion'), pos(p), area(), origin('center'), 'spell'])
-            wait(.5, () => {
+            const obj = add([sprite('explosion', {anim:'idle'}), pos(p), scale(.75), area(), origin('center'), 'spell'])
+            wait(1, () => {
                 if (player.state == 'Idle' && !player.dead) {
                     player.setState('Laugh')
                 }
@@ -1532,12 +1562,15 @@
                 const yv = (rand(vel.yv)-vel.yv)
                 addProjectile(spr, p, {xv:xv, yv:yv}, lifespan, true)
             }
-            if(spr=='bone') addProjectile('skull', p, {xv:0, yv:-200}, lifespan, true)
+            if(spr=='bone') {
+                addProjectile('skull', p, {xv:0, yv:-200}, lifespan, true)
+            }
         }
         onUpdate('projectile', (p)=>{
             p.move(p.xv, p.yv)
         })
         player.onCollide('hurts', (s) => {
+            //return
             if (player.dead) return
             if(!player.dead){
                 die();
@@ -1578,7 +1611,11 @@
             //wait(1, () => {
             //  destroy(k)
             //})
-            if(s.expSpr) addExplosion(s.expSpr , s.pos,  {xv:200, yv:200}, .5, 5)
+            if(s.expSpr) {
+                addExplosion(s.expSpr , s.pos,  {xv:200, yv:200}, .5, 5)
+            } else{
+                addExplosion('steam' , s.pos,  {xv:100, yv:100}, .35, 5)
+            }
             destroy(s)
         })      
         onCollide('spell', 'slime', (k,s) => {
@@ -1650,11 +1687,10 @@
                 s.play(s.state)
                 s.playing = s.state
             }
-            console.log(s.dir)
             s.move(s.dir.x * 10, s.dir.y * 10)
         })
         onUpdate('spider-down', (s)=>{
-            let w = add([sprite('web-line'), pos(s.pos.x+32, s.pos.y+4), area({scale:.6}), layer('ui')])
+            let w = add([sprite('web-line'), pos(s.pos.x+16, s.pos.y+4), area({scale:.6}), layer('ui')])
             s.move(0, 270)
             s.webs.push(w)
             if(s.pos.y>player.pos.y-16){
@@ -1664,7 +1700,7 @@
                     })
                 })
                 destroy(s)
-                let spider = add([sprite('spider', {anim:'Drop'}), pos(s.pos.x, s.pos.y), area({scale:.6}), layer('mg'), solid(), 'spider', 'hurts', 'destructible', { dir: 0, timer: 1, small: true, ready: false}])
+                let spider = add([sprite('spider', {anim:'Drop'}), pos(s.pos.x, s.pos.y), area({scale:.6}), layer('mg'), solid(), 'spider', 'hurts', 'destructible', { dir: 0, timer: 2, adjusted: true, ready: false,}])
                 if(player.pos.x>s.pos.x){
                     spider.dir=1
                     spider.play('Walk-R')
@@ -1676,17 +1712,22 @@
             }
         })
         onUpdate('spider', (s)=>{
-            s.move(s.dir * 170, 0)
-            s.timer -= dt()
-            if (s.timer <= 0) {
-                s.dir = -s.dir
-                if(s.dir > 0){
-                  s.play('Walk-R')
-                }else{
-                  s.play('Walk-L')
-                }
-                s.timer = rand(1)+1
-              }       
+            if(!s.adjusted){
+                s.move(0, rand(255)+255)
+                s.adjusted = true;
+            }else{
+                s.move(s.dir * 170, 0)
+                s.timer -= dt()
+                if (s.timer <= 0) {
+                    s.dir = -s.dir
+                    if(s.dir > 0){
+                      s.play('Walk-R')
+                    }else{
+                      s.play('Walk-L')
+                    }
+                    s.timer = rand(1)+1
+                  }           
+            }
         })
         
         onUpdate('bat', (s)=>{
@@ -1730,5 +1771,145 @@
         })
 
     })
+    scene('villiage', ({monster})=>{
+        layers(['bg', 'mg', 'fg', 'obj', 'ui'], 'obj')
+        const map = [
+            '                                                                                               ',
+            '                                                                                               ',
+            '                                                                                               ',
+            '                                                                                               ',
+            '                                                                                               ',
+            '                                                                                               ',
+            '                                                                                               ',
+            '                                                                                               ',
+            '                                                                                               ',
+            '===============================================================================================',
+            '-----------------------------------------------------------------------------------------------'
+            ];
+            const levelCfg = {
+                width: 32,
+                height: 32,
+                '=': () => [sprite('terrain-top-center'), area({scale:.5}), solid(), origin('center'), 'ground'],
+                '-': () => [sprite('terrain-center'), area(), solid(), origin('center'), 'ground'],
+            }
+            addLevel(map, levelCfg)    
+            const player = add([
+                sprite(monster, {anim:'idle'}),
+                pos(0,0),
+                area(scale),
+                solid(),
+                body(),
+                state("idle", ["idle", "attack-1", "attack-2", "attack-3", "run", "jump"],
+               ),
+                
+            ])
+            player.onStateEnter("idle", () => {
+                player.flipX(player.turned);
+                player.play("idle")               
+            })
+            player.onStateEnter("run", () => {
+                player.flipX(player.turned);
+                if(player.isGrounded()) player.play("run")               
+            })
+            player.onAnimEnd("attack-1", () => {
+                // You can also register an event that runs when certain anim ends
+                player.flipX(player.turned);
+                player.enterState(player.nextState)
+                player.nextState = 'idle';
 
-    go ('mansion', { level: 0, score: 0, startX: 192, startY:216, newGame:true })
+            })
+            player.onAnimEnd("attack-2", () => {
+                // You can also register an event that runs when certain anim ends
+                player.flipX(player.turned);
+                player.enterState(player.nextState)
+                player.nextState = 'idle';
+
+            })
+            player.onAnimEnd("attack-3", () => {
+                // You can also register an event that runs when certain anim ends
+                player.flipX(player.turned);
+                player.enterState(player.nextState)
+                player.nextState = 'idle';
+
+            })
+            player.onStateEnter("attack-1", () => {
+                // enter "idle" state when the attack animation ends
+                player.flipX(player.turned);
+                player.play("attack-1", {
+                    loop:false
+                })
+            })
+            player.onStateEnter("attack-2", () => {
+                // enter "idle" state when the attack animation ends
+                player.flipX(player.turned);
+                player.play("attack-2", {
+                    loop:false
+                })
+            })
+            player.onStateEnter("attack-3", () => {
+                // enter "idle" state when the attack animation ends
+                player.flipX(player.turned);
+                player.play("attack-3", {
+                    loop:false
+                })
+            })
+            player.onCollide('ground', ()=>{
+                if(player.state=='attack-3'){
+
+                }else if(player.state!='run'){
+                        player.enterState('idle')
+                }else if(player.jumping){
+                    player.jumping = false;
+                    player.play('run')
+                }
+            })
+            player.onUpdate(()=>{
+                if (!isKeyDown("right")&&!isKeyDown("left")&&player.state=='run') {
+                    player.enterState('idle')
+                }
+                if(player.state=='run'){
+                    let speed = (player.turned?-100:100)
+                    player.move(speed,0)
+                }
+            })
+            onKeyPress('space', () => {
+                if(!player.isGrounded() && player.state!='attack-3') {
+                    player.nextState = 'idle';
+                    player.enterState("attack-3")
+                }else if(player.state=='idle'||player.state=='run') {
+                    player.nextState = 'idle';
+                    player.enterState("attack-1")
+                }else if(player.state=='attack-1'){
+                    player.nextState = 'attack-2';
+                }else if(player.state=='attack-2'){
+                    player.nextState = 'attack-3';
+                }
+                console.log(player.state)
+                console.log(player.nextState)
+            })
+            onKeyPress('up', () => {
+                if(!player.isGrounded()) return
+                player.jump(500);
+                player.jumping = true;
+                if(player.state=='idle'||player.state=='run'){
+                    player.play('jump',{loop:false})
+                }
+            })
+            onKeyPress('left', () => {
+                player.turned = true;
+            })
+            onKeyPress('right', () => {
+                player.turned = false;
+            })
+            onKeyPress(['right', 'left'], () => {
+                player.flipX(player.turned)
+                if(player.state=='idle'){
+                    player.enterState("run")
+                }else{
+                    player.nextState = 'run';
+                }
+            })
+    
+    })
+    //go ('mansion', { level: 0, score: 0, startX: 192, startY:216, newGame:true })
+    go ('villiage', {monster:'boar'})
