@@ -198,6 +198,7 @@
     loadAseprite('skeleton', 'monsters/skeleton.png', 'monsters/skeleton.json')
     loadAseprite('beast', 'monsters/beast.png', 'monsters/beast.json')
     loadAseprite('mushroom', 'monsters/mushroom.png', 'monsters/mushroom.json')
+    loadAseprite('troll', 'monsters/troll.png', 'monsters/troll.json')
     scene('mansion', ({
         level,
         startX,
@@ -1799,7 +1800,7 @@
         })
 
     })
-    scene('villiage', ({key, dex, spd, con, str, name, size, specials={}})=>{
+    scene('village', ({key, dex, spd, con, str, name, size, specials={}})=>{
         layers(['bg', 'mg', 'fg', 'obj', 'ui'], 'obj')
         const map = [
             '                                                                                               ',
@@ -1905,6 +1906,13 @@
                 if(player.state=='run'){
                     xspeed = (player.turned?-spd*50:spd*50)
                 }
+                if(player.vx&&Math.abs(player.vx)>1){
+                    console.log(player.vx)
+                    xspeed += player.vx; 
+                    player.vx *= .7
+                }else{
+                    player.vx = 0
+                }
                 player.move(xspeed,0)
                 camPos(player.pos.x+width()/4, player.pos.y-height()/6)
             })
@@ -1915,6 +1923,10 @@
                     if(specials.jumping.jump){
                         player.jump(370)
                     }
+                    if(specials.jumping.lunge){
+                        player.vx = (dex*150)*(player.turned?-1:1);
+                    }
+
                 }else if(player.state=='idle'||player.state=='run') {
                     player.nextState = 'idle';
                     player.enterState("attack-1")
@@ -1922,6 +1934,20 @@
                     player.nextState = 'attack-2';
                 }else if(player.state=='attack-2'){
                     player.nextState = 'attack-3';
+                }else if(player.state=='attack-3'){
+                    if(isKeyDown("down")){
+                        if(specials.standing.jump && player.isGrounded()){
+                            player.jump(150+(dex*100))
+                        }
+                        if(specials.standing.attack){
+                            player.nextState = 'attack-3';
+                        }
+                        if(specials.standing.lunge){
+                            player.vx = (dex*100)*(player.turned?-1:1);
+                            console.log('lunge')
+                        }
+                    }
+                    //player.nextState = 'attack-3';
                 }
                 console.log(player.state)
                 console.log(player.nextState)
@@ -1951,5 +1977,5 @@
     
     })
     //go ('mansion', { level: 0, startX: 192, startY:216, newGame:true })
-    go ('villiage', {key:'mushroom', dex: 2, spd: 3, size: 1.5, specials:{jumping:{jump:true}}})
+    go ('village', {key:'troll', dex: 1, spd: 3, size: 2, specials:{jumping:{jump:false, lunge:true}, standing:{lunge:true, attack:true, jump:false}}})
     

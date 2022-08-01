@@ -259,42 +259,6 @@
     "spriteSourceSize": { "x": 0, "y": 0, "w": 55, "h": 46 },
     "sourceSize": { "w": 55, "h": 46 },
     "duration": 100
-   },
-   {
-    "filename": "mushroom 29.aseprite",
-    "frame": { "x": 1595, "y": 0, "w": 55, "h": 46 },
-    "rotated": false,
-    "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 55, "h": 46 },
-    "sourceSize": { "w": 55, "h": 46 },
-    "duration": 100
-   },
-   {
-    "filename": "mushroom 30.aseprite",
-    "frame": { "x": 1650, "y": 0, "w": 55, "h": 46 },
-    "rotated": false,
-    "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 55, "h": 46 },
-    "sourceSize": { "w": 55, "h": 46 },
-    "duration": 100
-   },
-   {
-    "filename": "mushroom 31.aseprite",
-    "frame": { "x": 1705, "y": 0, "w": 55, "h": 46 },
-    "rotated": false,
-    "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 55, "h": 46 },
-    "sourceSize": { "w": 55, "h": 46 },
-    "duration": 100
-   },
-   {
-    "filename": "mushroom 32.aseprite",
-    "frame": { "x": 1760, "y": 0, "w": 55, "h": 46 },
-    "rotated": false,
-    "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 55, "h": 46 },
-    "sourceSize": { "w": 55, "h": 46 },
-    "duration": 100
    }
  ],
  "meta": {
@@ -302,16 +266,16 @@
   "version": "1.2.37-x64",
   "image": "mushroom.png",
   "format": "RGBA8888",
-  "size": { "w": 1815, "h": 46 },
+  "size": { "w": 1595, "h": 46 },
   "scale": "1",
   "frameTags": [
    { "name": "idle", "from": 0, "to": 3, "direction": "forward" },
    { "name": "run", "from": 4, "to": 10, "direction": "forward" },
    { "name": "attack-1", "from": 11, "to": 14, "direction": "forward" },
    { "name": "attack-2", "from": 15, "to": 20, "direction": "forward" },
-   { "name": "attack-3", "from": 21, "to": 28, "direction": "forward" },
-   { "name": "jump", "from": 29, "to": 30, "direction": "forward" },
-   { "name": "hit", "from": 31, "to": 32, "direction": "forward" }
+   { "name": "attack-3", "from": 21, "to": 24, "direction": "forward" },
+   { "name": "jump", "from": 25, "to": 26, "direction": "forward" },
+   { "name": "hit", "from": 27, "to": 28, "direction": "forward" }
   ],
   "layers": [
    { "name": "Layer Copy", "opacity": 255, "blendMode": "normal" }
