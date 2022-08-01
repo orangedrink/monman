@@ -1,6 +1,0 @@
-All assets were created in the pixel art editor PyxelEdit.
-The source files offers the possibility of opening the sprite sheets where all layers and animation frames are set up correctly.
-This makes it easier to make your own modifications to the characters, such as changing weapons. 
-
-Store link to PyxelEdit: https://pyxeledit.com/get.php
-

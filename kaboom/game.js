@@ -195,6 +195,9 @@
     loadAseprite('steam', 'steam.png', 'steam.json')
     loadAseprite('bean', 'monsters/bean.png', 'monsters/bean.json')
     loadAseprite('boar', 'monsters/boar.png', 'monsters/boar.json')
+    loadAseprite('skeleton', 'monsters/skeleton.png', 'monsters/skeleton.json')
+    loadAseprite('beast', 'monsters/beast.png', 'monsters/beast.json')
+    loadAseprite('mushroom', 'monsters/mushroom.png', 'monsters/mushroom.json')
     scene('mansion', ({
         level,
         startX,
@@ -203,6 +206,22 @@
     }) => {
         layers(['bg', 'mg', 'fg', 'obj', 'ui'], 'obj')
         let buttonsPressed = 0
+        const monsterMapping = {
+            '0001' : {key:'boar', dex: 1, spd: 1, size: 2},
+            '0010' : {key:'beast', dex: 3, spd: 3, size: 2},
+            '0011' : {key:'boar', dex: 1, spd: 1, size: 2},
+            '0100' : {key:'skeleton', dex: 2, spd: 2, size: 2},
+            '0101' : {key:'boar', dex: 250, spd: 80, size: 1},
+            '0110' : {key:'boar', dex: 250, spd: 80, size: 1},
+            '0111' : {key:'boar', dex: 250, spd: 80, size: 1},
+            '1001' : {key:'boar', dex: 250, spd: 80, size: 1},
+            '1010' : {key:'boar', dex: 250, spd: 80, size: 1},
+            '1011' : {key:'boar', dex: 250, spd: 80, size: 1},
+            '1100' : {key:'boar', dex: 250, spd: 80, size: 1},
+            '1101' : {key:'boar', dex: 250, spd: 80, size: 1},
+            '1110' : {key:'boar', dex: 250, spd: 80, size: 1},
+            '1111' : {key:'boar', dex: 250, spd: 80, size: 1.5},
+        }
         const maps = [
             [
                 'yccccw',
@@ -1389,7 +1408,11 @@
                         if(gamestate.bit4) monByte = monByte.replaceAt(3, '1')
                         dialog('The Monster Maker Machine is configured with the following Monster Byte:\n\n'+monByte+'\n\n', 
                             player, 
-                            {x:m.pos.x+96, y:m.pos.y+64}
+                            {x:m.pos.x+96, y:m.pos.y+64},
+                            ['Create Monster', 'Cancel'],
+                            (i)=>{
+                                if(i==0) go ('villiage', monsterMapping[monByte])
+                            }
                         )    
 
                     }
@@ -1406,9 +1429,14 @@
                         ['Yes','No'],
                         function(i){
                             if(i==0){
-                                dialog('Ah but he looks so tired. Perhaps later..',
+                                dialog('Take up your arms and go forth my pet.. They\'ll all be sorry that they didn\'t come to my birthday party!',
                                     player,
-                                    {x:m.pos.x+64, y:m.pos.y+64}
+                                    {x:m.pos.x+64, y:m.pos.y+64},
+                                    ['Continue', 'Cancel'],
+                                    (i)=>{
+                                        if(i==0) go ('villiage', {key:'bean', dex: 500, spd: 120, size: 1})
+
+                                    }
                                 )    
                             } else{
                                 dialog('Very well. Perhaps later..',
@@ -1644,7 +1672,7 @@
             if(!s.ready) return
             if(s.timer<0){
                 s.timer = 2
-                if(player.pos.x-s.pos.x>0 &&player.pos.y-s.pos.y>0){
+                if(player.pos.x-s.pos.x>0 && player.pos.y-s.pos.y>0){
                     //player is below and to the right of slime
                     if(rand(10)>5){
                         s.dir = {x:1, y:0}
@@ -1771,7 +1799,7 @@
         })
 
     })
-    scene('villiage', ({monster})=>{
+    scene('villiage', ({key, dex, spd, con, str, name, size, specials={}})=>{
         layers(['bg', 'mg', 'fg', 'obj', 'ui'], 'obj')
         const map = [
             '                                                                                               ',
@@ -1784,7 +1812,9 @@
             '                                                                                               ',
             '                                                                                               ',
             '===============================================================================================',
-            '-----------------------------------------------------------------------------------------------'
+            '-----------------------------------------------------------------------------------------------',
+            '-----------------------------------------------------------------------------------------------',
+            '-----------------------------------------------------------------------------------------------',
             ];
             const levelCfg = {
                 width: 32,
@@ -1794,11 +1824,13 @@
             }
             addLevel(map, levelCfg)    
             const player = add([
-                sprite(monster, {anim:'idle'}),
-                pos(0,0),
-                area(scale),
+                sprite(key, {anim:'idle'}),
+                pos(250,0),
+                area({scale:.7}),
                 solid(),
                 body(),
+                origin('bot'),
+                scale(size*.5),
                 state("idle", ["idle", "attack-1", "attack-2", "attack-3", "run", "jump"],
                ),
                 
@@ -1869,15 +1901,20 @@
                 } else if((isKeyDown("right")||isKeyDown("left"))&&player.state=='idle'){
                     player.enterState('run')
                 }
+                let xspeed = 0;
                 if(player.state=='run'){
-                    let speed = (player.turned?-100:100)
-                    player.move(speed,0)
+                    xspeed = (player.turned?-spd*50:spd*50)
                 }
+                player.move(xspeed,0)
+                camPos(player.pos.x+width()/4, player.pos.y-height()/6)
             })
             onKeyPress('space', () => {
                 if(!player.isGrounded() && player.state!='attack-3') {
                     player.nextState = 'idle';
                     player.enterState("attack-3")
+                    if(specials.jumping.jump){
+                        player.jump(370)
+                    }
                 }else if(player.state=='idle'||player.state=='run') {
                     player.nextState = 'idle';
                     player.enterState("attack-1")
@@ -1891,7 +1928,7 @@
             })
             onKeyPress('up', () => {
                 if(!player.isGrounded()) return
-                player.jump(500);
+                player.jump(150+(dex*100));
                 player.jumping = true;
                 if(player.state=='idle'||player.state=='run'){
                     player.play('jump',{loop:false})
@@ -1913,5 +1950,6 @@
             })
     
     })
-    //go ('mansion', { level: 0, score: 0, startX: 192, startY:216, newGame:true })
-    go ('villiage', {monster:'bean'})
+    //go ('mansion', { level: 0, startX: 192, startY:216, newGame:true })
+    go ('villiage', {key:'mushroom', dex: 2, spd: 3, size: 1.5, specials:{jumping:{jump:true}}})
+    

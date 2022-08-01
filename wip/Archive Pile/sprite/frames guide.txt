@@ -1,4 +1,0 @@
-row 1 = idle (1 to 5)
-row 2 = walk (6 to 9)
-row 3 = dead (10 to 16)
-row 4 = attack (17 to 22)
