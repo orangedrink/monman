@@ -21,15 +21,14 @@
     }
     // Constants
     const MOVE_SPEED = 120
-    const dialog = function(message, player, p, choices, callback){
-        dialogOpen = true
+    const camTween = function(p, steps){
         var step = 0;
         var camInterval = setInterval(function(){
             step++;
-            if(step>6) clearInterval(camInterval)
+            if(step>steps) clearInterval(camInterval)
             var currCam = camPos();
-            var xmov = (p.x - currCam.x) / (6-step);
-            var ymov = (p.y - currCam.y) / (6-step);
+            var xmov = (p.x - currCam.x) / (steps-step);
+            var ymov = (p.y - currCam.y) / (steps-step);
             if(Math.round(p.y)!=Math.round(currCam.y)){
                 currCam.y+=ymov;
             }
@@ -38,6 +37,11 @@
             }
             camPos(currCam)
         },1)
+
+    }
+    const dialog = function(message, player, p, choices, callback){
+        dialogOpen = true
+        camTween(p, 6)
         //camPos(player.pos.x, player.pos.y)
         const b = add([
             sprite('dialog'),
@@ -56,7 +60,7 @@
             pos(p.x, p.y-(choices&&choices.length?40:8)),
             origin('center')
         ]))
-        if(choices){
+        if(choices&&choices.length){
             cursor = add([
                 text('>>>',
                 {
@@ -130,6 +134,111 @@
             }, 1)    
         })
     }
+    let cardExists = false;
+    const card = function(message, player, p, choices, callback){
+        cardExists = true;
+        let t = add([
+            text(message,{
+                size: 12,
+                width:300
+            }),
+            pos(p.x, p.y-(choices&&choices.length?40:8)),
+            area(),
+        ])
+    }
+    const spellMapping = {
+        'kapow': {velocity: 10, size: .75, range: 32, sprite: 'explosion'},
+        'kaboom': {velocity: 60, size: 1.25, range: 48, sprite: 'explosion'},
+    }
+    let spellKey = 'kaboom'
+    const monsterMapping = {
+        '1000' : {key:'skeleton', str: 1, con:2, dex: 3, spd: 2, size: 2,
+            name:'Skeleton',
+            type: 'Undead',
+        },
+        '0100' : {key:'boar', str: 2, con:2, dex: 2, spd: 1, size: 2,
+            name:'Pigman',
+            type: 'Animal',
+        },
+        '0010' : {key:'beast', str: 2, con:2, dex: 3, spd: 3, size: 2, 
+            specials:{jumping:{lunge:true}},
+            name:'Beast',
+            type: 'Animal',
+        },
+        '1100' : {key:'mushroom', str: 2, con:2, dex: 3, spd: 3, size: 2, 
+            specials:{jumping:{lunge:true, jump:true}, standing:{lunge:true}},
+            name:'Fun Guy',
+            type: 'Mushroom',
+        },
+        '1010' : {key:'troll', str: 3, con:2, dex: 2, spd: 2, size: 3, 
+            specials:{standing:{pound:true}},
+            name:'Troll',
+            type: 'Animal',
+        },
+        '0110' : {key:'reaver', str: 2, con:1, dex: 3, spd: 2, size: 2, 
+            specials:{jumping:{lunge:true, jump:true}},
+            name:'Flesh Reaver',
+            type: 'Undead',
+        },
+        '1110' : {key:'lizard', str: 2, con:2, dex: 3, spd: 3, size: 2, 
+            specials:{standing:{attack:true}},
+            name:'Lizardman',
+            type: 'Animal',
+        },
+        //=============================================================
+        //bit 4
+        '0001' : {key:'elemental', str: 3, con:3, dex: 3, spd: 3, size: 2, 
+            specials:{standing:{attack:true, lunge:true}},
+            name:'Spirit Elemental',
+            type: 'Magical',
+        },
+        '1001' : {key:'golem', str: 4, con:4, dex: 3, spd: 3, size: 2, 
+            specials:{standing:{attack:true, lunge:true}, jumping:{lunge:true}},
+            name:'Iron Golem',
+            type: 'Magical',
+        },
+        '0101' : {key:'mushroom', str: 3, con:3, dex: 4, spd: 4, size: 3, 
+            specials:{jumping:{lunge:true, jump:true}, standing:{lunge:true}},
+            name:'Fun Gus',
+            type: 'Mushroom',
+        },
+        '0011' : {key:'troll', str: 3, con:3, dex: 4, spd: 4, size: 3, 
+            specials:{standing:{attack:true, lunge:true, pound:true}, jumping:{lunge:true, pound:true}},
+            name:'Giant Troll',
+            type: 'Animal',
+        },
+        '1101' : {key:'beast', str: 3, con:3, dex: 4, spd: 4, size: 3, 
+            specials:{standing:{attack:true, lunge:true}, jumping:{lunge:true}},
+            name:'Giant Beast',
+            type: 'Animal',
+        },
+        '1011' : {key:'boar', str: 4, con:4, dex: 3, spd: 3, size: 3, 
+            specials:{standing:{attack:true, lunge:true, pound:true}, jumping:{pound:true, lunge:true}},
+            name:'Boarman',
+            type: 'Animal',
+        },
+        '0111' : {key:'lizard', str: 4, con:4, dex: 5, spd: 5, size: 3, 
+            specials:{standing:{attack:true}},
+            name:'Dragonman',
+            type: 'Animal',
+        },
+        '1111' : {key:'golem', str: 5, con:5, dex: 4, spd: 4, size: 3, 
+            specials:{standing:{attack:true, lunge:true}, jumping:{lunge:true}},
+            name:'Steel Golem',
+            type: 'Magical',
+        },
+
+        //=============================================================
+        //Special
+        'bean' : {key:'bean', str: 3, con:3, dex: 5, spd: 4, size: 2, 
+            specials:{jumping:{lunge:true, jump:true}, standing:{lunge:true, attack:true}},
+            name:'Bean',
+            type: 'Animal',
+        },
+
+
+    }
+
     //Load sprites
     loadRoot('assets/')
     loadSprite('left-wall', 'wall-left.png')
@@ -145,6 +254,11 @@
     loadSprite('top-right-inside-wall', 'wall-inside-top-right.png')
     loadSprite('top-left-wall', 'wall-top-left.png')
     loadSprite('top-right-wall', 'wall-top-right.png')
+    loadSprite('galley-sign', 'galley-sign.png')
+    loadSprite('library-sign', 'library-sign.png')
+    loadSprite('cellar-sign', 'cellar-sign.png')
+    loadSprite('parlor-sign', 'parlor-sign.png')
+    loadSprite('tower-sign', 'tower-sign.png')
     loadSprite('top-door', 'door.png')
     //loadSprite('explosion', 'explode.png')
     loadSprite('stairs-up', 'stairs-up.png')
@@ -177,8 +291,9 @@
     loadSprite('web2', 'web2.png')
     loadSprite('web-line', 'web-line.png')
     loadSprite('blank', 'blank.png')
-    loadSprite('terrain-top-center', 'villiage/terrain_top_center_B_full.png')
-    loadSprite('terrain-center', 'villiage/terrain_center.png')
+    loadSprite('terrain-top-center', 'village/terrain_top_center_B_full.png')
+    loadSprite('building-door', 'village/building_door.png')
+    loadSprite('terrain-center', 'village/terrain_center.png')
     loadAseprite("doctor", "doctor.png", "doctor.json");
     loadAseprite('monmach', 'monmach.png', 'monmach.json')
     loadAseprite('switch', 'switch.png', 'switch.json')
@@ -199,6 +314,51 @@
     loadAseprite('beast', 'monsters/beast.png', 'monsters/beast.json')
     loadAseprite('mushroom', 'monsters/mushroom.png', 'monsters/mushroom.json')
     loadAseprite('troll', 'monsters/troll.png', 'monsters/troll.json')
+    loadAseprite('reaver', 'monsters/reaver.png', 'monsters/reaver.json')
+    loadAseprite('lizard', 'monsters/lizard.png', 'monsters/lizard.json')
+    loadAseprite('elemental', 'monsters/elemental.png', 'monsters/elemental.json')
+    loadAseprite('golem', 'monsters/golem.png', 'monsters/golem.json')
+    loadSprite('peasant', 'village/Peasant_Red.png', {
+        sliceX: 6,
+        sliceY: 9,
+        anims: {
+            idle:{ from: 0, to: 5, loop: true},
+            walk: { from: 6, to: 11, loop: true},
+            run: { from: 14, to: 20, loop: true},
+            attack: {from: 21, to: 26},
+            hit: {from: 36, to: 38},
+            die: {from: 39, to: 53},
+            
+        }
+    })
+    loadSprite('militia', 'village/Milita_Green.png', {
+        sliceX: 6,
+        sliceY: 9,
+        anims: {
+            idle:{ from: 0, to: 5, loop: true},
+            walk: { from: 6, to: 11, loop: true},
+            run: { from: 14, to: 20, loop: true},
+            attack: {from: 21, to: 26},
+            hit: {from: 36, to: 38},
+            die: {from: 39, to: 53},
+            
+        }
+    })
+    loadSprite('knight', 'village/Knight_Purple.png', {
+        sliceX: 8,
+        sliceY: 7,
+        anims: {
+            idle:{ from: 0, to: 7, loop: true},
+            walk: { from: 8, to: 15, loop: true},
+            run: { from: 16, to: 23, loop: true},
+            attack: {from: 26, to: 29},
+            hit: {from: 37, to: 38},
+            die: {from: 39, to: 54},
+            
+        }
+    })
+
+
     scene('mansion', ({
         level,
         startX,
@@ -207,22 +367,6 @@
     }) => {
         layers(['bg', 'mg', 'fg', 'obj', 'ui'], 'obj')
         let buttonsPressed = 0
-        const monsterMapping = {
-            '0001' : {key:'boar', dex: 1, spd: 1, size: 2},
-            '0010' : {key:'beast', dex: 3, spd: 3, size: 2},
-            '0011' : {key:'boar', dex: 1, spd: 1, size: 2},
-            '0100' : {key:'skeleton', dex: 2, spd: 2, size: 2},
-            '0101' : {key:'boar', dex: 250, spd: 80, size: 1},
-            '0110' : {key:'boar', dex: 250, spd: 80, size: 1},
-            '0111' : {key:'boar', dex: 250, spd: 80, size: 1},
-            '1001' : {key:'boar', dex: 250, spd: 80, size: 1},
-            '1010' : {key:'boar', dex: 250, spd: 80, size: 1},
-            '1011' : {key:'boar', dex: 250, spd: 80, size: 1},
-            '1100' : {key:'boar', dex: 250, spd: 80, size: 1},
-            '1101' : {key:'boar', dex: 250, spd: 80, size: 1},
-            '1110' : {key:'boar', dex: 250, spd: 80, size: 1},
-            '1111' : {key:'boar', dex: 250, spd: 80, size: 1.5},
-        }
         const maps = [
             [
                 'yccccw',
@@ -242,20 +386,20 @@
                 '        a3ib   ycccccw   a1ib',
                 '        aiib   aiiiiib   aiib',
                 '        aiib   aiqrsib   aiib',
-                '    a>b aiifccceituvifccceiib a<b',
+                '    a>b aii=ccceituvifccceiib a<b',
                 '    aib aiiiiiiiituviiiiiiiib aib', 
-                '    aifceiiiiiiiituviiiiiiiifceib',
+                '    aifc(iiiiiiiituviiiiiiii*ceib',
                 '    aiiiiiiiiiiIituviIiiiiiiiiiib',
                 '    xdddgiippiiIituviIiippiihdddz',
 //                '        aiippiiIituviIiippiib',
 //                '        aiippiiIituviIiippiib',
                 'aVb     aiippiiIituviIiippiib     a^b',
                 'aib     aiippiiIituviIiippiib     aib',
-                'aifccccceiiiiiiiituviiiiiiiifccccceib',
+                'aifccccceiiiiiiiituviiiiiiii-ccccceib',
                 'aiiiiiiiiiiiiiiiiABCiiiiiiiiiiiiiiiib',
                 'xdddddddddddddddgiiihdddddddddddddddz',
                 '                aiiib',
-                '                aiiifcccccccw',
+                '                aiii)cccccccw',
                 '                aiiiiiiiiiiib',
                 '                xddddddddg2ib',
                 '                         aiib',
@@ -1217,7 +1361,12 @@
             '$': () => [sprite('breaker'), {frame: gamestate.breakerSet?1:0}, area(), solid(), layer('mg'), 'replace', 'breaker', {reset:false}],
             '%': () => [sprite('right-wall'), area(), solid(), 'wall', 'replace', 'destructible', ],
             '&': () => [sprite('blank'), area(), solid(), 'wall' ],
-            
+            '*': () => [sprite('galley-sign'), area(), solid(), layer('bg'), 'wall'],
+            '(': () => [sprite('library-sign'), area(), solid(), layer('bg'), 'wall'],
+            ')': () => [sprite('cellar-sign'), area(), solid(), layer('bg'), 'wall'],
+            '-': () => [sprite('parlor-sign'), area(), solid(), layer('bg'), 'wall'],
+            '=': () => [sprite('tower-sign'), area(), solid(), layer('bg'), 'wall'],
+
             '>': () => [sprite('top-door'), area(), layer('mg'), solid(), 'door', 'replace', {
                 doorLookup: '>'
             }],
@@ -1292,7 +1441,7 @@
             //  player,
             //    player.pos,
             //)
-            dialog('Yawn... Another fine morning... TO MAKE THOSE MISERABLE VILLIAGERS PAY!\n\nHAHAHAHA!\n\nTo the Monster Maker Machine!',
+            dialog('Yawn... Another fine morning... TO MAKE THOSE MISERABLE VILLAGERS PAY!\n\nHAHAHAHA!\n\nTo the Monster Maker Machine!',
                 player,
                 player.pos,
             )
@@ -1392,14 +1541,29 @@
             }
         });
         player.onCollide('monmach', (m) => {
-                if(!m.open){
-                shake(10,5)
-                wait(1, ()=>{
+            if(!m.open){
+                camTween({x:m.pos.x+m.width/2, y:m.pos.y+m.height/2}, 16)
+                for (let index = 0; index < 20; index++) {
+                    setTimeout(()=>{
+                        if(index<5) shake(index)
+                        addExplosion('steam', m.pos.add(rand(128), rand(128)), {xv:130, yv:130}, .5, rand(3))
+                    },index*100)
+                }                
+                wait(3, ()=>{
                     if(!gamestate.bit1&&!gamestate.bit2&&!gamestate.bit3&&!gamestate.bit4){
                         gamestate.mmFound=true
                         dialog('Ah the Monster Maker Machine. How Lovely. It seems to be ready to accept a cofiguration. Now I know those bit switches are around this old place somewhere.. . Perhaps I should head to the Library to refresh myself on the Users\' Manuals', 
                             player, 
-                            {x:player.pos.x, y:player.pos.y}
+                            {x:m.pos.x+m.width/2, y:m.pos.y+m.height/2},
+                            [],
+                            function(){
+                                dialogOpen = true
+                                camTween(player.pos, 8)
+                                wait(1,()=>{
+                                    dialogOpen = false
+                                })
+                            }
+
                         )    
                     }else{
                         let monByte = '0000'
@@ -1412,19 +1576,19 @@
                             {x:m.pos.x+96, y:m.pos.y+64},
                             ['Create Monster', 'Cancel'],
                             (i)=>{
-                                if(i==0) go ('villiage', monsterMapping[monByte])
+                                if(i==0) go ('village', monsterMapping[monByte])
                             }
                         )    
 
                     }
                 })
-                 m.open = true;
+                m.open = true;
                 m.play('open', {loop:false})    
             }
         })
 
         player.onCollide('bean', (m) => {
-                    dialog('Ah my Lovely kitty. How are you this fine evening, Bean? How would you like to tach those villiagers the lesson of thier lives? HAHAHA!\n\nSend Bean to terrorize the villiage?', 
+                    dialog('Ah my Lovely kitty. How are you this fine evening, Bean? How would you like to tach those villagers the lesson of thier lives? HAHAHA!\n\nSend Bean to terrorize the village?', 
                         player,  
                         {x:m.pos.x+64, y:m.pos.y+64},
                         ['Yes','No'],
@@ -1435,7 +1599,7 @@
                                     {x:m.pos.x+64, y:m.pos.y+64},
                                     ['Continue', 'Cancel'],
                                     (i)=>{
-                                        if(i==0) go ('villiage', {key:'bean', dex: 500, spd: 120, size: 1})
+                                        if(i==0) go ('village', monsterMapping['bean'])
 
                                     }
                                 )    
@@ -1516,7 +1680,12 @@
         })
         function spawnSpell(p) {
             console.log(p)
-            const obj = add([sprite('explosion', {anim:'idle'}), pos(p), scale(.75), area(), origin('center'), 'spell'])
+            const spell = spellMapping[spellKey]
+            const obj = add([sprite(spell.sprite, {anim:'idle'}), pos(p), scale(spell.size), area(), origin('center'), 'spell', {xv:player.dir.x*spell.velocity, yv:player.dir.y*spell.velocity}])
+            obj.onUpdate(()=>{
+                obj.move(obj.xv,obj.yv)
+
+            })
             wait(1, () => {
                 if (player.state == 'Idle' && !player.dead) {
                     player.setState('Laugh')
@@ -1531,7 +1700,7 @@
             keystate = 'space'
             if(!dialogOpen && !player.dead){
                 shake(4)
-                spawnSpell(player.pos.add(player.dir.scale(48)))    
+                spawnSpell(player.pos.add(player.dir.scale(spellMapping[spellKey].range)))    
             }
         })
 
@@ -1800,53 +1969,189 @@
         })
 
     })
-    scene('village', ({key, dex, spd, con, str, name, size, specials={}})=>{
+    scene('village', ({key, dex, spd, con, str, name, type, size, specials={}})=>{
+        //loadAseprite(key, 'monsters/'+key+'.png', 'monsters/'+key+'.json')
+        const rangeAdj = 30-(size*10)
+        let count = 0
+        let level = 1;
         layers(['bg', 'mg', 'fg', 'obj', 'ui'], 'obj')
         const map = [
-            '                                                                                               ',
-            '                                                                                               ',
-            '                                                                                               ',
-            '                                                                                               ',
-            '                                                                                               ',
-            '                                                                                               ',
-            '                                                                                               ',
-            '                                                                                               ',
-            '                                                                                               ',
-            '===============================================================================================',
-            '-----------------------------------------------------------------------------------------------',
-            '-----------------------------------------------------------------------------------------------',
-            '-----------------------------------------------------------------------------------------------',
+            '=                                                                                                                                                                =',
+            '-                                                                                                                                                                -',
+            '-                                                                                                                                                                -',
+            '-                                                                                                                                                                -',
+            '-                                                                                                                                                                -',
+            '-                                                                                                                                                                -',
+            '-                                                                                                                                                                -',
+            '-                        W                   W              W              X           W        W             X          X            Y          Y        Z      -',
+            '-                                                                                                                                                                -',
+            '-================================================================================================================================================================-',
+            '------------------------------------------------------------------------------------------------------------------------------------------------------------------',
+            '------------------------------------------------------------------------------------------------------------------------------------------------------------------',
+            '------------------------------------------------------------------------------------------------------------------------------------------------------------------',
             ];
             const levelCfg = {
                 width: 32,
                 height: 32,
-                '=': () => [sprite('terrain-top-center'), area({scale:.5}), solid(), origin('center'), 'ground'],
+                '=': () => [sprite('terrain-top-center'), area({width:32, height:18}), solid(), origin('center'), 'ground'],
                 '-': () => [sprite('terrain-center'), area(), solid(), origin('center'), 'ground'],
+                'W': () => [sprite('building-door'), area({width:32, height:0}), origin('center'), 'enemy-gen', {sprite:'peasant', level:1, count:0, timer:3, genCount:2, hp: 10, str:1, dex:1}],
+                'X': () => [sprite('building-door'), area({width:32, height:0}), origin('center'), 'enemy-gen', {sprite:'peasant', level:1, count:0, timer:3, genCount:5, hp: 50, str:1, dex:1}],
+                'Y': () => [sprite('building-door'), area({width:32, height:0}), origin('center'), 'enemy-gen', {sprite:'militia', level:1, count:0, timer:3, genCount:3, hp: 100, str:3, dex:2}],
+                'Z': () => [sprite('building-door'), area({width:32, height:0}), origin('center'), 'enemy-gen', {sprite:'knight', level:1, count:0, timer:3, genCount:2, hp: 200, str:5, dex:5}],
             }
-            addLevel(map, levelCfg)    
+            addLevel(map, levelCfg) 
+            onUpdate('enemy-gen', (e)=>{
+                //console.log(count)
+                e.timer-=dt()
+                //console.log(e.timer)
+                 if(e.count<e.genCount && e.timer<0){
+                    if(Math.abs(e.pos.x-player.pos.x)<200&&Math.abs(e.pos.y-player.pos.y)<150){
+                        e.count++
+                        e.timer = rand(20)*.1
+                        //console.log(count)
+                            add([
+                            sprite(e.sprite), 
+                            area({width:20, height:30}), 
+                            pos(e.pos.x, e.pos.y+16),
+                            body(), 
+                            origin('bot'), 
+                            health(e.hp),
+                            state('run', ["idle", "attack", "run", "jump", "hit", "die"]), 
+                            'enemy', 
+                            {init:false, str:e.str, timer:1, dir:1, parent:e, dex:e.dex}
+                        ])    
+                    }
+                 }
+            })
+            onUpdate('enemy', (enemy)=>{
+                if(player.pos.x>enemy.pos.x){
+                    enemy.dir=1
+                }else{
+                    enemy.dir=-1
+                }
+
+                enemy.flipX(enemy.dir==-1);
+                if(!enemy.init){
+                    enemy.init = true;
+
+                    enemy.onStateEnter("idle", () => {
+                        enemy.play('idle')
+                    })
+                    enemy.onStateEnter("attack", () => {
+                        enemy.play('attack', {speed:20})
+                    })
+                    enemy.onStateEnter("run", () => {
+                        enemy.play('run')
+                    })
+                    enemy.onStateEnter("hit", () => {
+                        enemy.play('hit')
+                    })
+                    enemy.onStateEnter("die", () => {
+                        enemy.play('die')
+                    })
+                    enemy.onAnimEnd("attack", () => {
+                        enemy.enterState('idle') 
+                        if((player.state.indexOf('attack')==-1)&&Math.abs(enemy.pos.x-player.pos.x)<(enemy.width/2)&&Math.abs(enemy.pos.y-player.pos.y)<30){
+                            player.hurt(enemy.str)
+                            player.timer=rand(player.con-enemy.str)*.5
+                            player.enterState('hit')
+                        }
+                    })        
+                    enemy.onAnimEnd("hit", () => {
+                        enemy.enterState('idle')       
+                    })        
+
+                    enemy.onAnimEnd("die", () => {
+                        if(count) count-=1    
+                        enemy.height = 0
+                        console.log(count)
+                        wait(10,()=>{
+                            destroy(enemy)
+                        })
+                    })        
+                    enemy.on("death", () => {
+                        //destroy(enemy)
+                        setTimeout(()=>{
+                            enemy.solid = false;
+                        },100)
+                        enemy.dead = true
+                        enemy.play('die')
+                    })
+                    enemy.enterState('run')        
+                }
+                if(player.dangerous&&(!enemy.dead&&enemy.state!='hit'&&Math.abs(enemy.pos.x-player.pos.x)<(rangeAdj)+(player.width/2)*(size*.5)&&Math.abs(enemy.pos.y-player.pos.y)<80)){
+                    setTimeout(()=>{
+                        enemy.enterState('hit')
+                        player.dangerous = false;
+                        enemy.timer = .25
+                        let attackMul = parseInt(player.state.split('-')[1])||1
+                        //console.log(player.state.split('-'))
+                        enemy.hurt(str*attackMul)
+                        //console.log(str+'x'+attackMul+'='+str*attackMul+'='+enemy.hp())    
+                    },10)
+
+                }
+                if(enemy.timer<0&&!enemy.dead&&(enemy.state=='idle'||enemy.state=='run')&&Math.abs(enemy.pos.x-player.pos.x)<(enemy.width/2)-10&&Math.abs(enemy.pos.y-player.pos.y)<80){
+                    enemy.timer = .5-(enemy.dex*.1)
+                    enemy.enterState('attack')
+                }
+                if(enemy.timer<0&&!enemy.dead&&(enemy.state=='idle'||enemy.state=='run')&&Math.abs(enemy.pos.x-player.pos.x)<300&&Math.abs(enemy.pos.y-player.pos.y)<80){
+                    enemy.timer = .5
+                    //console.log('run')
+                    //enemy.dir=enemy.dir*-1
+                    enemy.enterState('run')
+                }
+                if(enemy.state=='run'&&Math.abs(enemy.pos.x-player.pos.x)<5){
+                    enemy.enterState('idle')
+                }
+                enemy.timer-=dt();
+                if(enemy.state=='run'){
+                    enemy.move(enemy.dir*150,0)
+                }
+            })  
+  
             const player = add([
                 sprite(key, {anim:'idle'}),
-                pos(250,0),
-                area({scale:.7}),
+                pos(250,50),
+                area({width:20, height: size*20}),
                 solid(),
                 body(),
+                health(con*5),
                 origin('bot'),
                 scale(size*.5),
-                state("idle", ["idle", "attack-1", "attack-2", "attack-3", "run", "jump"],
+                state("idle", ["idle", "attack-1", "attack-2", "attack-3", "run", "jump", "hit"],
                ),
                 
             ])
+
             player.onStateEnter("idle", () => {
                 player.flipX(player.turned);
+                player.dangerous = false;
                 player.play("idle")               
             })
             player.onStateEnter("run", () => {
                 player.flipX(player.turned);
                 if(player.isGrounded()) player.play("run")               
             })
+            player.onStateEnter("hit", () => {
+                player.flipX(player.turned);
+                player.play("hit",{
+                    loop:false,
+
+                })               
+            })
+
+            player.onAnimEnd("hit", () => {
+                // You can also register an event that runs when certain anim ends
+                player.flipX(player.turned);
+                player.enterState('idle')
+                console.log('test')
+            })
             player.onAnimEnd("attack-1", () => {
                 // You can also register an event that runs when certain anim ends
                 player.flipX(player.turned);
+                player.dangerous = false;
                 player.enterState(player.nextState)
                 player.nextState = 'idle';
 
@@ -1854,6 +2159,7 @@
             player.onAnimEnd("attack-2", () => {
                 // You can also register an event that runs when certain anim ends
                 player.flipX(player.turned);
+                player.dangerous = false;
                 player.enterState(player.nextState)
                 player.nextState = 'idle';
 
@@ -1861,34 +2167,70 @@
             player.onAnimEnd("attack-3", () => {
                 // You can also register an event that runs when certain anim ends
                 player.flipX(player.turned);
+                player.dangerous = false;
                 player.enterState(player.nextState)
                 player.nextState = 'idle';
+                player.timer = .7-(dex*.1)
 
             })
             player.onStateEnter("attack-1", () => {
                 // enter "idle" state when the attack animation ends
                 player.flipX(player.turned);
+                setTimeout(()=>{
+                    player.dangerous = true;
+                },550-(dex*100))
                 player.play("attack-1", {
-                    loop:false
+                    loop:false,
+                    speed:3+dex*2
                 })
             })
             player.onStateEnter("attack-2", () => {
                 // enter "idle" state when the attack animation ends
                 player.flipX(player.turned);
+                setTimeout(()=>{
+                    player.dangerous = true;
+                },550-(dex*100))
                 player.play("attack-2", {
-                    loop:false
+                    loop:false,
+                    speed:3+dex*2
                 })
             })
             player.onStateEnter("attack-3", () => {
                 // enter "idle" state when the attack animation ends
                 player.flipX(player.turned);
+                setTimeout(()=>{
+                    player.dangerous = true;
+                },550-(dex*100))
+                if(player.doShake){
+                    setTimeout(()=>{
+                        shake()
+                    },100)
+                    player.doShake = false
+                }
                 player.play("attack-3", {
-                    loop:false
+                    loop:false,
+                    speed:3+dex*2
+
+                })
+                //console.log(player.width)
+            })
+            player.on("death", () => {
+                //destroy(enemy)
+                wait(3, ()=>{
+                    go('mansion', { level: 0, startX: 192, startY:216, newGame:true })
                 })
             })
-            player.onCollide('ground', ()=>{
-                if(player.state=='attack-3'){
 
+            player.onCollide('ground', ()=>{
+                if(!cardExists){
+                    card(`Name:\t${name}\nType:\t${type}\nStr:${str}\nCon:${con}\nDex:${dex}\nSpd:${spd}`,
+                        player, 
+                        vec2(player.pos.x-(player.width/2), player.pos.y-(player.height/2+100))
+                    )
+                }
+                if(player.state=='attack-3'){
+                    if(player.doShake) shake()
+                    player.doShake=false;
                 }else if(player.state!='run'){
                         player.enterState('idle')
                 }else if(player.jumping){
@@ -1897,17 +2239,18 @@
                 }
             })
             player.onUpdate(()=>{
+                player.timer -= dt()
+                console.log(player.timer)
                 if (!isKeyDown("right")&&!isKeyDown("left")&&player.state=='run') {
                     player.enterState('idle')
                 } else if((isKeyDown("right")||isKeyDown("left"))&&player.state=='idle'){
-                    player.enterState('run')
+                    if(player.timer<=0)player.enterState('run')
                 }
                 let xspeed = 0;
                 if(player.state=='run'){
                     xspeed = (player.turned?-spd*50:spd*50)
                 }
                 if(player.vx&&Math.abs(player.vx)>1){
-                    console.log(player.vx)
                     xspeed += player.vx; 
                     player.vx *= .7
                 }else{
@@ -1917,14 +2260,20 @@
                 camPos(player.pos.x+width()/4, player.pos.y-height()/6)
             })
             onKeyPress('space', () => {
-                if(!player.isGrounded() && player.state!='attack-3') {
+                if(player.timer>0) return
+                if(!player.isGrounded() && player.state!='attack-3' && player.state!='hit') {
                     player.nextState = 'idle';
                     player.enterState("attack-3")
-                    if(specials.jumping.jump){
-                        player.jump(370)
-                    }
-                    if(specials.jumping.lunge){
-                        player.vx = (dex*150)*(player.turned?-1:1);
+                    if(specials.jumping){
+                        if(specials.jumping.jump){
+                            player.jump(370)
+                        }
+                        if(specials.jumping.lunge){
+                            player.vx = (dex*150)*(player.turned?-1:1);
+                        }
+                        if(specials.jumping.pound){
+                            player.doShake=true;
+                        }    
                     }
 
                 }else if(player.state=='idle'||player.state=='run') {
@@ -1934,25 +2283,32 @@
                     player.nextState = 'attack-2';
                 }else if(player.state=='attack-2'){
                     player.nextState = 'attack-3';
+                    if(isKeyDown("down") && specials.standing && specials.standing.pound){
+                        player.doShake=true;
+                    }    
+
                 }else if(player.state=='attack-3'){
                     if(isKeyDown("down")){
-                        if(specials.standing.jump && player.isGrounded()){
-                            player.jump(150+(dex*100))
-                        }
-                        if(specials.standing.attack){
-                            player.nextState = 'attack-3';
-                        }
-                        if(specials.standing.lunge){
-                            player.vx = (dex*100)*(player.turned?-1:1);
-                            console.log('lunge')
+                        if(specials.standing){
+                            if(specials.standing.jump && player.isGrounded()){
+                                player.jump(150+(dex*100))
+                            }
+                            if(specials.standing.attack){
+                                player.nextState = 'attack-3';
+                            }
+                            if(specials.standing.lunge){
+                                player.vx = (dex*150)*(player.turned?-1:1);
+                                console.log('lunge')
+                            }
                         }
                     }
                     //player.nextState = 'attack-3';
                 }
-                console.log(player.state)
-                console.log(player.nextState)
+                //console.log(player.state)
+                //console.log(player.nextState)
             })
             onKeyPress('up', () => {
+                if(player.timer>0) return
                 if(!player.isGrounded()) return
                 player.jump(150+(dex*100));
                 player.jumping = true;
@@ -1967,15 +2323,16 @@
                 player.turned = false;
             })
             onKeyPress(['right', 'left'], () => {
+                if(player.timer>0) return
                 player.flipX(player.turned)
                 if(player.state=='idle'){
                     player.enterState("run")
                 }else{
-                    player.nextState = 'run';
+                    //player.nextState = 'run';
                 }
             })
     
     })
-    //go ('mansion', { level: 0, startX: 192, startY:216, newGame:true })
-    go ('village', {key:'troll', dex: 1, spd: 3, size: 2, specials:{jumping:{jump:false, lunge:true}, standing:{lunge:true, attack:true, jump:false}}})
+    go ('mansion', { level: 0, startX: 192, startY:216, newGame:true })
+    //go('village', monsterMapping['1001'])
     
