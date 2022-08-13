@@ -2430,6 +2430,6 @@
             })
     
     })
-    //go ('mansion', { level: 0, startX: 192, startY:216, newGame:true })
-    go('village', monsterMapping['0001'])
+    go ('mansion', { level: 0, startX: 192, startY:216, newGame:true })
+    //go('village', monsterMapping['0001'])
     
