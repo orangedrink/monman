@@ -7,7 +7,7 @@
         fullscreen: true,
         scale: 2,
         debug: true,
-        background: [0, 0, 0, 1],
+        background: [33, 33, 33, 1],
     })
     //globals
     let dialogOpen = false;
@@ -18,6 +18,7 @@
         bit2: false,
         bit3: false,
         bit4: false,
+        tears:0,
     }
     // Constants
     const MOVE_SPEED = 120
@@ -147,10 +148,14 @@
         ])
     }
     const spellMapping = {
-        'kapow': {velocity: 10, size: .75, range: 32, sprite: 'explosion'},
-        'kaboom': {velocity: 60, size: 1.25, range: 48, sprite: 'explosion'},
+        'kapow': {velocity: 10, size: 1, range: 32, sprite: 'explosion'},
+        'kaboom': {velocity: 20, size: 1.25, range: 48, sprite: 'explosion'},
+        'lightningstrike': {velocity: 30, size: 1, range: 48, sprite: 'lightningstrike', lifespan: .5},
+        'lightningstorm': {velocity: 50, size: 1.25, range: 48, sprite: 'lightningstorm', lifespan: 1},
+        'fireball': {velocity: 180, size: 1.25, range: 28, sprite: 'fireball', expSpr: 'explosion', collide: true, lifespan: 3},
+        'shadowbolt': {velocity: 260, size: 2, range: 28, sprite: 'shadowbolt', expSpr: 'shadow_explosion', collide: true, lifespan: 3},
     }
-    let spellKey = 'kaboom'
+    let spellKey = 'fireball'
     const monsterMapping = {
         '1000' : {key:'skeleton', str: 1, con:2, dex: 3, spd: 2, size: 2,
             name:'Skeleton',
@@ -292,10 +297,11 @@
     loadSprite('web-line', 'web-line.png')
     loadSprite('blank', 'blank.png')
     loadSprite('terrain-top-center', 'village/terrain_top_center_B_full.png')
-    loadSprite('building-door', 'village/building_door.png')
     loadSprite('terrain-center', 'village/terrain_center.png')
+    loadAseprite("building-door", "village/building_door.png", "village/building_door.json");
     loadAseprite("doctor", "doctor.png", "doctor.json");
     loadAseprite('monmach', 'monmach.png', 'monmach.json')
+    loadAseprite('tears', 'tears.png', 'tears.json')
     loadAseprite('switch', 'switch.png', 'switch.json')
     loadAseprite('button', 'button.png', 'button.json')
     loadAseprite('breaker', 'breaker.png', 'breaker.json')
@@ -307,7 +313,12 @@
     loadAseprite('spider', 'spider.png', 'spider.json')
     loadAseprite('bat', 'bat.png', 'bat.json')
     loadAseprite('explosion', 'explosion.png', 'explosion.json')
+    loadAseprite('fireball', 'fireball.png', 'fireball.json')
+    loadAseprite('shadowbolt', 'shadowbolt.png', 'shadowbolt.json')
+    loadAseprite('lightningstrike', 'lightningstrike.png', 'lightningstrike.json')
+    loadAseprite('lightningstorm', 'lightningstorm.png', 'lightningstorm.json')
     loadAseprite('steam', 'steam.png', 'steam.json')
+    loadAseprite('shadow_explosion', 'shadow_explosion.png', 'shadow_explosion.json')
     loadAseprite('bean', 'monsters/bean.png', 'monsters/bean.json')
     loadAseprite('boar', 'monsters/boar.png', 'monsters/boar.json')
     loadAseprite('skeleton', 'monsters/skeleton.png', 'monsters/skeleton.json')
@@ -386,41 +397,49 @@
                 '        a3ib   ycccccw   a1ib',
                 '        aiib   aiiiiib   aiib',
                 '        aiib   aiqrsib   aiib',
-                '    a>b aii=ccceituvifccceiib a<b',
+                '    a>b aiifccceituvifccceiib a<b',
                 '    aib aiiiiiiiituviiiiiiiib aib', 
-                '    aifc(iiiiiiiituviiiiiiii*ceib',
+                '    aifceiiiiiiiituviiiiiiiifceib',
                 '    aiiiiiiiiiiIituviIiiiiiiiiiib',
                 '    xdddgiippiiIituviIiippiihdddz',
 //                '        aiippiiIituviIiippiib',
 //                '        aiippiiIituviIiippiib',
                 'aVb     aiippiiIituviIiippiib     a^b',
                 'aib     aiippiiIituviIiippiib     aib',
-                'aifccccceiiiiiiiituviiiiiiii-ccccceib',
+                'aifccccceiiiiiiiituviiiiiiiifccccceib',
                 'aiiiiiiiiiiiiiiiiABCiiiiiiiiiiiiiiiib',
                 'xdddddddddddddddgiiihdddddddddddddddz',
                 '                aiiib',
-                '                aiii)cccccccw',
+                '                aiiifcccccccw',
                 '                aiiiiiiiiiiib',
                 '                xddddddddg2ib',
                 '                         aiib',
             ],
             [
-                '  yEEEEEw',
-                'yFeiiiiifGw',
-                'aiiiiiiiiib',
-                'xdgiqrsihdz',
-                '  aotuvib',
-                '  aituvib',
-                '  aituvib',
-                'yHeiABCifJw',
-                'aiiiiiiiiib',
-                'xdgiiiiihdz',
-                '  aiiiiib',
-                '  xdgihdz',
-                '    aib',
-                '    aib',
-                '    aib',
-                '    x>z',
+                '         + + + + ',
+                '  + + F yccccccccw E + + + + J + +',
+                'yccccccceiiiiiiiifcccccccccccccccccw',
+                'aiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiib',
+                'aiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiib',
+                'xdddddddgiqrrrrsihdddddddddddddddddz',
+                '        aituuuuvib',
+                '        aituuuuvib',
+                '        aituuuuvib + + + + + + _ + ',
+                'yccccccceiABBBBCifcccccccccccccccccw',
+                'aoiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiib',
+                'aiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiib',
+                'xdddddddgiqrrrrsihdddddddddddddddddz',
+                '        aituuuuvib',
+                '        aituuuuvib',
+                ' G + +  aituuuuvib+ + + + + + H +',
+                'yccccccceiABBBBCifcccccccccccccccccw',
+                'aiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiib',
+                'aiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiib',
+                'xddddddddddgihdddddddddddddddddddddz',
+                '           aib',
+                '           aib',
+                '           aib',
+                '           x>z',
             ],
             [
                 '          y^w',
@@ -767,7 +786,7 @@
                             if(gamestate.mmFound){
                                 return true;
                             }else{
-                                dialog('That Monster Maker is around here somewhere! I can\'t leave until I find it.', player, player.pos)
+                                dialog('That Monster Maker is around here somewhere! I can\'t go to The Galley until I find it.', player, player.pos)
                                 return false;
                             }
                         }
@@ -776,14 +795,14 @@
                 },
                 '>': {
                     targetLevel: 2,
-                    targetX: 352,
-                    targetY: 932,
+                    targetX: 800,
+                    targetY: 1433,
                     keys: [
                         ()=>{
                             if(gamestate.mmFound){
                                 return true;
                             }else{
-                                dialog('That Monster Maker is around here somewhere! I can\'t leave until I find it.', player, player.pos)
+                                dialog('That Monster Maker is around here somewhere! I can\'t go to The Library until I find it.', player, player.pos)
                                 return false;
                             }
                         },
@@ -798,7 +817,7 @@
                             if(gamestate.mmFound){
                                 return true;
                             }else{
-                                dialog('That Monster Maker is around here somewhere! I can\'t leave until I find it.', player, player.pos)
+                                dialog('That Monster Maker is around here somewhere! I can\'t go to The Parlor until I find it.', player, player.pos)
                                 return false;
                             }
                         },
@@ -1129,7 +1148,7 @@
     
                                 return true;
                             }else{
-                                dialog('Where in the blazes is that Monster Maker Machine? I can\'t leave until I find it.', player, player.pos)
+                                dialog('Where in the blazes is that Monster Maker Machine? I can\'t go to The Cellar until I find it.', player, player.pos)
                                 return false;
                             }
                         }
@@ -1144,7 +1163,7 @@
                             if(gamestate.mmFound){   
                                 return true;
                             }else{
-                                dialog('Where in the blazes is that Monster Maker Machine? I can\'t leave until I find it.', player, player.pos)
+                                dialog('Where in the blazes is that Monster Maker Machine? I can\'t go to The Tower until I find it.', player, player.pos)
                                 return false;
                             }
                         }
@@ -1316,7 +1335,7 @@
             l: () => [sprite('chair2'), layer('mg'), area(), solid(), 'replace'],
             m: () => [sprite('chair3'), layer('mg'), area(), solid(), 'replace'],
             n: () => [sprite('table'), layer('mg'), area(), solid(), 'replace',],
-            o: () => [sprite('table2'), layer('mg'), area(), solid(), 'replace', 'book',  {book: 'note'}],
+            o: () => [sprite('table2'), layer('mg'), area({width:192, height:96}), solid(), 'replace', 'book',  {book: 'note'}],
             p: () => [sprite('statue'), layer('mg'), area(), solid(), 'replace'],
 
             q: () => [sprite('top-left-carpet'), layer('bg')],
@@ -1334,12 +1353,12 @@
             B: () => [sprite('bottom-carpet'), layer('bg')],
             C: () => [sprite('bottom-right-carpet'), layer('bg')],
             D: () => [sprite('bed'), layer('bg'), layer('mg'), area(), solid(), 'replace'],
-            E: () => [sprite('bookshelf'), layer('bg'), layer('mg'), area(), solid(), 'book' , 'replace-wall', {book: 'manual'}],
-            F: () => [sprite('bookshelf'), layer('bg'), layer('mg'), area(), solid(), 'book' , 'replace-wall', {book: 'bit1'}],
-            G: () => [sprite('bookshelf'), layer('bg'), layer('mg'), area(), solid(), 'book' , 'replace-wall', {book: 'bit2'}],
-            H: () => [sprite('bookshelf'), layer('bg'), layer('mg'), area(), solid(), 'book' , 'replace-wall', {book: 'bit3'}],
+            E: () => [sprite('bookshelf'), layer('bg'), layer('mg'), area(), solid(), 'book', {book: 'manual'}],
+            F: () => [sprite('bookshelf'), layer('bg'), layer('mg'), area(), solid(), 'book', {book: 'bit1'}],
+            G: () => [sprite('bookshelf'), layer('bg'), layer('mg'), area(), solid(), 'book', {book: 'bit2'}],
+            H: () => [sprite('bookshelf'), layer('bg'), layer('mg'), area(), solid(), 'book', {book: 'bit3'}],
             I: () => [sprite('column'), layer('mg'), area(), solid(), 'replace'],
-            J: () => [sprite('bookshelf'), layer('mg'), area(), solid(), 'book', 'replace-wall', {book: 'bit4'}],
+            J: () => [sprite('bookshelf'), layer('mg'), area(), solid(), 'book', {book: 'bit4'}],
             K: () => [sprite('couch'), layer('mg'), area(), solid(), 'replace-wall'],
             L: () => [sprite('button'), layer('mg'), area(), solid(), 'button', 'replace-wall', {replaceNotSolid:true}],
             M: () => [sprite('monmach'), {frame: 0}, area(), solid(), layer('mg'), 'monmach'],
@@ -1366,6 +1385,8 @@
             ')': () => [sprite('cellar-sign'), area(), solid(), layer('bg'), 'wall'],
             '-': () => [sprite('parlor-sign'), area(), solid(), layer('bg'), 'wall'],
             '=': () => [sprite('tower-sign'), area(), solid(), layer('bg'), 'wall'],
+            '_': () => [sprite('tears'), layer('bg'), layer('mg'), area(), solid(), 'tears'],
+            '+': () => [sprite('bookshelf'), layer('bg'), layer('mg'), area(), solid()],
 
             '>': () => [sprite('top-door'), area(), layer('mg'), solid(), 'door', 'replace', {
                 doorLookup: '>'
@@ -1586,7 +1607,40 @@
                 m.play('open', {loop:false})    
             }
         })
-
+        player.onCollide('tears', (m) => {
+            if(gamestate.tears.open) return
+            console.log('tears')
+            gamestate.tears.open = true
+            m.play('open', {loop: false})
+            camTween({x:m.pos.x+m.width/2, y:m.pos.y+m.height/2}, 8)
+            wait(2, ()=>{
+                dialog('The resevior of tears', 
+                    player,  
+                    {x:m.pos.x+64, y:m.pos.y+64},
+                    ['Yes','No'],
+                    function(i){
+                        if(i==0){
+                            dialog('dialog',
+                                player,
+                                {x:m.pos.x+64, y:m.pos.y+64},
+                                ['Continue', 'Cancel'],
+                                (i)=>{
+                                    dialog('Continue',
+                                    player,
+                                    {x:m.pos.x+64, y:m.pos.y+64}
+                                )    
+                                    }
+                            )    
+                        } else{
+                            dialog('Cancel',
+                                player,
+                                {x:m.pos.x+64, y:m.pos.y+64}
+                            )    
+                        }
+                    }        
+                )
+            })
+        })
         player.onCollide('bean', (m) => {
                     dialog('Ah my Lovely kitty. How are you this fine evening, Bean? How would you like to tach those villagers the lesson of thier lives? HAHAHA!\n\nSend Bean to terrorize the village?', 
                         player,  
@@ -1681,17 +1735,53 @@
         function spawnSpell(p) {
             console.log(p)
             const spell = spellMapping[spellKey]
-            const obj = add([sprite(spell.sprite, {anim:'idle'}), pos(p), scale(spell.size), area(), origin('center'), 'spell', {xv:player.dir.x*spell.velocity, yv:player.dir.y*spell.velocity}])
+            let deg = 0;
+            if(spell.expSpr){
+                if(player.dir.y==1&&player.dir.x==0){
+                    deg=90
+                } else if(player.dir.y==0 && player.dir.x==-1) {
+                    deg=180
+                } else if(player.dir.y==-1 && player.dir.x==0) {
+                    deg=270
+                } else if(player.dir.y==1 && player.dir.x==1){
+                    deg=45
+                } else if(player.dir.y==1 && player.dir.x==-1){
+                    deg=135
+                } else if(player.dir.y==-1 && player.dir.x==1){
+                    deg=320
+                } else if(player.dir.y==-1 && player.dir.x==-1){
+                    deg=225
+                }
+            }
+            let obj
+            let lifespan = spell.lifespan
+            if(player.dir.x||player.dir.y||!spell.expSpr){
+                obj = add([sprite(spell.sprite, {anim:'idle'}), pos(p), scale(spell.size), area({scale:.75}), rotate(deg), origin('center'), 'spell', {xv:player.dir.x*spell.velocity, yv:player.dir.y*spell.velocity}])
+            }else{
+                obj = add([sprite(spell.expSpr, {anim:'idle'}), pos(p), scale(1), area({scale:.75}), rotate(deg), origin('center'), 'spell', {xv:player.dir.x*spell.velocity, yv:player.dir.y*spell.velocity}])
+                lifespan = 1
+            }
             obj.onUpdate(()=>{
                 obj.move(obj.xv,obj.yv)
 
             })
-            wait(1, () => {
-                if (player.state == 'Idle' && !player.dead) {
+            if(spell.collide){
+                obj.onCollide('wall', ()=>{
+                    destroy(obj)
+                    let ex = add([sprite(spell.expSpr, {anim:'idle', speed:30}), pos(obj.pos), scale(1), area({scale:.75}), origin('center'), 'spell', {xv:0, yv:0}])
+                    wait(1, ()=>{
+                        destroy(ex)
+                    })
+                })
+            }
+            if(spell.sprite=='explosion') shake(4)
+            wait(lifespan||1, () => {
+                if (spell.sprite=='explosion'&& player.state == 'Idle' && !player.dead) {
                     player.setState('Laugh')
                 }
                 destroy(obj)
             })
+
         }
         onKeyPress('space', () => {
             keystate = 'space'
@@ -1699,7 +1789,6 @@
         keyPress('space', () => {
             keystate = 'space'
             if(!dialogOpen && !player.dead){
-                shake(4)
                 spawnSpell(player.pos.add(player.dir.scale(spellMapping[spellKey].range)))    
             }
         })
@@ -1972,6 +2061,10 @@
     scene('village', ({key, dex, spd, con, str, name, type, size, specials={}})=>{
         //loadAseprite(key, 'monsters/'+key+'.png', 'monsters/'+key+'.json')
         const rangeAdj = 30-(size*10)
+        const addTears = function(t){
+            gamestate.tears += t
+            console.log('tears', gamestate.tears)
+        }
         let count = 0
         let level = 1;
         layers(['bg', 'mg', 'fg', 'obj', 'ui'], 'obj')
@@ -1984,7 +2077,6 @@
             '-                                                                                                                                                                -',
             '-                                                                                                                                                                -',
             '-                        W                   W              W              X           W        W             X          X            Y          Y        Z      -',
-            '-                                                                                                                                                                -',
             '-================================================================================================================================================================-',
             '------------------------------------------------------------------------------------------------------------------------------------------------------------------',
             '------------------------------------------------------------------------------------------------------------------------------------------------------------------',
@@ -1993,7 +2085,7 @@
             const levelCfg = {
                 width: 32,
                 height: 32,
-                '=': () => [sprite('terrain-top-center'), area({width:32, height:18}), solid(), origin('center'), 'ground'],
+                '=': () => [sprite('terrain-top-center'), area({width:32, height:10}), solid(), origin('center'), 'ground'],
                 '-': () => [sprite('terrain-center'), area(), solid(), origin('center'), 'ground'],
                 'W': () => [sprite('building-door'), area({width:32, height:0}), origin('center'), 'enemy-gen', {sprite:'peasant', level:1, count:0, timer:3, genCount:2, hp: 10, str:1, dex:1}],
                 'X': () => [sprite('building-door'), area({width:32, height:0}), origin('center'), 'enemy-gen', {sprite:'peasant', level:1, count:0, timer:3, genCount:5, hp: 50, str:1, dex:1}],
@@ -2004,23 +2096,28 @@
             onUpdate('enemy-gen', (e)=>{
                 //console.log(count)
                 e.timer-=dt()
-                //console.log(e.timer)
+                
                  if(e.count<e.genCount && e.timer<0){
                     if(Math.abs(e.pos.x-player.pos.x)<200&&Math.abs(e.pos.y-player.pos.y)<150){
                         e.count++
-                        e.timer = rand(20)*.1
-                        //console.log(count)
+                        console.log(e.timer)
+                        e.timer = rand(10)+3
+                        e.play('open', {loop:false, speed:30})
+                        wait(.25, ()=>{
+                            //console.log(count)
                             add([
-                            sprite(e.sprite), 
-                            area({width:20, height:30}), 
-                            pos(e.pos.x, e.pos.y+16),
-                            body(), 
-                            origin('bot'), 
-                            health(e.hp),
-                            state('run', ["idle", "attack", "run", "jump", "hit", "die"]), 
-                            'enemy', 
-                            {init:false, str:e.str, timer:1, dir:1, parent:e, dex:e.dex}
-                        ])    
+                                sprite(e.sprite), 
+                                area({width:20, height:30}), 
+                                pos(e.pos.x, e.pos.y+16),
+                                body(), 
+                                origin('bot'), 
+                                health(e.hp),
+                                state('run', ["idle", "attack", "run", "jump", "hit", "die"]), 
+                                'enemy', 
+                                {init:false, str:e.str, timer:1, dir:1, parent:e, dex:e.dex}
+                            ])    
+    
+                        })
                     }
                  }
             })
@@ -2074,6 +2171,7 @@
                         //destroy(enemy)
                         setTimeout(()=>{
                             enemy.solid = false;
+                            addTears(enemy.str)
                         },100)
                         enemy.dead = true
                         enemy.play('die')
@@ -2240,7 +2338,6 @@
             })
             player.onUpdate(()=>{
                 player.timer -= dt()
-                console.log(player.timer)
                 if (!isKeyDown("right")&&!isKeyDown("left")&&player.state=='run') {
                     player.enterState('idle')
                 } else if((isKeyDown("right")||isKeyDown("left"))&&player.state=='idle'){
@@ -2333,6 +2430,6 @@
             })
     
     })
-    go ('mansion', { level: 0, startX: 192, startY:216, newGame:true })
-    //go('village', monsterMapping['1001'])
+    //go ('mansion', { level: 0, startX: 192, startY:216, newGame:true })
+    go('village', monsterMapping['0001'])
     
