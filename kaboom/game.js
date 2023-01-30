@@ -155,7 +155,7 @@
         'fireball': {velocity: 180, size: 1.25, range: 28, sprite: 'fireball', expSpr: 'explosion', collide: true, lifespan: 3},
         'shadowbolt': {velocity: 260, size: 2, range: 28, sprite: 'shadowbolt', expSpr: 'shadow_explosion', collide: true, lifespan: 3},
     }
-    let spellKey = 'fireball'
+    let spellKey = 'lightningstorm'
     const monsterMapping = {
         '1000' : {key:'skeleton', str: 1, con:2, dex: 3, spd: 2, size: 2,
             name:'Skeleton',
@@ -298,6 +298,8 @@
     loadSprite('blank', 'blank.png')
     loadSprite('terrain-top-center', 'village/terrain_top_center_B_full.png')
     loadSprite('terrain-center', 'village/terrain_center.png')
+    loadSprite('house', 'village/house.png')
+    loadSprite('mountains_bg', 'village/bg_mountains_and_sky.png')
     loadAseprite("building-door", "village/building_door.png", "village/building_door.json");
     loadAseprite("doctor", "doctor.png", "doctor.json");
     loadAseprite('monmach', 'monmach.png', 'monmach.json')
@@ -1608,38 +1610,41 @@
             }
         })
         player.onCollide('tears', (m) => {
-            if(gamestate.tears.open) return
-            console.log('tears')
-            gamestate.tears.open = true
+            if(m.open) return
+            //console.log('tears')
+            m.open = true
             m.play('open', {loop: false})
             camTween({x:m.pos.x+m.width/2, y:m.pos.y+m.height/2}, 8)
-            wait(2, ()=>{
-                dialog('The resevior of tears', 
-                    player,  
-                    {x:m.pos.x+64, y:m.pos.y+64},
-                    ['Yes','No'],
-                    function(i){
-                        if(i==0){
-                            dialog('dialog',
+            wait(1, ()=>{
+                            dialog('Spend Villiager tears in order to equip a new spell?',
                                 player,
                                 {x:m.pos.x+64, y:m.pos.y+64},
-                                ['Continue', 'Cancel'],
+                                ['Kaboom:\t0 Tears', 'Lightning:\t100', 'Fireball:\t200', 'Shadowbolt:\t500', 'Cancel'],
                                 (i)=>{
-                                    dialog('Continue',
-                                    player,
-                                    {x:m.pos.x+64, y:m.pos.y+64}
-                                )    
+                                    let key
+                                    let name
+                                    let cost
+                                    if(i==0){
+//                                        gamestate.tears -= 0;
+                                        spellKey = 'kaboom';
+                                        dialog(
+                                            'Kaboom was equipped',
+                                            player,
+                                            {x:m.pos.x+64, y:m.pos.y+64}
+                                        )        
+                                    } else if(i==1){
+                                        gamestate.tears -= 100;
+                                        spellKey = 'lightningstorm';
+                                        dialog(
+                                            'Lightning was equipped',
+                                            player,
+                                            {x:m.pos.x+64, y:m.pos.y+64}
+                                        )        
                                     }
+                                }
                             )    
-                        } else{
-                            dialog('Cancel',
-                                player,
-                                {x:m.pos.x+64, y:m.pos.y+64}
-                            )    
-                        }
-                    }        
-                )
             })
+            
         })
         player.onCollide('bean', (m) => {
                     dialog('Ah my Lovely kitty. How are you this fine evening, Bean? How would you like to tach those villagers the lesson of thier lives? HAHAHA!\n\nSend Bean to terrorize the village?', 
@@ -1927,6 +1932,12 @@
                 s.play('idle')
             }
         })      
+        onUpdate('tears', (m)=>{
+            if(Math.abs((m.pos.x+64) - player.pos.x) > 96 && m.open){
+                m.play('close', {loop:false})
+                m.open = false
+            }
+        })
         onUpdate('slime', (s)=>{
             if(!s.ready) return
             if(s.timer<0){
@@ -2069,10 +2080,10 @@
         let level = 1;
         layers(['bg', 'mg', 'fg', 'obj', 'ui'], 'obj')
         const map = [
-            '=                                                                                                                                                                =',
+            '=B                                                                                                                                                               =',
             '-                                                                                                                                                                -',
             '-                                                                                                                                                                -',
-            '-                                                                                                                                                                -',
+            '-                     1                   1              1              1           1        1             1          1            1          1        1         -',
             '-                                                                                                                                                                -',
             '-                                                                                                                                                                -',
             '-                                                                                                                                                                -',
@@ -2085,12 +2096,14 @@
             const levelCfg = {
                 width: 32,
                 height: 32,
-                '=': () => [sprite('terrain-top-center'), area({width:32, height:10}), solid(), origin('center'), 'ground'],
+                'B': () => [sprite('mountains_bg'), origin('center'), pos(width()/2, height()/2,), 'background'],
+                '1': () => [sprite('house')],
+                '=': () => [sprite('terrain-top-center'), area({width:32, height:4}), solid(), origin('center'), 'ground'],
                 '-': () => [sprite('terrain-center'), area(), solid(), origin('center'), 'ground'],
-                'W': () => [sprite('building-door'), area({width:32, height:0}), origin('center'), 'enemy-gen', {sprite:'peasant', level:1, count:0, timer:3, genCount:2, hp: 10, str:1, dex:1}],
-                'X': () => [sprite('building-door'), area({width:32, height:0}), origin('center'), 'enemy-gen', {sprite:'peasant', level:1, count:0, timer:3, genCount:5, hp: 50, str:1, dex:1}],
-                'Y': () => [sprite('building-door'), area({width:32, height:0}), origin('center'), 'enemy-gen', {sprite:'militia', level:1, count:0, timer:3, genCount:3, hp: 100, str:3, dex:2}],
-                'Z': () => [sprite('building-door'), area({width:32, height:0}), origin('center'), 'enemy-gen', {sprite:'knight', level:1, count:0, timer:3, genCount:2, hp: 200, str:5, dex:5}],
+                'W': () => [sprite('building-door'), area({width:32, height:0}), origin('center'), 'enemy-gen', {sprite:'peasant', level:1, count:0, timer:3, genCount:2, hp: 5, str:1, dex:1}],
+                'X': () => [sprite('building-door'), area({width:32, height:0}), origin('center'), 'enemy-gen', {sprite:'peasant', level:1, count:0, timer:3, genCount:3, hp: 5, str:1, dex:1}],
+                'Y': () => [sprite('building-door'), area({width:32, height:0}), origin('center'), 'enemy-gen', {sprite:'militia', level:1, count:0, timer:3, genCount:3, hp: 10, str:3, dex:2}],
+                'Z': () => [sprite('building-door'), area({width:32, height:0}), origin('center'), 'enemy-gen', {sprite:'knight', level:1, count:0, timer:3, genCount:2, hp: 20, str:5, dex:5}],
             }
             addLevel(map, levelCfg) 
             onUpdate('enemy-gen', (e)=>{
@@ -2120,6 +2133,9 @@
                         })
                     }
                  }
+            })
+            onUpdate('background', (b)=>{
+                b.moveTo(camPos())
             })
             onUpdate('enemy', (enemy)=>{
                 if(player.pos.x>enemy.pos.x){
@@ -2431,5 +2447,5 @@
     
     })
     go ('mansion', { level: 0, startX: 192, startY:216, newGame:true })
-    //go('village', monsterMapping['0001'])
+    //go('village', monsterMapping['1111'])
     
